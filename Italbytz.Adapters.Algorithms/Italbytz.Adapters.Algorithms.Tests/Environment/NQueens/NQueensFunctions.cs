@@ -6,6 +6,7 @@
 
 using System;
 using Italbytz.Adapters.Algorithms.Search.Framework;
+using Italbytz.Adapters.Algorithms.Util.Datastructure;
 using Italbytz.Ports.Algorithms;
 
 namespace Italbytz.Adapters.Algorithms.Tests.Environment.NQueens
@@ -21,9 +22,21 @@ namespace Italbytz.Adapters.Algorithms.Tests.Environment.NQueens
             return node.State.GetNumberOfAttackingPairs();
         }
 
-        internal static List<QueenAction> GetCSFActions(NQueensBoard board)
+        internal static List<QueenAction> GetCSFActions(NQueensBoard state)
         {
-            throw new NotImplementedException();
+            var actions = new List<QueenAction>();
+            for (int i = 0; i < state.Size; i++)
+            {
+                for (int j = 0; j < state.Size; j++)
+                {
+                    var loc = new XYLocation(i, j);
+                    if (!state.QueenExistsAt(loc))
+                    {
+                        actions.Add(new QueenAction(QueenAction.MOVE_QUEEN, loc));
+                    }
+                }
+            }
+            return actions;
         }
 
         internal static NQueensBoard GetResult(NQueensBoard board, QueenAction action)

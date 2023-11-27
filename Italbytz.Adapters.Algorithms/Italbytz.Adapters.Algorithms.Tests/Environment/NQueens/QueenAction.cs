@@ -5,12 +5,19 @@
  */
 
 using System;
+using Italbytz.Adapters.Algorithms.Agent;
+using Italbytz.Adapters.Algorithms.Util.Datastructure;
+
 namespace Italbytz.Adapters.Algorithms.Tests.Environment.NQueens
 {
-    public class QueenAction
+    public class QueenAction : DynamicAction
     {
-        public QueenAction()
+        internal static string MOVE_QUEEN = "moveQueenTo";
+        internal static string ATTRIBUTE_QUEEN_LOC = "location";
+
+        public QueenAction(string type, XYLocation loc) : base(type)
         {
+            Attributes[ATTRIBUTE_QUEEN_LOC] = loc;
         }
     }
 }

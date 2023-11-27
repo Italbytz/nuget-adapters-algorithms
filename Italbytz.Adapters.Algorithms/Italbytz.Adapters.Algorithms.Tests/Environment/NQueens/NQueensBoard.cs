@@ -6,13 +6,14 @@
 
 using System;
 using System.Drawing;
+using Italbytz.Adapters.Algorithms.Util.Datastructure;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Italbytz.Adapters.Algorithms.Tests.Environment.NQueens
 {
     public class NQueensBoard
     {
-        private bool[,] squares;
+        private readonly bool[,] squares;
         public int Size { get; }
 
         public NQueensBoard(int size)
@@ -31,6 +32,16 @@ namespace Italbytz.Adapters.Algorithms.Tests.Environment.NQueens
                     squares[col, row] = false;
                 }
             }
+        }
+
+        public bool QueenExistsAt(XYLocation l)
+        {
+            return (QueenExistsAt(l.X, l.Y));
+        }
+
+        private bool QueenExistsAt(int x, int y)
+        {
+            return squares[x, y];
         }
 
         public int GetNumberOfAttackingPairs()

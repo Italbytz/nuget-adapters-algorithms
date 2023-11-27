@@ -47,6 +47,9 @@
 	  <Compile Include="..\..\..\nuget-ports-algorithms\Italbytz.Ports.Algorithms\Italbytz.Ports.Algorithms\IEnvironment.cs">
 	    <Link>IEnvironment.cs</Link>
 	  </Compile>
+	  <Compile Include="..\..\..\nuget-ports-algorithms\Italbytz.Ports.Algorithms\Italbytz.Ports.Algorithms\IAction.cs">
+	    <Link>IAction.cs</Link>
+	  </Compile>
 	</ItemGroup>
 	<ItemGroup>
 	  <None Remove="Search\" />
@@ -55,6 +58,8 @@
 	  <None Remove="Agent\" />
 	  <None Remove="Search\Agent\" />
 	  <None Remove="Search\Framework\Problem\" />
+	  <None Remove="Util\" />
+	  <None Remove="Util\Datastructure\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Search\" />
@@ -63,5 +68,7 @@
 	  <Folder Include="Agent\" />
 	  <Folder Include="Search\Agent\" />
 	  <Folder Include="Search\Framework\Problem\" />
+	  <Folder Include="Util\" />
+	  <Folder Include="Util\Datastructure\" />
 	</ItemGroup>
 </Project>
