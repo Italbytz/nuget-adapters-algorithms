@@ -20,6 +20,11 @@ namespace Italbytz.Adapters.Algorithms.Tests.Environment.NQueens
         {
             return node.State.GetNumberOfAttackingPairs();
         }
+
+        internal static List<QueenAction> GetCSFActions(NQueensBoard board)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 

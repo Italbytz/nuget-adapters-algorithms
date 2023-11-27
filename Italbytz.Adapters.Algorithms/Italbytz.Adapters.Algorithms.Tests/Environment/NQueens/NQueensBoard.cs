@@ -9,7 +9,7 @@ namespace Italbytz.Adapters.Algorithms.Tests.Environment.NQueens
 {
     public class NQueensBoard
     {
-        public NQueensBoard()
+        public NQueensBoard(int size)
         {
         }
 

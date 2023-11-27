@@ -12,7 +12,7 @@ namespace Italbytz.Adapters.Algorithms.Search.Agent
 {
     public class SearchAgent<TPercept, TState, TAction> : SimpleAgent<TPercept, TAction>
     {
-        public SearchAgent()
+        public SearchAgent(IProblem<TState, TAction> problem, ISearchForActions<TState, TAction> search)
         {
         }
     }
