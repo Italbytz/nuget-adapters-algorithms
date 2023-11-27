@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFrameworks>netstandard2.0</TargetFrameworks>
+		<Nullable>enable</Nullable>
+		<PackageVersion>0.1.0</PackageVersion>
+		<Authors>Robin Nunkesser</Authors>
+		<PackageProjectUrl>https://github.com/Italbytz/nuget-adapters-algorithms</PackageProjectUrl>
+		<Description>Some algorithm adapters to use with Ports and Adapters.</Description>
+		<PackOnBuild>true</PackOnBuild>
+		<PackageLicenseUrl>https://github.com/Italbytz/nuget-adapters-algorithms/blob/main/LICENSE</PackageLicenseUrl>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+		<LangVersion>9.0</LangVersion>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+		<LangVersion>9.0</LangVersion>
+	</PropertyGroup>
+	<ItemGroup>
+	  <Compile Include="..\..\..\nuget-ports-algorithms\Italbytz.Ports.Algorithms\Italbytz.Ports.Algorithms\IMetrics.cs">
+	    <Link>IMetrics.cs</Link>
+	  </Compile>
+	  <Compile Include="..\..\..\nuget-ports-algorithms\Italbytz.Ports.Algorithms\Italbytz.Ports.Algorithms\INode.cs">
+	    <Link>INode.cs</Link>
+	  </Compile>
+	  <Compile Include="..\..\..\nuget-ports-algorithms\Italbytz.Ports.Algorithms\Italbytz.Ports.Algorithms\INodeFactory.cs">
+	    <Link>INodeFactory.cs</Link>
+	  </Compile>
+	  <Compile Include="..\..\..\nuget-ports-algorithms\Italbytz.Ports.Algorithms\Italbytz.Ports.Algorithms\IOnlineSearchProblem.cs">
+	    <Link>IOnlineSearchProblem.cs</Link>
+	  </Compile>
+	  <Compile Include="..\..\..\nuget-ports-algorithms\Italbytz.Ports.Algorithms\Italbytz.Ports.Algorithms\IProblem.cs">
+	    <Link>IProblem.cs</Link>
+	  </Compile>
+	  <Compile Include="..\..\..\nuget-ports-algorithms\Italbytz.Ports.Algorithms\Italbytz.Ports.Algorithms\ISearchForActions.cs">
+	    <Link>ISearchForActions.cs</Link>
+	  </Compile>
+	  <Compile Include="..\..\..\nuget-ports-algorithms\Italbytz.Ports.Algorithms\Italbytz.Ports.Algorithms\ISearchForStates.cs">
+	    <Link>ISearchForStates.cs</Link>
+	  </Compile>
+	</ItemGroup>
+	<ItemGroup>
+	  <None Remove="Search\" />
+	  <None Remove="Search\Local\" />
+	  <None Remove="Search\Framework\" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Search\" />
+	  <Folder Include="Search\Local\" />
+	  <Folder Include="Search\Framework\" />
+	</ItemGroup>
+</Project>

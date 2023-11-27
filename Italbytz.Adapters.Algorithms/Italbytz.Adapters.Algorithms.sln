@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 25.0.1706.7
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Italbytz.Adapters.Algorithms", "Italbytz.Adapters.Algorithms\Italbytz.Adapters.Algorithms.csproj", "{00345CDB-ED61-4599-8653-975C63217D54}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Italbytz.Adapters.Algorithms.Tests", "Italbytz.Adapters.Algorithms.Tests\Italbytz.Adapters.Algorithms.Tests.csproj", "{97908D31-F978-43F9-8894-957E1B10D2EB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{00345CDB-ED61-4599-8653-975C63217D54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00345CDB-ED61-4599-8653-975C63217D54}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00345CDB-ED61-4599-8653-975C63217D54}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00345CDB-ED61-4599-8653-975C63217D54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97908D31-F978-43F9-8894-957E1B10D2EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97908D31-F978-43F9-8894-957E1B10D2EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97908D31-F978-43F9-8894-957E1B10D2EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97908D31-F978-43F9-8894-957E1B10D2EB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AC38D94D-5B68-4013-9272-336DCDBFD878}
+	EndGlobalSection
+EndGlobal
