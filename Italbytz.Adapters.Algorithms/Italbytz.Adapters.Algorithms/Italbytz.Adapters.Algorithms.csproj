@@ -38,15 +38,27 @@
 	  <Compile Include="..\..\..\nuget-ports-algorithms\Italbytz.Ports.Algorithms\Italbytz.Ports.Algorithms\ISearchForStates.cs">
 	    <Link>ISearchForStates.cs</Link>
 	  </Compile>
+	  <Compile Include="..\..\..\nuget-ports-algorithms\Italbytz.Ports.Algorithms\Italbytz.Ports.Algorithms\IAgent.cs">
+	    <Link>IAgent.cs</Link>
+	  </Compile>
+	  <Compile Include="..\..\..\nuget-ports-algorithms\Italbytz.Ports.Algorithms\Italbytz.Ports.Algorithms\IPercept.cs">
+	    <Link>IPercept.cs</Link>
+	  </Compile>
 	</ItemGroup>
 	<ItemGroup>
 	  <None Remove="Search\" />
 	  <None Remove="Search\Local\" />
 	  <None Remove="Search\Framework\" />
+	  <None Remove="Agent\" />
+	  <None Remove="Search\Agent\" />
+	  <None Remove="Search\Framework\Problem\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Search\" />
 	  <Folder Include="Search\Local\" />
 	  <Folder Include="Search\Framework\" />
+	  <Folder Include="Agent\" />
+	  <Folder Include="Search\Agent\" />
+	  <Folder Include="Search\Framework\Problem\" />
 	</ItemGroup>
 </Project>
