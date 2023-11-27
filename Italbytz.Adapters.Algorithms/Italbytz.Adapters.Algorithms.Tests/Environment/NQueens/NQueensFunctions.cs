@@ -39,9 +39,15 @@ namespace Italbytz.Adapters.Algorithms.Tests.Environment.NQueens
             return actions;
         }
 
-        internal static NQueensBoard GetResult(NQueensBoard board, QueenAction action)
+        internal static NQueensBoard GetResult(NQueensBoard state, QueenAction action)
         {
-            throw new NotImplementedException();
+            var result = new NQueensBoard(state.Size);
+            result.SetQueensAt(state.GetQueenPositions());
+            switch (action.Name)
+            {
+                case QueenAction.MOVE_QUEEN: result.MoveQueenTo(action.Location); break;
+            }
+            return result;
         }
 
         internal static bool GetTestGoal(NQueensBoard board)

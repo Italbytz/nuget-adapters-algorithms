@@ -48,6 +48,44 @@ namespace Italbytz.Adapters.Algorithms.Tests.Environment.NQueens
         {
             return 42;
         }
+
+        internal List<XYLocation> GetQueenPositions()
+        {
+            var result = new List<XYLocation>();
+            for (int col = 0; col < Size; col++)
+            {
+                for (int row = 0; row < Size; row++)
+                {
+                    if (QueenExistsAt(col, row))
+                        result.Add(new XYLocation(col, row));
+                }
+            }
+            return result;
+        }
+
+        internal void SetQueensAt(List<XYLocation> xylocations)
+        {
+            Clear();
+            foreach (var xylocation in xylocations)
+            {
+                AddQueenAt(xylocation);
+            }
+        }
+
+        private void AddQueenAt(XYLocation xylocation)
+        {
+            squares[xylocation.X, xylocation.Y] = true;
+        }
+
+        internal void MoveQueenTo(XYLocation location)
+        {
+            for (int row = 0; row < Size; row++)
+            {
+                squares[location.X, row] = false;
+            }
+            squares[location.X, location.Y] = true;
+        }
     }
 }
+
 
