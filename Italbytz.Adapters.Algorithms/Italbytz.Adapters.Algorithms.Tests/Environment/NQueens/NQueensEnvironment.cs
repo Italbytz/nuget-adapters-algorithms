@@ -1,7 +1,9 @@
 ﻿using System;
 using Italbytz.Adapters.Algorithms.Agent;
 using Italbytz.Adapters.Algorithms.Search.Agent;
+using Italbytz.Adapters.Algorithms.Util.Datastructure;
 using Italbytz.Ports.Algorithms;
+using static System.Collections.Specialized.BitVector32;
 
 namespace Italbytz.Adapters.Algorithms.Tests.Environment.NQueens
 {
@@ -14,14 +16,20 @@ namespace Italbytz.Adapters.Algorithms.Tests.Environment.NQueens
             this.Board = board;
         }
 
-        protected override void Execute(IAgent<IPercept, QueenAction> agent, QueenAction? anAction)
+        protected override void Execute(IAgent<IPercept, QueenAction> agent, QueenAction? action)
         {
-            throw new NotImplementedException();
+            var loc = new XYLocation(action.X, action.Y);
+            if (action.Name == QueenAction.PLACE_QUEEN)
+                Board.AddQueenAt(loc);
+            else if (action.Name == QueenAction.REMOVE_QUEEN)
+                Board.RemoveQueenFrom(loc);
+            else if (action.Name == QueenAction.MOVE_QUEEN)
+                Board.MoveQueenTo(loc);
         }
 
-        protected override IPercept GetPerceptSeenBy(IAgent<IPercept, QueenAction> agent)
+        protected override IPercept? GetPerceptSeenBy(IAgent<IPercept, QueenAction> agent)
         {
-            throw new NotImplementedException();
+            return null;
         }
     }
 }

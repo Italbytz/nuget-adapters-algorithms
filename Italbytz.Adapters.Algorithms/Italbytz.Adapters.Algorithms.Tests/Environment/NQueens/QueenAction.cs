@@ -13,8 +13,13 @@ namespace Italbytz.Adapters.Algorithms.Tests.Environment.NQueens
     public class QueenAction : DynamicAction
     {
         internal const string MOVE_QUEEN = "moveQueenTo";
-        internal static string ATTRIBUTE_QUEEN_LOC = "location";
+        internal const string PLACE_QUEEN = "placeQueenAt";
+        internal const string REMOVE_QUEEN = "removeQueenAt";
+
+        internal const string ATTRIBUTE_QUEEN_LOC = "location";
         public XYLocation Location => (XYLocation)Attributes[ATTRIBUTE_QUEEN_LOC];
+        public int X => Location.X;
+        public int Y => Location.Y;
 
         public QueenAction(string type, XYLocation loc) : base(type)
         {

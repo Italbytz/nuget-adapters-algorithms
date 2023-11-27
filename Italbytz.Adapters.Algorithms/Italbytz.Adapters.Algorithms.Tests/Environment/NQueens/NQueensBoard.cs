@@ -46,7 +46,66 @@ namespace Italbytz.Adapters.Algorithms.Tests.Environment.NQueens
 
         public int GetNumberOfAttackingPairs()
         {
-            return 42;
+            return GetQueenPositions().Select(l => GetNumberOfAttacksOn(l)).Sum() / 2;
+        }
+
+        public int GetNumberOfAttacksOn(XYLocation l)
+        {
+            int x = l.X;
+            int y = l.Y;
+            return NumberOfHorizontalAttacksOn(x, y) + NumberOfVerticalAttacksOn(x, y) + NumberOfDiagonalAttacksOn(x, y);
+        }
+
+        private int NumberOfDiagonalAttacksOn(int x, int y)
+        {
+            int result = 0;
+            int col;
+            int row;
+            // forward up diagonal
+            for (col = (x + 1), row = (y - 1); (col < Size && (row > -1)); col++, row--)
+                if (QueenExistsAt(col, row))
+                    result++;
+
+            // forward down diagonal
+            for (col = (x + 1), row = (y + 1); ((col < Size) && (row < Size)); col++, row++)
+                if (QueenExistsAt(col, row))
+                    result++;
+
+            // backward up diagonal
+            for (col = (x - 1), row = (y - 1); ((col > -1) && (row > -1)); col--, row--)
+                if (QueenExistsAt(col, row))
+                    result++;
+
+            // backward down diagonal
+            for (col = (x - 1), row = (y + 1); ((col > -1) && (row < Size)); col--, row++)
+                if (QueenExistsAt(col, row))
+                    result++;
+
+            return result;
+        }
+
+        private int NumberOfVerticalAttacksOn(int x, int y)
+        {
+            int result = 0;
+            for (int row = 0; row < Size; row++)
+            {
+                if ((QueenExistsAt(x, row)))
+                    if (row != y)
+                        result++;
+            }
+            return result;
+        }
+
+        private int NumberOfHorizontalAttacksOn(int x, int y)
+        {
+            int result = 0;
+            for (int col = 0; col < Size; col++)
+            {
+                if ((QueenExistsAt(col, y)))
+                    if (col != x)
+                        result++;
+            }
+            return result;
         }
 
         internal List<XYLocation> GetQueenPositions()
@@ -72,7 +131,7 @@ namespace Italbytz.Adapters.Algorithms.Tests.Environment.NQueens
             }
         }
 
-        private void AddQueenAt(XYLocation xylocation)
+        internal void AddQueenAt(XYLocation xylocation)
         {
             squares[xylocation.X, xylocation.Y] = true;
         }
@@ -84,6 +143,27 @@ namespace Italbytz.Adapters.Algorithms.Tests.Environment.NQueens
                 squares[location.X, row] = false;
             }
             squares[location.X, location.Y] = true;
+        }
+
+        internal int GetNumberOfQueensOnBoard()
+        {
+            int count = 0;
+            for (int col = 0; col < Size; col++)
+            {
+                for (int row = 0; row < Size; row++)
+                {
+                    if (squares[col, row])
+                    {
+                        count++;
+                    }
+                }
+            }
+            return count;
+        }
+
+        internal void RemoveQueenFrom(XYLocation loc)
+        {
+            squares[loc.X, loc.Y] = false;
         }
     }
 }

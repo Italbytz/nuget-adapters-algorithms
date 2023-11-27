@@ -12,9 +12,18 @@ namespace Italbytz.Adapters.Algorithms.Search.Local
 {
     public class HillClimbingSearch<TState, TAction> : ISearchForActions<TState, TAction>, ISearchForStates<TState, TAction>
     {
+        private INodeFactory<TState, TAction> nodeFactory;
+
         public HillClimbingSearch(Func<INode<TState, TAction>, double> evalFn)
         {
         }
+
+        public HillClimbingSearch(Func<INode<TState, TAction>, double> evalFn, INodeFactory<TState, TAction> nodeFactory)
+        {
+            this.nodeFactory = nodeFactory;
+        }
+
+        public IMetrics Metrics { get; }
 
         public List<TAction>? FindActions(IProblem<TState, TAction> problem)
         {

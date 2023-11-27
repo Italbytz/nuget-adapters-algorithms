@@ -17,7 +17,7 @@ public class NQueensHillClimbingTests
     public void Test1()
     {
         var board = new NQueensBoard(8);
-        var problem = new GeneralProblem<NQueensBoard, QueenAction>(board, NQueensFunctions.GetCSFActions, NQueensFunctions.GetResult, NQueensFunctions.GetTestGoal);
+        var problem = new GeneralProblem<NQueensBoard, QueenAction>(board, NQueensFunctions.GetCSFActions, NQueensFunctions.GetResult, NQueensFunctions.TestGoal);
         var search = new HillClimbingSearch<NQueensBoard, QueenAction>(node => -NQueensFunctions.GetNumberOfAttackingPairs(node));
         var agent = new SearchAgent<IPercept, NQueensBoard, QueenAction>(problem, search);
         var env = new NQueensEnvironment(board)

@@ -24,7 +24,7 @@ namespace Italbytz.Adapters.Algorithms.Agent
         }
 
         protected abstract void Execute(IAgent<TPercept, TAction> agent, TAction? anAction);
-        protected abstract TPercept GetPerceptSeenBy(IAgent<TPercept, TAction> agent);
+        protected abstract TPercept? GetPerceptSeenBy(IAgent<TPercept, TAction> agent);
     }
 }
 

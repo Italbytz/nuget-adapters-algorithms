@@ -46,13 +46,15 @@ namespace Italbytz.Adapters.Algorithms.Tests.Environment.NQueens
             switch (action.Name)
             {
                 case QueenAction.MOVE_QUEEN: result.MoveQueenTo(action.Location); break;
+                case QueenAction.PLACE_QUEEN: result.AddQueenAt(action.Location); break;
+                case QueenAction.REMOVE_QUEEN: result.RemoveQueenFrom(action.Location); break;
             }
             return result;
         }
 
-        internal static bool GetTestGoal(NQueensBoard board)
+        internal static bool TestGoal(NQueensBoard state)
         {
-            throw new NotImplementedException();
+            return state.GetNumberOfQueensOnBoard() == state.Size && state.GetNumberOfAttackingPairs() == 0;
         }
     }
 }
