@@ -12,8 +12,16 @@ namespace Italbytz.Adapters.Algorithms.Agent
 {
     public class SimpleAgent<TPercept, TAction> : IAgent<TPercept, TAction>
     {
+        public bool Alive { get; } = true;
+
         public SimpleAgent()
         {
+        }
+
+        public TAction? Act(TPercept? percept)
+        {
+            System.Console.WriteLine("Simple Agent act");
+            return default(TAction);
         }
     }
 }

@@ -16,35 +16,16 @@ public class NQueensHillClimbingTests
     [Test]
     public void Test1()
     {
-        var board = new NQueensBoard(8);
-        var problem = new GeneralProblem<NQueensBoard, QueenAction>(board, NQueensFunctions.GetCSFActions, NQueensFunctions.GetResult, NQueensFunctions.GetTestGoal);
+        var problem = new GeneralProblem<NQueensBoard, QueenAction>(env.Board, NQueensFunctions.GetCSFActions, NQueensFunctions.GetResult, NQueensFunctions.GetTestGoal);
         var search = new HillClimbingSearch<NQueensBoard, QueenAction>(node => -NQueensFunctions.GetNumberOfAttackingPairs(node));
         var agent = new SearchAgent<IPercept, NQueensBoard, QueenAction>(problem, search);
-        /*
-         * 
-
-        //Abstract Env
-
-        public void step()
+        var env = new NQueensEnvironment(new NQueensBoard(8))
         {
-            for (Agent <? super P, ? extends A > agent : agents) {
-            if (agent.isAlive())
-            {
-                P percept = getPerceptSeenBy(agent);
-                Optional <? extends A > anAction = agent.act(percept);
-                if (anAction.isPresent())
-                {
-                    execute(agent, anAction.get());
-                    notify(agent, percept, anAction.get());
-                }
-                else
-                {
-                    executeNoOp(agent);
-                }
-            }
+            Agent = agent
+        };
+        for (int i = 0; i < 10; i++)
+        {
+            env.Step();
         }
-        createExogenousChange();
-        */
     }
-}
 }

@@ -25,6 +25,16 @@ namespace Italbytz.Adapters.Algorithms.Tests.Environment.NQueens
         {
             throw new NotImplementedException();
         }
+
+        internal static NQueensBoard GetResult(NQueensBoard board, QueenAction action)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal static bool GetTestGoal(NQueensBoard board)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 

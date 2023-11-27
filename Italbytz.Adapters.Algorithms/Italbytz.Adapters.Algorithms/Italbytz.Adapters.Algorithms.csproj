@@ -44,6 +44,9 @@
 	  <Compile Include="..\..\..\nuget-ports-algorithms\Italbytz.Ports.Algorithms\Italbytz.Ports.Algorithms\IPercept.cs">
 	    <Link>IPercept.cs</Link>
 	  </Compile>
+	  <Compile Include="..\..\..\nuget-ports-algorithms\Italbytz.Ports.Algorithms\Italbytz.Ports.Algorithms\IEnvironment.cs">
+	    <Link>IEnvironment.cs</Link>
+	  </Compile>
 	</ItemGroup>
 	<ItemGroup>
 	  <None Remove="Search\" />
