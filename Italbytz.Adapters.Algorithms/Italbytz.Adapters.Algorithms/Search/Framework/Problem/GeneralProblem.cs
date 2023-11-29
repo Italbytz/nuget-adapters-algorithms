@@ -57,6 +57,11 @@ namespace Italbytz.Adapters.Algorithms.Search.Framework.Problem
             throw new NotImplementedException();
         }
 
+        public bool TestSolution(INode<TState, TAction> node)
+        {
+            return GoalTest(node.State);
+        }
+
         /*public bool TestGoal(TState state)
         {
             throw new NotImplementedException();

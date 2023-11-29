@@ -14,11 +14,33 @@ namespace Italbytz.Adapters.Algorithms.Search.Framework
 
         public TState State { get; }
 
-        public Node()
+        public double PathCost { get; }
+
+        public int Depth { get; }
+
+        public TAction Action { get; }
+
+        public INode<TState, TAction> Parent { get; }
+
+        public Node(TState state) : this(state, null, default, 0.0)
         {
+
         }
 
 
+        public Node(TState state, INode<TState, TAction>? parent, TAction? action, double pathCost)
+        {
+            State = state;
+            this.Parent = parent;
+            this.Action = action;
+            PathCost = pathCost;
+            Depth = parent != null ? parent.Depth + 1 : 0;
+        }
+
+        public bool IsRootNode()
+        {
+            return Parent == null;
+        }
     }
 }
 

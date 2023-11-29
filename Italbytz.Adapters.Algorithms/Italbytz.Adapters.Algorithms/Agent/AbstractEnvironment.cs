@@ -14,13 +14,14 @@ namespace Italbytz.Adapters.Algorithms.Agent
 
         public void Step()
         {
+            System.Console.WriteLine("Step start");
             if (Agent.Alive)
             {
                 var percept = GetPerceptSeenBy(Agent);
                 var anAction = Agent.Act(percept);
-                Execute(Agent, anAction);
+                if (anAction != null) Execute(Agent, anAction);
             }
-            System.Console.WriteLine("Step");
+            System.Console.WriteLine("Step finish");
         }
 
         protected abstract void Execute(IAgent<TPercept, TAction> agent, TAction? anAction);

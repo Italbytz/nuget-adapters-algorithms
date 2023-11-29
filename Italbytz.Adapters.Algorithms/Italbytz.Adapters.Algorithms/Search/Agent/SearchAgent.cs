@@ -20,8 +20,9 @@ namespace Italbytz.Adapters.Algorithms.Search.Agent
         public SearchAgent(IProblem<TState, TAction> problem, ISearchForActions<TState, TAction> search)
         {
             var actions = search.FindActions(problem);
+            System.Console.WriteLine("Found actions");
             actionList = new List<TAction>();
-            actionList.AddRange(actions);
+            if (actions != null) actionList.AddRange(actions);
             actionEnumerator = actionList.GetEnumerator();
             searchMetrics = search.Metrics;
         }
