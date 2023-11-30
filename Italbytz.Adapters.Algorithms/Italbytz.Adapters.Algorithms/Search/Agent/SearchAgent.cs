@@ -16,6 +16,7 @@ namespace Italbytz.Adapters.Algorithms.Search.Agent
         private List<TAction> actionList;
         private IMetrics searchMetrics;
         private List<TAction>.Enumerator actionEnumerator;
+        public bool Done { get; } = false;
 
         public SearchAgent(IProblem<TState, TAction> problem, ISearchForActions<TState, TAction> search)
         {
@@ -26,6 +27,15 @@ namespace Italbytz.Adapters.Algorithms.Search.Agent
             actionEnumerator = actionList.GetEnumerator();
             searchMetrics = search.Metrics;
         }
+
+        public override TAction? Act(TPercept? percept)
+        {
+            System.Console.WriteLine("Search Agent act");
+            return default(TAction);
+        }
+
+
+
     }
 }
 
