@@ -51,7 +51,7 @@ namespace Italbytz.Adapters.Algorithms.Search.Local
             //while (!Tasks.currIsCancelled())
             //{
             //    metrics.set(METRIC_NODE_VALUE, getValue(current));
-            for (int i = 0; i < 100; i++)
+            while (true)
             {
 
                 var children = nodeFactory.GetSuccessors(current, p);
