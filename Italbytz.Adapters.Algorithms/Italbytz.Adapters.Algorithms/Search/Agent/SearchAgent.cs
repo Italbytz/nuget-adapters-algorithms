@@ -15,22 +15,27 @@ namespace Italbytz.Adapters.Algorithms.Search.Agent
     {
         private List<TAction> actionList;
         private IMetrics searchMetrics;
-        private List<TAction>.Enumerator actionEnumerator;
+        //private List<TAction>.Enumerator actionEnumerator;
         public bool Done { get; } = false;
 
         public SearchAgent(IProblem<TState, TAction> problem, ISearchForActions<TState, TAction> search)
         {
             var actions = search.FindActions(problem);
-            System.Console.WriteLine("Found actions");
             actionList = new List<TAction>();
-            if (actions != null) actionList.AddRange(actions);
-            actionEnumerator = actionList.GetEnumerator();
+            if (actions != null)
+            {
+                actionList.AddRange(actions);
+            }
+            if (actionList.Count == 0)
+            {
+                Done = true;
+            }
+            //actionEnumerator = actionList.GetEnumerator();
             searchMetrics = search.Metrics;
         }
 
         public override TAction? Act(TPercept? percept)
         {
-            System.Console.WriteLine("Search Agent act");
             return default(TAction);
         }
 

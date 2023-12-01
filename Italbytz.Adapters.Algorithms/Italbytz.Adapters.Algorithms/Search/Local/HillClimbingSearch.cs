@@ -32,7 +32,6 @@ namespace Italbytz.Adapters.Algorithms.Search.Local
 
         public IEnumerable<TAction>? FindActions(IProblem<TState, TAction> problem)
         {
-            System.Console.WriteLine("Start find actions");
             nodeFactory.UseParentLinks = true;
             return SearchUtils.ToActions<TState, TAction>(FindNode(problem));
         }
@@ -44,7 +43,6 @@ namespace Italbytz.Adapters.Algorithms.Search.Local
 
         public INode<TState, TAction>? FindNode(IProblem<TState, TAction> p)
         {
-            System.Console.WriteLine("Start FindNode");
             //ClearMetrics();
             INode<TState, TAction> current = nodeFactory.CreateNode(p.InitialState);
             INode<TState, TAction> neighbor;
@@ -63,6 +61,7 @@ namespace Italbytz.Adapters.Algorithms.Search.Local
                     return p.TestSolution(current) ? current : null;
                 }
                 current = neighbor;
+                Console.WriteLine(current.State);
             }
             lastState = current.State;
             return null;

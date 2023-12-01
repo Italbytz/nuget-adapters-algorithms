@@ -20,7 +20,6 @@ namespace Italbytz.Adapters.Algorithms.Agent
 
         public virtual TAction? Act(TPercept? percept)
         {
-            System.Console.WriteLine("Simple Agent act");
             return default(TAction);
         }
     }

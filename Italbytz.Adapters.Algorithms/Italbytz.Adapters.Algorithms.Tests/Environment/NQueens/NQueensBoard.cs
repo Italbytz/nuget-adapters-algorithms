@@ -6,6 +6,7 @@
 
 using System;
 using System.Drawing;
+using System.Text;
 using Italbytz.Adapters.Algorithms.Util.Datastructure;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
@@ -164,6 +165,23 @@ namespace Italbytz.Adapters.Algorithms.Tests.Environment.NQueens
         internal void RemoveQueenFrom(XYLocation loc)
         {
             squares[loc.X, loc.Y] = false;
+        }
+
+        public override string? ToString()
+        {
+            StringBuilder builder = new StringBuilder();
+            for (int row = 0; row < Size; row++)
+            {
+                for (int col = 0; col < Size; col++)
+                {
+                    if (QueenExistsAt(col, row))
+                        builder.Append('Q');
+                    else
+                        builder.Append('-');
+                }
+                builder.Append("\n");
+            }
+            return builder.ToString();
         }
     }
 }
