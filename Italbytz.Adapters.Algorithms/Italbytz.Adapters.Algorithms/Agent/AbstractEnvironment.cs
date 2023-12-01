@@ -1,6 +1,7 @@
 ﻿using System;
 using Italbytz.Adapters.Algorithms.Search.Agent;
-using Italbytz.Ports.Algorithms;
+using Italbytz.Ports.Algorithms.AI;
+using Italbytz.Ports.Algorithms.AI.Agent;
 
 namespace Italbytz.Adapters.Algorithms.Agent
 {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using Italbytz.Ports.Algorithms;
+using Italbytz.Ports.Algorithms.AI;
+using Italbytz.Ports.Algorithms.AI.Search;
 
 namespace Italbytz.Adapters.Algorithms.Search.Framework
 {

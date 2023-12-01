@@ -17,41 +17,6 @@
 		<LangVersion>9.0</LangVersion>
 	</PropertyGroup>
 	<ItemGroup>
-	  <Compile Include="..\..\..\nuget-ports-algorithms\Italbytz.Ports.Algorithms\Italbytz.Ports.Algorithms\IMetrics.cs">
-	    <Link>IMetrics.cs</Link>
-	  </Compile>
-	  <Compile Include="..\..\..\nuget-ports-algorithms\Italbytz.Ports.Algorithms\Italbytz.Ports.Algorithms\INode.cs">
-	    <Link>INode.cs</Link>
-	  </Compile>
-	  <Compile Include="..\..\..\nuget-ports-algorithms\Italbytz.Ports.Algorithms\Italbytz.Ports.Algorithms\INodeFactory.cs">
-	    <Link>INodeFactory.cs</Link>
-	  </Compile>
-	  <Compile Include="..\..\..\nuget-ports-algorithms\Italbytz.Ports.Algorithms\Italbytz.Ports.Algorithms\IOnlineSearchProblem.cs">
-	    <Link>IOnlineSearchProblem.cs</Link>
-	  </Compile>
-	  <Compile Include="..\..\..\nuget-ports-algorithms\Italbytz.Ports.Algorithms\Italbytz.Ports.Algorithms\IProblem.cs">
-	    <Link>IProblem.cs</Link>
-	  </Compile>
-	  <Compile Include="..\..\..\nuget-ports-algorithms\Italbytz.Ports.Algorithms\Italbytz.Ports.Algorithms\ISearchForActions.cs">
-	    <Link>ISearchForActions.cs</Link>
-	  </Compile>
-	  <Compile Include="..\..\..\nuget-ports-algorithms\Italbytz.Ports.Algorithms\Italbytz.Ports.Algorithms\ISearchForStates.cs">
-	    <Link>ISearchForStates.cs</Link>
-	  </Compile>
-	  <Compile Include="..\..\..\nuget-ports-algorithms\Italbytz.Ports.Algorithms\Italbytz.Ports.Algorithms\IAgent.cs">
-	    <Link>IAgent.cs</Link>
-	  </Compile>
-	  <Compile Include="..\..\..\nuget-ports-algorithms\Italbytz.Ports.Algorithms\Italbytz.Ports.Algorithms\IPercept.cs">
-	    <Link>IPercept.cs</Link>
-	  </Compile>
-	  <Compile Include="..\..\..\nuget-ports-algorithms\Italbytz.Ports.Algorithms\Italbytz.Ports.Algorithms\IEnvironment.cs">
-	    <Link>IEnvironment.cs</Link>
-	  </Compile>
-	  <Compile Include="..\..\..\nuget-ports-algorithms\Italbytz.Ports.Algorithms\Italbytz.Ports.Algorithms\IAction.cs">
-	    <Link>IAction.cs</Link>
-	  </Compile>
-	</ItemGroup>
-	<ItemGroup>
 	  <None Remove="Search\" />
 	  <None Remove="Search\Local\" />
 	  <None Remove="Search\Framework\" />
@@ -70,5 +35,40 @@
 	  <Folder Include="Search\Framework\Problem\" />
 	  <Folder Include="Util\" />
 	  <Folder Include="Util\Datastructure\" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Compile Include="..\..\..\nuget-ports-algorithms\Italbytz.Ports.Algorithms\Italbytz.Ports.Algorithms\AI\Agent\IAction.cs">
+	    <Link>IAction.cs</Link>
+	  </Compile>
+	  <Compile Include="..\..\..\nuget-ports-algorithms\Italbytz.Ports.Algorithms\Italbytz.Ports.Algorithms\AI\Agent\IAgent.cs">
+	    <Link>IAgent.cs</Link>
+	  </Compile>
+	  <Compile Include="..\..\..\nuget-ports-algorithms\Italbytz.Ports.Algorithms\Italbytz.Ports.Algorithms\AI\Agent\IEnvironment.cs">
+	    <Link>IEnvironment.cs</Link>
+	  </Compile>
+	  <Compile Include="..\..\..\nuget-ports-algorithms\Italbytz.Ports.Algorithms\Italbytz.Ports.Algorithms\AI\Agent\IPercept.cs">
+	    <Link>IPercept.cs</Link>
+	  </Compile>
+	  <Compile Include="..\..\..\nuget-ports-algorithms\Italbytz.Ports.Algorithms\Italbytz.Ports.Algorithms\AI\Problem\IOnlineSearchProblem.cs">
+	    <Link>IOnlineSearchProblem.cs</Link>
+	  </Compile>
+	  <Compile Include="..\..\..\nuget-ports-algorithms\Italbytz.Ports.Algorithms\Italbytz.Ports.Algorithms\AI\Problem\IProblem.cs">
+	    <Link>IProblem.cs</Link>
+	  </Compile>
+	  <Compile Include="..\..\..\nuget-ports-algorithms\Italbytz.Ports.Algorithms\Italbytz.Ports.Algorithms\AI\Search\IMetrics.cs">
+	    <Link>IMetrics.cs</Link>
+	  </Compile>
+	  <Compile Include="..\..\..\nuget-ports-algorithms\Italbytz.Ports.Algorithms\Italbytz.Ports.Algorithms\AI\Search\INode.cs">
+	    <Link>INode.cs</Link>
+	  </Compile>
+	  <Compile Include="..\..\..\nuget-ports-algorithms\Italbytz.Ports.Algorithms\Italbytz.Ports.Algorithms\AI\Search\INodeFactory.cs">
+	    <Link>INodeFactory.cs</Link>
+	  </Compile>
+	  <Compile Include="..\..\..\nuget-ports-algorithms\Italbytz.Ports.Algorithms\Italbytz.Ports.Algorithms\AI\Search\ISearchForActions.cs">
+	    <Link>ISearchForActions.cs</Link>
+	  </Compile>
+	  <Compile Include="..\..\..\nuget-ports-algorithms\Italbytz.Ports.Algorithms\Italbytz.Ports.Algorithms\AI\Search\ISearchForStates.cs">
+	    <Link>ISearchForStates.cs</Link>
+	  </Compile>
 	</ItemGroup>
 </Project>

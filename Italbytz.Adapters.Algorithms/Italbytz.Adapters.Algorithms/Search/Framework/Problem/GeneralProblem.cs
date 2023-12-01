@@ -7,7 +7,9 @@
 using System;
 using System.Collections.Generic;
 using System.Net.NetworkInformation;
-using Italbytz.Ports.Algorithms;
+using Italbytz.Ports.Algorithms.AI;
+using Italbytz.Ports.Algorithms.AI.Problem;
+using Italbytz.Ports.Algorithms.AI.Search;
 using static System.Collections.Specialized.BitVector32;
 
 namespace Italbytz.Adapters.Algorithms.Search.Framework.Problem
@@ -39,19 +41,6 @@ namespace Italbytz.Adapters.Algorithms.Search.Framework.Problem
         {
         }
 
-
-
-
-        /*public List<TAction> GetActions(TState state)
-        {
-            throw new NotImplementedException();
-        }
-
-        public TState GetResult(TState state, TAction action)
-        {
-            throw new NotImplementedException();
-        }*/
-
         public double GetStepCosts(TState state, TAction action, TState stateDelta)
         {
             throw new NotImplementedException();
@@ -62,10 +51,6 @@ namespace Italbytz.Adapters.Algorithms.Search.Framework.Problem
             return GoalTest(node.State);
         }
 
-        /*public bool TestGoal(TState state)
-        {
-            throw new NotImplementedException();
-        }*/
     }
 }
 

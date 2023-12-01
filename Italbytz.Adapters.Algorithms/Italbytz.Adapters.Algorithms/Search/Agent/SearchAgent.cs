@@ -7,7 +7,9 @@
 using System;
 using System.Collections.Generic;
 using Italbytz.Adapters.Algorithms.Agent;
-using Italbytz.Ports.Algorithms;
+using Italbytz.Ports.Algorithms.AI;
+using Italbytz.Ports.Algorithms.AI.Problem;
+using Italbytz.Ports.Algorithms.AI.Search;
 
 namespace Italbytz.Adapters.Algorithms.Search.Agent
 {

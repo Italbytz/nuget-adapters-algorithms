@@ -5,7 +5,8 @@
  */
 
 using System;
-using Italbytz.Ports.Algorithms;
+using Italbytz.Ports.Algorithms.AI;
+using Italbytz.Ports.Algorithms.AI.Agent;
 using static System.Collections.Specialized.BitVector32;
 
 namespace Italbytz.Adapters.Algorithms.Agent

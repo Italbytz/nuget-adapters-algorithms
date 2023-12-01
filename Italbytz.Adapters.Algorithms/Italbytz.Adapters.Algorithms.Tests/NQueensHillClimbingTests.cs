@@ -3,7 +3,8 @@ using Italbytz.Adapters.Algorithms.Search.Framework.Problem;
 using Italbytz.Adapters.Algorithms.Search.Local;
 using Italbytz.Adapters.Algorithms.Tests.Environment.NQueens;
 using Italbytz.Adapters.Algorithms.Util.Datastructure;
-using Italbytz.Ports.Algorithms;
+using Italbytz.Ports.Algorithms.AI;
+using Italbytz.Ports.Algorithms.AI.Agent;
 
 namespace Italbytz.Adapters.Algorithms.Tests;
 
@@ -31,5 +32,6 @@ public class NQueensHillClimbingTests
         {
             env.Step();
         }
+        Assert.That(env.Board.GetNumberOfAttackingPairs(), Is.EqualTo(28));
     }
 }

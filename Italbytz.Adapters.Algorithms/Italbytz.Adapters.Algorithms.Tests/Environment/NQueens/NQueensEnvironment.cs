@@ -2,7 +2,8 @@
 using Italbytz.Adapters.Algorithms.Agent;
 using Italbytz.Adapters.Algorithms.Search.Agent;
 using Italbytz.Adapters.Algorithms.Util.Datastructure;
-using Italbytz.Ports.Algorithms;
+using Italbytz.Ports.Algorithms.AI;
+using Italbytz.Ports.Algorithms.AI.Agent;
 using static System.Collections.Specialized.BitVector32;
 
 namespace Italbytz.Adapters.Algorithms.Tests.Environment.NQueens

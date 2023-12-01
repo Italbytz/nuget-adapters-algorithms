@@ -10,11 +10,6 @@ namespace Italbytz.Adapters.Algorithms.Agent
         public ObjectWithDynamicAttributes()
         {
         }
-
-        /*public void SetAttribute(Object key, Object value)
-        {
-            attributes[key] = value;
-        }*/
     }
 }
 

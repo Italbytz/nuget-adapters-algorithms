@@ -7,7 +7,8 @@
 using System;
 using Italbytz.Adapters.Algorithms.Search.Framework;
 using Italbytz.Adapters.Algorithms.Util.Datastructure;
-using Italbytz.Ports.Algorithms;
+using Italbytz.Ports.Algorithms.AI;
+using Italbytz.Ports.Algorithms.AI.Search;
 
 namespace Italbytz.Adapters.Algorithms.Tests.Environment.NQueens
 {

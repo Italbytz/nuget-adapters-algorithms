@@ -1,7 +1,9 @@
 ﻿using System;
-using Italbytz.Ports.Algorithms;
+using Italbytz.Ports.Algorithms.AI;
 using System.Net.NetworkInformation;
 using System.Collections.Generic;
+using Italbytz.Ports.Algorithms.AI.Search;
+using Italbytz.Ports.Algorithms.AI.Problem;
 
 namespace Italbytz.Adapters.Algorithms.Search.Framework
 {
@@ -13,20 +15,20 @@ namespace Italbytz.Adapters.Algorithms.Search.Framework
         {
         }
 
-        public Node<TState, TAction> CreateNode(TState state)
+        public INode<TState, TAction> CreateNode(TState state)
         {
             return new Node<TState, TAction>(state);
         }
 
-        public Node<TState, TAction> CreateNode(TState state, INode<TState, TAction> parent, TAction action, double stepCost)
+        public INode<TState, TAction> CreateNode(TState state, INode<TState, TAction> parent, TAction action, double stepCost)
         {
             var p = UseParentLinks ? parent : null;
             return new Node<TState, TAction>(state, p, action, parent.PathCost + stepCost);
         }
 
-        public List<Node<TState, TAction>> GetSuccessors(INode<TState, TAction> node, IProblem<TState, TAction> problem)
+        public List<INode<TState, TAction>> GetSuccessors(INode<TState, TAction> node, IProblem<TState, TAction> problem)
         {
-            List<Node<TState, TAction>> successors = new List<Node<TState, TAction>>();
+            List<INode<TState, TAction>> successors = new List<INode<TState, TAction>>();
 
             foreach (var action in problem.Actions(node.State))
             {

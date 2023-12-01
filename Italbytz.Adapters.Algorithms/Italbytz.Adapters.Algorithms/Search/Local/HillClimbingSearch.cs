@@ -8,7 +8,9 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Italbytz.Adapters.Algorithms.Search.Framework;
-using Italbytz.Ports.Algorithms;
+using Italbytz.Ports.Algorithms.AI;
+using Italbytz.Ports.Algorithms.AI.Problem;
+using Italbytz.Ports.Algorithms.AI.Search;
 
 namespace Italbytz.Adapters.Algorithms.Search.Local
 {
@@ -67,7 +69,7 @@ namespace Italbytz.Adapters.Algorithms.Search.Local
             return null;
         }
 
-        private INode<TState, TAction> GetHighestValuedNodeFrom(List<Node<TState, TAction>> children)
+        private INode<TState, TAction> GetHighestValuedNodeFrom(List<INode<TState, TAction>> children)
         {
             double highestValue = Double.NegativeInfinity;
             INode<TState, TAction>? nodeWithHighestValue = null;
