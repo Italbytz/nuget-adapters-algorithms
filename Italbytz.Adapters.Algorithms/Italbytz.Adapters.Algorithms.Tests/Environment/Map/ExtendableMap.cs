@@ -50,7 +50,7 @@ namespace Italbytz.Adapters.Algorithms.Tests.Environment.Map
 	}
 
 	/** Returns a list of all locations. */
-	public List<String> getLocations()
+	public List<String> GetLocations()
 	{
 	    return links.getVertexLabels();
 	}
@@ -65,7 +65,7 @@ namespace Italbytz.Adapters.Algorithms.Tests.Environment.Map
 	 * Answers to the question: Where can I get, following one of the
 	 * connections starting at the specified location?
 	 */
-	public List<String> getPossibleNextLocations(String location)
+	public List<String> GetPossibleNextLocations(String location)
 	{
 	    List<String> result = links.getSuccessors(location);
 	    result.Sort();
@@ -78,16 +78,16 @@ namespace Italbytz.Adapters.Algorithms.Tests.Environment.Map
 	 * {@link #getPossibleNextLocations(String)} as the underlying graph structure
 	 * cannot be traversed efficiently in reverse order.
 	 */
-	public List<String> getPossiblePrevLocations(String location)
+	public List<String> GetPossiblePrevLocations(String location)
 	{
-	    return getPossibleNextLocations(location);
+	    return GetPossibleNextLocations(location);
 	}
 
 	/**
 	 * Returns the travel distance between the two specified locations if they
 	 * are linked by a connection and null otherwise.
 	 */
-	public Double getDistance(String fromLocation, String toLocation)
+	public Double GetDistance(String fromLocation, String toLocation)
 	{
 	    return links.get(fromLocation, toLocation);
 	}
@@ -111,9 +111,9 @@ namespace Italbytz.Adapters.Algorithms.Tests.Environment.Map
 	/**
 	 * Returns a location which is selected by random.
 	 */
-	public String randomlyGenerateDestination()
+	public String RandomlyGenerateDestination()
 	{
-	    return Util.Util.selectRandomlyFromList(getLocations());
+	    return Util.Util.selectRandomlyFromList(GetLocations());
 	}
 
 	/** Removes a one-way connection. */
@@ -163,7 +163,7 @@ namespace Italbytz.Adapters.Algorithms.Tests.Environment.Map
 	 * Returns the position of the specified location as with respect to an
 	 * orthogonal coordinate system.
 	 */
-	public Point2D getPosition(String loc)
+	public Point2D GetPosition(String loc)
 	{
 	    return locationPositions[loc];
 	}

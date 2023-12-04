@@ -4,6 +4,7 @@
  * Copyright (c) 2018 aimacode
  */
 
+using System;
 using System.Collections.Generic;
 
 namespace Italbytz.Adapters.Algorithms.Util
@@ -68,7 +69,14 @@ namespace Italbytz.Adapters.Algorithms.Util
 	private Dictionary<VertexLabelType, EdgeLabelType> checkForNewVertex(
 			VertexLabelType v)
 	{
-	    Dictionary<VertexLabelType, EdgeLabelType> result = globalEdgeLookup[v];
+		Dictionary<VertexLabelType, EdgeLabelType>? result = null;
+	    try
+	    {
+		    result = globalEdgeLookup[v];
+	    }
+	    catch (KeyNotFoundException e)
+	    {
+	    }
 	    if (result == null)
 	    {
 		result = new Dictionary<VertexLabelType, EdgeLabelType>();

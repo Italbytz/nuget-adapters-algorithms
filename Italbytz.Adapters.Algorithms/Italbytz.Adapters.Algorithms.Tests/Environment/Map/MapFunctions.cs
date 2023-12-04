@@ -4,21 +4,24 @@ public class MapFunctions
 {
     public static Func<string, List<MoveToAction>> CreateActionsFunction(Map map)
     {
-        throw new NotImplementedException();
+        return state => map.GetPossibleNextLocations(state)
+            .Select(loc => new MoveToAction(loc)).ToList();
     }
-
-    public static Func<string, MoveToAction, string> CreateResultFunction()
-    {
-        throw new NotImplementedException();
-    }
-
-    public static bool TestGoal(string arg)
-    {
-        throw new NotImplementedException();
-    }
+    
+    public static bool TestGoal(string arg) => arg.Equals(SimplifiedRoadMapOfPartOfRomania.BUCHAREST);
 
     public static Func<string,MoveToAction,string,double> CreateDistanceStepCostFunction(Map map)
     {
-        throw new NotImplementedException();
+        return (state, action, statePrimed) => {
+            double distance = map.GetDistance(state, statePrimed);
+            // Used by Uniform-cost search to ensure every step is greater than or equal
+            // to some small positive constant
+            return (distance != null && distance > 0) ? distance : 0.1;
+        };
+    }
+
+    public static string GetResult(string state, MoveToAction action)
+    {
+        return action.ToLocation;
     }
 }

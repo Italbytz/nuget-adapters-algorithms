@@ -19,7 +19,7 @@ public class UniformCostSearchTests
     public void TestSimplifiedRoadMapOfRomania()
     {
         var romaniaMap = new SimplifiedRoadMapOfPartOfRomania();
-        var problem = new GeneralProblem<string, MoveToAction>(SimplifiedRoadMapOfPartOfRomania.SIBIU, MapFunctions.CreateActionsFunction(romaniaMap), MapFunctions.CreateResultFunction(), MapFunctions.TestGoal,MapFunctions.CreateDistanceStepCostFunction(romaniaMap));
+        var problem = new GeneralProblem<string, MoveToAction>(SimplifiedRoadMapOfPartOfRomania.SIBIU, MapFunctions.CreateActionsFunction(romaniaMap), MapFunctions.GetResult, MapFunctions.TestGoal, MapFunctions.CreateDistanceStepCostFunction(romaniaMap));
         var search = new UniformCostSearch<string, MoveToAction>();
         var agent = new SearchAgent<IPercept, string, MoveToAction>(problem, search);
         var actions = agent.Actions;
