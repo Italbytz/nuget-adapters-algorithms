@@ -25,7 +25,6 @@
     <None Remove="Environment\NQueens\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Environment\" />
     <Folder Include="Environment\NQueens\" />
   </ItemGroup>
 </Project>
