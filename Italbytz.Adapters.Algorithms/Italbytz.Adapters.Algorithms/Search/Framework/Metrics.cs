@@ -9,6 +9,8 @@ namespace Italbytz.Adapters.Algorithms.Search.Framework
         public Metrics()
         {
         }
+
+        public string Get(string name) => throw new NotImplementedException();
     }
 }
 

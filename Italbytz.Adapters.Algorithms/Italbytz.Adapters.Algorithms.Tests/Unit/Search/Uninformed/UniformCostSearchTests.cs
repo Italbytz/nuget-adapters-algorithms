@@ -1,5 +1,6 @@
 using Italbytz.Adapters.Algorithms.Search.Agent;
 using Italbytz.Adapters.Algorithms.Search.Framework.Problem;
+using Italbytz.Adapters.Algorithms.Search.Framework.QSearch;
 using Italbytz.Adapters.Algorithms.Search.Uninformed;
 using Italbytz.Adapters.Algorithms.Tests.Environment.Map;
 using Italbytz.Adapters.Algorithms.Tests.Environment.NQueens;
@@ -21,7 +22,9 @@ public class UniformCostSearchTests
         var problem = new GeneralProblem<string, MoveToAction>(SimplifiedRoadMapOfPartOfRomania.SIBIU, MapFunctions.CreateActionsFunction(romaniaMap), MapFunctions.CreateResultFunction(), MapFunctions.TestGoal,MapFunctions.CreateDistanceStepCostFunction(romaniaMap));
         var search = new UniformCostSearch<string, MoveToAction>();
         var agent = new SearchAgent<IPercept, string, MoveToAction>(problem, search);
-        //var actions = agent.GetActions();
+        var actions = agent.Actions;
+        Assert.That(actions.ToString(), Is.EqualTo("[Action[name=moveTo, location=RimnicuVilcea], Action[name=moveTo, location=Pitesti], Action[name=moveTo, location=Bucharest]]"));
+        Assert.That(search.Metrics.Get(QueueSearch.METRIC_PATH_COST), Is.EqualTo("278.0"));
     }
 
 }

@@ -28,7 +28,6 @@
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Search\Local\" />
-	  <Folder Include="Search\Framework\" />
 	  <Folder Include="Agent\" />
 	  <Folder Include="Search\Agent\" />
 	  <Folder Include="Search\Framework\Problem\" />
