@@ -4,11 +4,9 @@
  * Copyright (c) 2018 aimacode
  */
 
-using System;
-using System.Collections.Generic;
-using aima.core.util;
+using Italbytz.Adapters.Algorithms.Util;
 
-namespace aima.core.environment.map
+namespace Italbytz.Adapters.Algorithms.Tests.Environment.Map
 {
     /**
      * Implements a map with locations, distance labeled links between the
@@ -115,7 +113,7 @@ namespace aima.core.environment.map
 	 */
 	public String randomlyGenerateDestination()
 	{
-	    return Util.selectRandomlyFromList(getLocations());
+	    return Util.Util.selectRandomlyFromList(getLocations());
 	}
 
 	/** Removes a one-way connection. */

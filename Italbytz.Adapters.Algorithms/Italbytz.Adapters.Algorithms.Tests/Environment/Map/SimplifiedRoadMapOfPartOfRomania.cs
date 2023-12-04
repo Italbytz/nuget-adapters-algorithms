@@ -4,10 +4,7 @@
  * Copyright (c) 2018 aimacode
  */
 
-using System;
-using System.Collections.Generic;
-
-namespace aima.core.environment.map
+namespace Italbytz.Adapters.Algorithms.Tests.Environment.Map
 {
     /**
      * Represents a simplified road map of Romania. The initialization method is

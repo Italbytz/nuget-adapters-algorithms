@@ -4,11 +4,9 @@
  * Copyright (c) 2018 aimacode
  */
 
-using System;
-using System.Collections.Generic;
-using aima.core.util;
+using Italbytz.Adapters.Algorithms.Util;
 
-namespace aima.core.environment.map
+namespace Italbytz.Adapters.Algorithms.Tests.Environment.Map
 {
     /**
      * Provides a general interface for maps.
