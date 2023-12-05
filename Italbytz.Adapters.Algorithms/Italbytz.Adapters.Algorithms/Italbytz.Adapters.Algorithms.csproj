@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFrameworks>netstandard2.0</TargetFrameworks>
 		<Nullable>enable</Nullable>
 		<PackageVersion>0.1.0</PackageVersion>
 		<Authors>Robin Nunkesser</Authors>
@@ -9,6 +8,7 @@
 		<Description>Some algorithm adapters to use with Ports and Adapters.</Description>
 		<PackOnBuild>true</PackOnBuild>
 		<PackageLicenseUrl>https://github.com/Italbytz/nuget-adapters-algorithms/blob/main/LICENSE</PackageLicenseUrl>
+		<TargetFramework>net6.0</TargetFramework>
 	</PropertyGroup>
 	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
 		<LangVersion>9.0</LangVersion>
