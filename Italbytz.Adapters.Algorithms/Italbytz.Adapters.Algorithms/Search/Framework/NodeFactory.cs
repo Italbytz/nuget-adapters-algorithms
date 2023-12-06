@@ -10,6 +10,11 @@ namespace Italbytz.Adapters.Algorithms.Search.Framework
     public class NodeFactory<TState, TAction> : INodeFactory<TState, TAction>
     {
         public bool UseParentLinks { get; set; } = true;
+        private List<Action<Node<TState, TAction>>> _listeners = new();
+        public void AddNodeListener(Action<INode<TState, TAction>> listener)
+        {
+            _listeners.Add(listener);
+        }
 
         public NodeFactory()
         {

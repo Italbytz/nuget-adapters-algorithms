@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Italbytz.Ports.Algorithms.AI;
 using Italbytz.Ports.Algorithms.AI.Search;
 
@@ -6,11 +7,24 @@ namespace Italbytz.Adapters.Algorithms.Search.Framework
 {
     public class Metrics : IMetrics
     {
-        public Metrics()
+        private Dictionary<String, String> dict = new();
+
+        public string Get(string name) => dict[name];
+        public void Set(string name, int i)
         {
+            dict[name] = i.ToString();
         }
 
-        public string Get(string name) => throw new NotImplementedException();
+        public void IncrementInt(string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int GetInt(string name)
+        {
+            var value = dict[name];
+            return int.Parse(value);
+        }
     }
 }
 

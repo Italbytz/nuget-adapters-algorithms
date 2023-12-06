@@ -14,7 +14,7 @@ namespace Italbytz.Adapters.Algorithms.Search.Uninformed
 
         public UniformCostSearch(QueueSearch<TState, TAction> impl) : base(impl,
             QueueFactory
-                .CreatePriorityQueue<Node<TState, TAction>>()) //new NodeComparer<TState, TAction>()))
+                .CreatePriorityQueue<INode<TState, TAction>>()) 
 
         {
         }
