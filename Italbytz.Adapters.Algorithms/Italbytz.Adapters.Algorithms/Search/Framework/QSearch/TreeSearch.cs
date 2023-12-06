@@ -28,16 +28,27 @@ namespace Italbytz.Adapters.Algorithms.Search.Framework.QSearch
             var root = NodeFactory.CreateNode(problem.InitialState);
             AddToFrontier(root);
             if (EarlyGoalTest && problem.TestSolution(root))
+            {
+                Metrics.Set(METRIC_PATH_COST, (int)root.PathCost);
                 return root;
+            }
             while (Frontier.Count > 0)
             {
                 var node = RemoveFromFrontier();
-                if (!EarlyGoalTest && problem.TestSolution(node)) return node;
+                if (!EarlyGoalTest && problem.TestSolution(node))
+                {
+                    Metrics.Set(METRIC_PATH_COST, (int)node.PathCost);
+                    return node;
+                }
                 var successors = NodeFactory.GetSuccessors(node, problem);
                 foreach (var successor in successors)
                 {
                     AddToFrontier(successor);
-                    if (EarlyGoalTest && problem.TestSolution(successor)) return successor;
+                    if (EarlyGoalTest && problem.TestSolution(successor))
+                    {
+                        Metrics.Set(METRIC_PATH_COST, (int)successor.PathCost);
+                        return successor;
+                    }
                 }
             }
             return null;

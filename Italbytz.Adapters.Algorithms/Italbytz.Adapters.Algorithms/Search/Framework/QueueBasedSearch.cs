@@ -14,7 +14,8 @@ namespace Italbytz.Adapters.Algorithms.Search.Framework
             this.Impl = impl;
             this._frontier = queue;
         }
-        public IMetrics Metrics { get; }
+
+        public IMetrics Metrics => Impl.Metrics;
 
         public IEnumerable<TAction>? FindActions(
             IProblem<TState, TAction> problem)

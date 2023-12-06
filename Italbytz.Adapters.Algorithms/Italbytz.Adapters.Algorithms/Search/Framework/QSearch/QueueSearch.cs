@@ -12,7 +12,7 @@ namespace Italbytz.Adapters.Algorithms.Search.Framework.QSearch
         public static string METRIC_PATH_COST = "pathCost";
         public NodeFactory<TState, TAction> NodeFactory { get; }
         protected bool EarlyGoalTest { get; } = false;
-        protected Metrics Metrics = new Metrics();
+        public Metrics Metrics { get; } = new Metrics();
 
         protected QueueSearch(NodeFactory<TState, TAction> nodeFactory) {
             NodeFactory = nodeFactory;

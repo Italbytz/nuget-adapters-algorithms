@@ -25,7 +25,7 @@ public class UniformCostSearchTests
         var actions = agent.Actions;
         var actionsString = string.Join(", ", actions); 
         Assert.That(actionsString, Is.EqualTo("MoveToAction[name=moveTo, location=RimnicuVilcea], MoveToAction[name=moveTo, location=Pitesti], MoveToAction[name=moveTo, location=Bucharest]"));
-        Assert.That(search.Metrics.Get(QueueSearch<string, MoveToAction>.METRIC_PATH_COST), Is.EqualTo("278.0"));
+        Assert.That(search.Metrics.Get(QueueSearch<string, MoveToAction>.METRIC_PATH_COST), Is.EqualTo("278"));
     }
 
 }

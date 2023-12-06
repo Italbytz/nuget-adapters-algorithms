@@ -7,7 +7,7 @@ namespace Italbytz.Adapters.Algorithms.Search.Framework
 {
     public class Metrics : IMetrics
     {
-        private Dictionary<String, String> dict = new();
+        private Dictionary<string, string> dict = new();
 
         public string Get(string name) => dict[name];
         public void Set(string name, int i)
