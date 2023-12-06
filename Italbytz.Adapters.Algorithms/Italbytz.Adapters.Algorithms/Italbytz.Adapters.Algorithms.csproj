@@ -67,5 +67,8 @@
 	  <Compile Include="..\..\..\nuget-ports-algorithms\Italbytz.Ports.Algorithms\Italbytz.Ports.Algorithms\AI\Search\ISearchForStates.cs">
 	    <Link>ISearchForStates.cs</Link>
 	  </Compile>
+		<Compile Include="..\..\..\nuget-ports-algorithms\Italbytz.Ports.Algorithms\Italbytz.Ports.Algorithms\AI\Search\Informed/IInformed.cs">
+			<Link>IInformed.cs</Link>
+		</Compile>
 	</ItemGroup>
 </Project>

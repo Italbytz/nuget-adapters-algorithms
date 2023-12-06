@@ -32,7 +32,7 @@ namespace Italbytz.Adapters.Algorithms.Util
     	 * 
     	 * @return the X coordinate of this <code>Point2D</code>.
     	 */
-        public double getX()
+        public double GetX()
         {
             return x;
         }
@@ -43,7 +43,7 @@ namespace Italbytz.Adapters.Algorithms.Util
       	 * 
     	 * @return the Y coordinate of this <code>Point2D</code>.
 	     */
-        public double getY()
+        public double GetY()
         {
             return y;
         }
@@ -53,12 +53,12 @@ namespace Italbytz.Adapters.Algorithms.Util
     	 * 
     	 * @return the Euclidean distance between a specified point and this point.
 	     */
-        public double distance(Point2D pt)
+        public double Distance(Point2D pt)
         {
             // Distance Between X Coordinates
-            double x_distance = (pt.getX() - x) * (pt.getX() - x);
+            double x_distance = (pt.GetX() - x) * (pt.GetX() - x);
             // Distance Between Y Coordinates
-            double y_distance = (pt.getY() - y) * (pt.getY() - y);
+            double y_distance = (pt.GetY() - y) * (pt.GetY() - y);
             // Distance Between 2d Points
             double total_distance = Math.Sqrt(x_distance + y_distance);
 
