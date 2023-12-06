@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Italbytz.Ports.Algorithms.AI.Problem;
 using Italbytz.Ports.Algorithms.AI.Search;
@@ -31,7 +32,13 @@ namespace Italbytz.Adapters.Algorithms.Search.Framework.QSearch
             while (Frontier.Count > 0)
             {
                 var node = RemoveFromFrontier();
-                // TODO
+                if (!EarlyGoalTest && problem.TestSolution(node)) return node;
+                var successors = NodeFactory.GetSuccessors(node, problem);
+                foreach (var successor in successors)
+                {
+                    AddToFrontier(successor);
+                    if (EarlyGoalTest && problem.TestSolution(successor)) return successor;
+                }
             }
             return null;
         }

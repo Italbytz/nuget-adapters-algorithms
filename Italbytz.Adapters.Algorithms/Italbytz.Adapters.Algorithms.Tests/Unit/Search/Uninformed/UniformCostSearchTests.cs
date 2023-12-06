@@ -23,7 +23,8 @@ public class UniformCostSearchTests
         var search = new UniformCostSearch<string, MoveToAction>();
         var agent = new SearchAgent<IPercept, string, MoveToAction>(problem, search);
         var actions = agent.Actions;
-        Assert.That(actions.ToString(), Is.EqualTo("[Action[name=moveTo, location=RimnicuVilcea], Action[name=moveTo, location=Pitesti], Action[name=moveTo, location=Bucharest]]"));
+        var actionsString = string.Join(", ", actions); 
+        Assert.That(actionsString, Is.EqualTo("MoveToAction[name=moveTo, location=RimnicuVilcea], MoveToAction[name=moveTo, location=Pitesti], MoveToAction[name=moveTo, location=Bucharest]"));
         Assert.That(search.Metrics.Get(QueueSearch<string, MoveToAction>.METRIC_PATH_COST), Is.EqualTo("278.0"));
     }
 
