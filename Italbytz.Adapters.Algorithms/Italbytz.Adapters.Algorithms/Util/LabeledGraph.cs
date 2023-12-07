@@ -1,8 +1,6 @@
-/** 
- * The original version of this file is part of <see href="https://github.com/aimacode/aima-csharp"/> which is released under 
- * MIT License
- * Copyright (c) 2018 aimacode
- */
+// The original version of this file is part of <see href="https://github.com/aimacode/aima-csharp"/> which is released under 
+// MIT License
+// Copyright (c) 2018 aimacode
 
 using System;
 using System.Collections.Generic;
