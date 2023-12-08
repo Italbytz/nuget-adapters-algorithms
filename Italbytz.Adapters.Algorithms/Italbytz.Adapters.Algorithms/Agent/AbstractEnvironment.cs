@@ -21,12 +21,10 @@ namespace Italbytz.Adapters.Algorithms.Agent
 
         public void Step()
         {
-            if (Agent.Alive)
-            {
-                var percept = GetPerceptSeenBy(Agent);
-                var anAction = Agent.Act(percept);
-                if (anAction != null) Execute(Agent, anAction);
-            }
+            if (!Agent.Alive) return;
+            var percept = GetPerceptSeenBy(Agent);
+            var anAction = Agent.Act(percept);
+            if (anAction != null) Execute(Agent, anAction);
         }
 
         protected abstract void Execute(IAgent<TPercept, TAction> agent, TAction? anAction);
