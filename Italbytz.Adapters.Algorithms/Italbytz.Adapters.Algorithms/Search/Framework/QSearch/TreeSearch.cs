@@ -23,6 +23,16 @@ namespace Italbytz.Adapters.Algorithms.Search.Framework.QSearch
             
         }
 
+        /// <summary>
+        /// Receives a problem and a queue implementing the search strategy and
+        /// computes a node referencing a goal state, if such a state was found.
+        /// This template method provides a base for tree and graph search
+        /// implementations. It can be customized by overriding some primitive
+        /// operations.
+        /// </summary>
+        /// <param name="problem">the search problem</param>
+        /// <param name="frontier">the data structure for nodes that are waiting to be expanded</param>
+        /// <returns>a node referencing a goal state, if the goal was found, otherwise empty</returns>
         public override INode<TState, TAction>? FindNode(
             IProblem<TState, TAction> problem,
             PriorityQueue<INode<TState, TAction>,double> frontier)

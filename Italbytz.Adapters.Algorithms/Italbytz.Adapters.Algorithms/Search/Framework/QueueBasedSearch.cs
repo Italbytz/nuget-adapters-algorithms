@@ -11,8 +11,8 @@ namespace Italbytz.Adapters.Algorithms.Search.Framework
 {
     public abstract class QueueBasedSearch<TState,TAction> : ISearchForActions<TState, TAction>, ISearchForStates<TState, TAction>
     {
-        protected QueueSearch<TState, TAction> Impl;
-        private PriorityQueue<INode<TState, TAction>,double> _frontier;
+        protected readonly QueueSearch<TState, TAction> Impl;
+        private readonly PriorityQueue<INode<TState, TAction>,double> _frontier;
 
         protected QueueBasedSearch(QueueSearch<TState, TAction> impl, PriorityQueue<INode<TState, TAction>,double> queue) {
             this.Impl = impl;

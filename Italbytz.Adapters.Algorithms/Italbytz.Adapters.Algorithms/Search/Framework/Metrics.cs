@@ -21,7 +21,7 @@ namespace Italbytz.Adapters.Algorithms.Search.Framework
 
         public void IncrementInt(string name)
         {
-            throw new NotImplementedException();
+            Set(name,GetInt(name)+1);
         }
 
         public int GetInt(string name)

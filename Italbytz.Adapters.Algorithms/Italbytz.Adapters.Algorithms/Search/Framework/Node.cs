@@ -40,6 +40,8 @@ namespace Italbytz.Adapters.Algorithms.Search.Framework
         {
             return Parent == null;
         }
+
+        public override string ToString() => $"[parent={Parent}, action={Action}, state={State}, pathCost={PathCost}]";
     }
 }
 

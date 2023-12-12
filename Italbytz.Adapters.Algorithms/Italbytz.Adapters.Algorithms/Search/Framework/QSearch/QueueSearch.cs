@@ -2,6 +2,7 @@
 // MIT License
 // Copyright (c) 2015 aima-java contributors
 
+using System;
 using System.Collections.Generic;
 using Italbytz.Ports.Algorithms.AI.Problem;
 using Italbytz.Ports.Algorithms.AI.Search;
@@ -21,6 +22,7 @@ namespace Italbytz.Adapters.Algorithms.Search.Framework.QSearch
         protected QueueSearch(NodeFactory<TState, TAction> nodeFactory) {
             NodeFactory = nodeFactory;
             NodeFactory.AddNodeListener((node) => Metrics.IncrementInt(METRIC_NODES_EXPANDED));
+            NodeFactory.AddNodeListener((node) => Console.WriteLine(node));
         }
         
         public abstract INode<TState, TAction>? FindNode(

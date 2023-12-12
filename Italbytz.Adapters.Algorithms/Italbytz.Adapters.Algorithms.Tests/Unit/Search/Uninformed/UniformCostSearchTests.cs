@@ -20,16 +20,32 @@ public class UniformCostSearchTests
     }
 
     [Test]
-    public void TestSimplifiedRoadMapOfRomania()
+    public void TestSimplifiedRoadMapOfRomaniaFromSibiu()
+    {
+        var search = new UniformCostSearch<string, MoveToAction>();
+        var actions = TestSimplifiedRoadMapOfRomania(search,
+            SimplifiedRoadMapOfPartOfRomania.SIBIU);
+        Assert.That(actions, Is.EqualTo("MoveToAction[name=moveTo, location=RimnicuVilcea], MoveToAction[name=moveTo, location=Pitesti], MoveToAction[name=moveTo, location=Bucharest]"));
+        Assert.That(search.Metrics.Get(QueueSearch<string, MoveToAction>.METRIC_PATH_COST), Is.EqualTo("278"));
+    }
+    
+    [Test]
+    public void TestSimplifiedRoadMapOfRomaniaFromArad()
+    {
+        var search = new UniformCostSearch<string, MoveToAction>();
+        var actions = TestSimplifiedRoadMapOfRomania(search,
+            SimplifiedRoadMapOfPartOfRomania.ARAD);
+        Assert.That(actions, Is.EqualTo("MoveToAction[name=moveTo, location=Sibiu], MoveToAction[name=moveTo, location=RimnicuVilcea], MoveToAction[name=moveTo, location=Pitesti], MoveToAction[name=moveTo, location=Bucharest]"));
+        Assert.That(search.Metrics.Get(QueueSearch<string, MoveToAction>.METRIC_PATH_COST), Is.EqualTo("418"));
+    }
+
+    private string TestSimplifiedRoadMapOfRomania(UniformCostSearch<string, MoveToAction> search, string initialState)
     {
         var romaniaMap = new SimplifiedRoadMapOfPartOfRomania();
-        var problem = new GeneralProblem<string, MoveToAction>(SimplifiedRoadMapOfPartOfRomania.SIBIU, MapFunctions.CreateActionsFunction(romaniaMap), MapFunctions.GetResult, MapFunctions.TestGoal, MapFunctions.CreateDistanceStepCostFunction(romaniaMap));
-        var search = new UniformCostSearch<string, MoveToAction>();
+        var problem = new GeneralProblem<string, MoveToAction>(initialState, MapFunctions.CreateActionsFunction(romaniaMap), MapFunctions.GetResult, MapFunctions.TestGoal, MapFunctions.CreateDistanceStepCostFunction(romaniaMap));
         var agent = new SearchAgent<IPercept, string, MoveToAction>(problem, search);
         var actions = agent.Actions;
-        var actionsString = string.Join(", ", actions); 
-        Assert.That(actionsString, Is.EqualTo("MoveToAction[name=moveTo, location=RimnicuVilcea], MoveToAction[name=moveTo, location=Pitesti], MoveToAction[name=moveTo, location=Bucharest]"));
-        Assert.That(search.Metrics.Get(QueueSearch<string, MoveToAction>.METRIC_PATH_COST), Is.EqualTo("278"));
+        return string.Join(", ", actions); 
     }
 
 }

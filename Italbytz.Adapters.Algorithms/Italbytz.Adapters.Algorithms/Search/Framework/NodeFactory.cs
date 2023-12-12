@@ -6,6 +6,7 @@ using System;
 using Italbytz.Ports.Algorithms.AI;
 using System.Net.NetworkInformation;
 using System.Collections.Generic;
+using System.Linq;
 using Italbytz.Ports.Algorithms.AI.Search;
 using Italbytz.Ports.Algorithms.AI.Problem;
 
@@ -14,7 +15,7 @@ namespace Italbytz.Adapters.Algorithms.Search.Framework
     public class NodeFactory<TState, TAction> : INodeFactory<TState, TAction>
     {
         public bool UseParentLinks { get; set; } = true;
-        private List<Action<Node<TState, TAction>>> _listeners = new();
+        private List<Action<INode<TState, TAction>>> _listeners = new();
         public void AddNodeListener(Action<INode<TState, TAction>> listener)
         {
             _listeners.Add(listener);
@@ -51,7 +52,10 @@ namespace Italbytz.Adapters.Algorithms.Search.Framework
 
         private void NotifyListeners(INode<TState, TAction> node)
         {
-
+            foreach (var listener in _listeners)
+            {
+                listener(node);
+            }
         }
     }
 }

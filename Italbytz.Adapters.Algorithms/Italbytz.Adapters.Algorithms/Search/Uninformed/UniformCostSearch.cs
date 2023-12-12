@@ -16,7 +16,7 @@ namespace Italbytz.Adapters.Algorithms.Search.Uninformed
         public UniformCostSearch() : this(new GraphSearch<TState, TAction>()) {
         }
 
-        public UniformCostSearch(QueueSearch<TState, TAction> impl) : base(impl,
+        private UniformCostSearch(QueueSearch<TState, TAction> impl) : base(impl,
             QueueFactory
                 .CreatePriorityQueue<INode<TState, TAction>>()) 
 
