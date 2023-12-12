@@ -52,10 +52,7 @@ namespace Italbytz.Adapters.Algorithms.Search.Framework
 
         private void NotifyListeners(INode<TState, TAction> node)
         {
-            foreach (var listener in _listeners)
-            {
-                listener(node);
-            }
+            _listeners.ForEach(listener => listener(node));
         }
     }
 }
