@@ -2,25 +2,18 @@
 // MIT License
 // Copyright (c) 2015 aima-java contributors
 
-using System;
-using Italbytz.Ports.Algorithms.AI;
 using Italbytz.Ports.Algorithms.AI.Agent;
-using static System.Collections.Specialized.BitVector32;
 
 namespace Italbytz.Adapters.Algorithms.Agent
 {
     public class SimpleAgent<TPercept, TAction> : IAgent<TPercept, TAction>
     {
+        protected SimpleAgent()
+        {
+        }
+
         public bool Alive { get; } = true;
 
-        public SimpleAgent()
-        {
-        }
-
-        public virtual TAction? Act(TPercept? percept)
-        {
-            return default(TAction);
-        }
+        public virtual TAction? Act(TPercept? percept) => default;
     }
 }
-

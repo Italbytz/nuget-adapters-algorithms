@@ -2,22 +2,18 @@
 // MIT License
 // Copyright (c) 2015 aima-java contributors
 
-using System;
-using Italbytz.Ports.Algorithms.AI;
 using Italbytz.Ports.Algorithms.AI.Agent;
 
 namespace Italbytz.Adapters.Algorithms.Agent
 {
     public class DynamicAction : ObjectWithDynamicAttributes, IAction
     {
-        internal static string ATTRIBUTE_NAME = "name";
-        public string Name => (string)Attributes[ATTRIBUTE_NAME];
+        private const string AttributeName = "name";
 
 
-        public DynamicAction(String name)
-        {
-            Attributes[ATTRIBUTE_NAME] = name;
-        }
+        protected DynamicAction(string name) =>
+            Attributes[AttributeName] = name;
+
+        public string Name => (string)Attributes[AttributeName];
     }
 }
-

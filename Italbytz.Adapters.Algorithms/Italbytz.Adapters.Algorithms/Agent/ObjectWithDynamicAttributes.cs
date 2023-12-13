@@ -2,7 +2,6 @@
 // MIT License
 // Copyright (c) 2015 aima-java contributors
 
-using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -10,13 +9,10 @@ namespace Italbytz.Adapters.Algorithms.Agent
 {
     public abstract class ObjectWithDynamicAttributes
     {
-        public Dictionary<Object, Object> Attributes { get; set; } = new Dictionary<Object, Object>();
+        protected Dictionary<object, object> Attributes { get; set; } = new();
 
-        public ObjectWithDynamicAttributes()
-        {
-        }
-
-        public override string ToString() => DescribeType() + DescribeAttributes();
+        public override string ToString() =>
+            DescribeType() + DescribeAttributes();
 
         private string DescribeAttributes()
         {
@@ -26,24 +22,17 @@ namespace Italbytz.Adapters.Algorithms.Agent
             foreach (var attribute in Attributes)
             {
                 if (first)
-                {
                     first = false;
-                }
                 else
-                {
                     sb.Append(", ");
-                }
 
                 sb.Append($"{attribute.Key}={attribute.Value}");
             }
-            sb.Append("]");
+
+            sb.Append(']');
             return sb.ToString();
         }
 
-        public string DescribeType()
-        {
-            return GetType().Name;
-        }
+        private string DescribeType() => GetType().Name;
     }
 }
-

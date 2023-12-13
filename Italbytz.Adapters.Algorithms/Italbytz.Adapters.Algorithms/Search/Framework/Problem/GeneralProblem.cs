@@ -14,7 +14,7 @@ namespace Italbytz.Adapters.Algorithms.Search.Framework.Problem
 {
     public class GeneralProblem<TState, TAction> : IProblem<TState, TAction>
     {
-        public TState InitialState { get; }
+        public TState InitialState { get; } 
 
         public Func<TState, TAction, TState> Result { get; }
 

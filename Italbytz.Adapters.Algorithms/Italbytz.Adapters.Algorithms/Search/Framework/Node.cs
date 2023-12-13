@@ -2,14 +2,26 @@
 // MIT License
 // Copyright (c) 2015 aima-java contributors
 
-using System;
-using Italbytz.Ports.Algorithms.AI;
 using Italbytz.Ports.Algorithms.AI.Search;
 
 namespace Italbytz.Adapters.Algorithms.Search.Framework
 {
     public class Node<TState, TAction> : INode<TState, TAction>
     {
+        public Node(TState state) : this(state, null, default, 0.0)
+        {
+        }
+
+
+        public Node(TState state, INode<TState, TAction>? parent,
+            TAction? action, double pathCost)
+        {
+            State = state;
+            Parent = parent;
+            Action = action;
+            PathCost = pathCost;
+            Depth = parent != null ? parent.Depth + 1 : 0;
+        }
 
         public TState State { get; }
 
@@ -19,29 +31,11 @@ namespace Italbytz.Adapters.Algorithms.Search.Framework
 
         public TAction Action { get; }
 
-        public INode<TState, TAction> Parent { get; }
+        public INode<TState, TAction>? Parent { get; }
 
-        public Node(TState state) : this(state, null, default, 0.0)
-        {
+        public bool IsRootNode() => Parent == null;
 
-        }
-
-
-        public Node(TState state, INode<TState, TAction>? parent, TAction? action, double pathCost)
-        {
-            State = state;
-            this.Parent = parent;
-            this.Action = action;
-            PathCost = pathCost;
-            Depth = parent != null ? parent.Depth + 1 : 0;
-        }
-
-        public bool IsRootNode()
-        {
-            return Parent == null;
-        }
-
-        public override string ToString() => $"[parent={Parent}, action={Action}, state={State}, pathCost={PathCost}]";
+        public override string ToString() =>
+            $"[parent={Parent}, action={Action}, state={State}, pathCost={PathCost}]";
     }
 }
-

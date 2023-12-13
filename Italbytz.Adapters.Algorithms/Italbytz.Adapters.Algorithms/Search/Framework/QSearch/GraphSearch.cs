@@ -8,11 +8,11 @@ namespace Italbytz.Adapters.Algorithms.Search.Framework.QSearch
     {
         public GraphSearch() : this(new NodeFactory<TState, TAction>())
         {
-            
         }
-        public GraphSearch(NodeFactory<TState, TAction> nodeFactory) : base (nodeFactory) 
+
+        private GraphSearch(NodeFactory<TState, TAction> nodeFactory) : base(
+            nodeFactory)
         {
-            
         }
     }
 }
