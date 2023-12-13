@@ -4,166 +4,174 @@
 
 using Italbytz.Adapters.Algorithms.Util;
 
-namespace Italbytz.Adapters.Algorithms.Tests.Environment.Map
+namespace Italbytz.Adapters.Algorithms.Tests.Environment.Map;
+
+/**
+ * Implements a map with locations, distance labeled links between the
+ * locations, straight line distances, and 2d-placement positions of locations.
+ * Locations are represented by strings and travel distances by double values.
+ * Locations and links can be added dynamically and removed after creation. This
+ * enables to read maps from file or to modify them with respect to newly
+ * obtained knowledge.
+ *
+ * @author Ruediger Lunde
+ */
+public class ExtendableMap : IMap
 {
     /**
-     * Implements a map with locations, distance labeled links between the
-     * locations, straight line distances, and 2d-placement positions of locations.
-     * Locations are represented by strings and travel distances by double values.
-     * Locations and links can be added dynamically and removed after creation. This
-     * enables to read maps from file or to modify them with respect to newly
-     * obtained knowledge.
-     * 
-     * @author Ruediger Lunde
+     * Stores map data. Locations are represented as vertices and connections
+     * (links) as directed edges labeled with corresponding travel distances.
      */
-    public class ExtendableMap : Map
+    private readonly LabeledGraph<string, double> _links;
+
+    /**
+     * Stores xy-coordinates for each location.
+     */
+    private readonly Dictionary<string, Point2D> _locationPositions;
+
+    /**
+     * Creates an empty map.
+     */
+    protected ExtendableMap()
     {
-	/**
-	 * Stores map data. Locations are represented as vertices and connections
-	 * (links) as directed edges labeled with corresponding travel distances.
-	 */
-	private readonly LabeledGraph<String, Double> links;
+        _links = new LabeledGraph<string, double>();
+        _locationPositions = new Dictionary<string, Point2D>();
+    }
 
-	/** Stores xy-coordinates for each location. */
-	private readonly Dictionary<String, Point2D> locationPositions;
+    /**
+     * Returns a list of all locations.
+     */
+    public List<string> GetLocations() => _links.getVertexLabels();
 
-	/** Creates an empty map. */
-	public ExtendableMap()
-	{
-	    links = new LabeledGraph<String, Double>();
-	    locationPositions = new Dictionary<String, Point2D>();
-	}
+    /**
+     * Answers to the question: Where can I get, following one of the
+     * connections starting at the specified location?
+     */
+    public List<string> GetPossibleNextLocations(string location)
+    {
+        var result = _links.getSuccessors(location);
+        result.Sort();
+        return result;
+    }
 
-	/** Removes everything. */
-	public void clear()
-	{
-	    links.clear();
-	    locationPositions.Clear();
-	}
+    /**
+     * Answers to the question: From where can I reach a specified location,
+     * following one of the map connections? This implementation just calls
+     * {@link #getPossibleNextLocations(String)} as the underlying graph structure
+     * cannot be traversed efficiently in reverse order.
+     */
+    public List<string> GetPossiblePrevLocations(string location) =>
+        GetPossibleNextLocations(location);
 
-	/** Clears all connections but keeps location position informations. */
-	public void clearLinks()
-	{
-	    links.clear();
-	}
+    /**
+     * Returns the travel distance between the two specified locations if they
+     * are linked by a connection and null otherwise.
+     */
+    public double GetDistance(string fromLocation, string toLocation) =>
+        _links.get(fromLocation, toLocation);
 
-	/** Returns a list of all locations. */
-	public List<String> GetLocations()
-	{
-	    return links.getVertexLabels();
-	}
+    /**
+     * Returns a location which is selected by random.
+     */
+    public string RandomlyGenerateDestination() =>
+        Util.Util.SelectRandomlyFromList(GetLocations());
 
-	/** Checks whether the given string is the name of a location. */
-	public bool isLocation(String str)
-	{
-	    return links.isVertexLabel(str);
-	}
+    /**
+     * Returns the position of the specified location as with respect to an
+     * orthogonal coordinate system.
+     */
+    public Point2D GetPosition(string loc) => _locationPositions[loc];
 
-	/**
-	 * Answers to the question: Where can I get, following one of the
-	 * connections starting at the specified location?
-	 */
-	public List<String> GetPossibleNextLocations(String location)
-	{
-	    List<String> result = links.getSuccessors(location);
-	    result.Sort();
-	    return result;
-	}
+    /**
+     * Removes everything.
+     */
+    public void Clear()
+    {
+        _links.clear();
+        _locationPositions.Clear();
+    }
 
-	/**
-	 * Answers to the question: From where can I reach a specified location,
-	 * following one of the map connections? This implementation just calls
-	 * {@link #getPossibleNextLocations(String)} as the underlying graph structure
-	 * cannot be traversed efficiently in reverse order.
-	 */
-	public List<String> GetPossiblePrevLocations(String location)
-	{
-	    return GetPossibleNextLocations(location);
-	}
+    /**
+     * Clears all connections but keeps location position informations.
+     */
+    public void ClearLinks()
+    {
+        _links.clear();
+    }
 
-	/**
-	 * Returns the travel distance between the two specified locations if they
-	 * are linked by a connection and null otherwise.
-	 */
-	public Double GetDistance(String fromLocation, String toLocation)
-	{
-	    return links.get(fromLocation, toLocation);
-	}
+    /**
+     * Checks whether the given string is the name of a location.
+     */
+    public bool IsLocation(string str) => _links.isVertexLabel(str);
 
-	/** Adds a one-way connection to the map. */
-	public void addUnidirectionalLink(String fromLocation, String toLocation, Double distance)
-	{
-	    links.set(fromLocation, toLocation, distance);
-	}
+    /**
+     * Adds a one-way connection to the map.
+     */
+    public void AddUnidirectionalLink(string fromLocation, string toLocation,
+        double distance)
+    {
+        _links.set(fromLocation, toLocation, distance);
+    }
 
-	/**
-	 * Adds a connection which can be traveled in both direction. Internally,
-	 * such a connection is represented as two one-way connections.
-	 */
-	public void addBidirectionalLink(String fromLocation, String toLocation, Double distance)
-	{
-	    links.set(fromLocation, toLocation, distance);
-	    links.set(toLocation, fromLocation, distance);
-	}
+    /**
+     * Adds a connection which can be traveled in both direction. Internally,
+     * such a connection is represented as two one-way connections.
+     */
+    public void AddBidirectionalLink(string fromLocation, string toLocation,
+        double distance)
+    {
+        _links.set(fromLocation, toLocation, distance);
+        _links.set(toLocation, fromLocation, distance);
+    }
 
-	/**
-	 * Returns a location which is selected by random.
-	 */
-	public String RandomlyGenerateDestination()
-	{
-	    return Util.Util.selectRandomlyFromList(GetLocations());
-	}
+    /**
+     * Removes a one-way connection.
+     */
+    public void RemoveUnidirectionalLink(string fromLocation, string toLocation)
+    {
+        _links.remove(fromLocation, toLocation);
+    }
 
-	/** Removes a one-way connection. */
-	public void removeUnidirectionalLink(String fromLocation, String toLocation)
-	{
-	    links.remove(fromLocation, toLocation);
-	}
+    /**
+     * Removes the two corresponding one-way connections.
+     */
+    public void RemoveBidirectionalLink(string fromLocation, string toLocation)
+    {
+        _links.remove(fromLocation, toLocation);
+        _links.remove(toLocation, fromLocation);
+    }
 
-	/** Removes the two corresponding one-way connections. */
-	public void removeBidirectionalLink(String fromLocation, String toLocation)
-	{
-	    links.remove(fromLocation, toLocation);
-	    links.remove(toLocation, fromLocation);
-	}
+    /**
+     * Defines the position of a location as with respect to an orthogonal
+     * coordinate system.
+     */
+    public void SetPosition(string loc, double x, double y)
+    {
+        _locationPositions.Add(loc, new Point2D(x, y));
+    }
 
-	/**
-	 * Defines the position of a location as with respect to an orthogonal
-	 * coordinate system.
-	 */
-	public void setPosition(String loc, double x, double y)
-	{
-	    locationPositions.Add(loc, new Point2D(x, y));
-	}
-
-	/**
-	 * Defines the position of a location within the map.Using this method, one
-	 * location should be selected as reference position (<code>dist= 0 </ code >
-	 *and < code > dir = 0 </ code >) and all the other location should be placed
-	 * relative to it.
-	 * 
-	 * @param loc
-	 *            location name
-	 * @param dist
-	 *            distance to a reference position
-	 * @param dir
-	 *            bearing (compass direction) in which the location is seen from
-	 *            the reference position
-	 */
-	public void setDistAndDirToRefLocation(String loc, double dist, int dir)
-	{
-	    Point2D coords = new Point2D(-Math.Sin(dir * Math.PI / 180.0) * dist, Math.Cos(dir * Math.PI / 180.0) * dist);
-	    links.addVertex(loc);
-	    locationPositions.Add(loc, coords);
-	}
-
-	/**
-	 * Returns the position of the specified location as with respect to an
-	 * orthogonal coordinate system.
-	 */
-	public Point2D GetPosition(String loc)
-	{
-	    return locationPositions[loc];
-	}
+    /**
+     * Defines the position of a location within the map.Using this method, one
+     * location should be selected as reference position (
+     * <code>dist= 0 </code>
+     * and
+     * < code> dir = 0 </code>
+     * ) and all the other location should be placed
+     * relative to it.
+     *
+     * @param loc
+     * location name
+     * @param dist
+     * distance to a reference position
+     * @param dir
+     * bearing (compass direction) in which the location is seen from
+     * the reference position
+     */
+    public void SetDistAndDirToRefLocation(string loc, double dist, int dir)
+    {
+        var coords = new Point2D(-Math.Sin(dir * Math.PI / 180.0) * dist,
+            Math.Cos(dir * Math.PI / 180.0) * dist);
+        _links.addVertex(loc);
+        _locationPositions.Add(loc, coords);
     }
 }

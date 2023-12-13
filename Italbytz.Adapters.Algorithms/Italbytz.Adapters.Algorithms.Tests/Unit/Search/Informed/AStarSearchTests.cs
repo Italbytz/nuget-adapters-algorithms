@@ -40,6 +40,6 @@ public class AStarSearchTests
                 "MoveToAction[name=moveTo, location=RimnicuVilcea], MoveToAction[name=moveTo, location=Pitesti], MoveToAction[name=moveTo, location=Bucharest]"));
         Assert.That(
             search.Metrics.Get(QueueSearch<string, MoveToAction>
-                .MetricPathCost), Is.EqualTo("278"));
+                .MetricPathCost), Is.EqualTo("278")); 
     }
 }

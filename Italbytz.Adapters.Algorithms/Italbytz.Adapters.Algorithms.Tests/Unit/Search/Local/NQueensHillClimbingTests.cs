@@ -15,7 +15,7 @@ public class NQueensHillClimbingTests
     }
 
     [Test]
-    public void TestNQueens()
+    public void TestNQueens() 
     {
         var board = new NQueensBoard(8);
         for (var i = 0; i < board.Size; i++)

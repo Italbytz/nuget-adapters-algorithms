@@ -2,6 +2,7 @@
 // MIT License
 // Copyright (c) 2015 aima-java contributors
 
+using System;
 using System.Collections.Generic;
 using Italbytz.Adapters.Algorithms.Search.Framework.QSearch;
 using Italbytz.Ports.Algorithms.AI.Problem;
@@ -9,14 +10,19 @@ using Italbytz.Ports.Algorithms.AI.Search;
 
 namespace Italbytz.Adapters.Algorithms.Search.Framework
 {
-    public abstract class QueueBasedSearch<TState,TAction> : ISearchForActions<TState, TAction>, ISearchForStates<TState, TAction>
+    public abstract class QueueBasedSearch<TState, TAction> :
+        ISearchForActions<TState, TAction>, ISearchForStates<TState, TAction>
     {
-        protected readonly QueueSearch<TState, TAction> Impl;
-        private readonly PriorityQueue<INode<TState, TAction>,double> _frontier;
+        private readonly PriorityQueue<INode<TState, TAction>, double>
+            _frontier;
 
-        protected QueueBasedSearch(QueueSearch<TState, TAction> impl, PriorityQueue<INode<TState, TAction>,double> queue) {
-            this.Impl = impl;
-            this._frontier = queue;
+        private readonly QueueSearch<TState, TAction> Impl;
+
+        protected QueueBasedSearch(QueueSearch<TState, TAction> impl,
+            PriorityQueue<INode<TState, TAction>, double> queue)
+        {
+            Impl = impl;
+            _frontier = queue;
         }
 
         public IMetrics Metrics => Impl.Metrics;
@@ -30,6 +36,7 @@ namespace Italbytz.Adapters.Algorithms.Search.Framework
             return SearchUtils.ToActions(node);
         }
 
-        public TState? FindState(IProblem<TState, TAction> problem) => throw new System.NotImplementedException();
+        public TState? FindState(IProblem<TState, TAction> problem) =>
+            throw new NotImplementedException();
     }
 }

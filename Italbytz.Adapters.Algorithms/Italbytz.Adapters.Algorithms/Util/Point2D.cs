@@ -7,60 +7,66 @@ using System;
 namespace Italbytz.Adapters.Algorithms.Util
 {
     /**
-     * Simplified version of <code>java.awt.geom.Point2D</code>. We do not want
+     * Simplified version of
+     * <code>java.awt.geom.Point2D</code>
+     * . We do not want
      * dependencies to presentation layer packages here.
-     * 
+     *
      * @author R. Lunde
      * @author Mike Stampone
      */
     public class Point2D
     {
-        private double x;
-        private double y;
+        private readonly double _x;
+        private readonly double _y;
 
         public Point2D(double x, double y)
         {
-            this.x = x;
-            this.y = y;
+            _x = x;
+            _y = y;
         }
 
         /**
-    	 * Returns the X coordinate of this <code>Point2D</code> in
-    	 * <code>double</code> precision.
-    	 * 
-    	 * @return the X coordinate of this <code>Point2D</code>.
-    	 */
-        public double GetX()
-        {
-            return x;
-        }
+         * Returns the X coordinate of this
+         * <code>Point2D</code>
+         * in
+         * <code>double</code>
+         * precision.
+         *
+         * @return the X coordinate of this
+         * <code>Point2D</code>
+         * .
+         */
+        public double GetX() => _x;
 
         /**
-    	 * Returns the Y coordinate of this <code>Point2D</code> in
-    	 * <code>double</code> precision.
-      	 * 
-    	 * @return the Y coordinate of this <code>Point2D</code>.
-	     */
-        public double GetY()
-        {
-            return y;
-        }
+         * Returns the Y coordinate of this
+         * <code>Point2D</code>
+         * in
+         * <code>double</code>
+         * precision.
+         *
+         * @return the Y coordinate of this
+         * <code>Point2D</code>
+         * .
+         */
+        public double GetY() => _y;
 
         /**
-    	 * Returns the Euclidean distance between a specified point and this point.
-    	 * 
-    	 * @return the Euclidean distance between a specified point and this point.
-	     */
+         * Returns the Euclidean distance between a specified point and this point.
+         *
+         * @return the Euclidean distance between a specified point and this point.
+         */
         public double Distance(Point2D pt)
         {
             // Distance Between X Coordinates
-            double x_distance = (pt.GetX() - x) * (pt.GetX() - x);
+            var xDistance = (pt.GetX() - _x) * (pt.GetX() - _x);
             // Distance Between Y Coordinates
-            double y_distance = (pt.GetY() - y) * (pt.GetY() - y);
+            var yDistance = (pt.GetY() - _y) * (pt.GetY() - _y);
             // Distance Between 2d Points
-            double total_distance = Math.Sqrt(x_distance + y_distance);
+            var totalDistance = Math.Sqrt(xDistance + yDistance);
 
-            return total_distance;
+            return totalDistance;
         }
     }
 }

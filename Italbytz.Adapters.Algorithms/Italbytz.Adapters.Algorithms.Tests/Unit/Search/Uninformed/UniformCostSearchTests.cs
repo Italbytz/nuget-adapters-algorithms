@@ -31,7 +31,7 @@ public class UniformCostSearchTests
             search.Metrics.Get(QueueSearch<string, MoveToAction>
                 .MetricPathCost), Is.EqualTo("278"));
     }
-
+ 
     [Test]
     public void TestSimplifiedRoadMapOfRomaniaFromArad()
     {

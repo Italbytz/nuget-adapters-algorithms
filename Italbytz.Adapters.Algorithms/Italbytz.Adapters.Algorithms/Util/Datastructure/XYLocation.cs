@@ -14,7 +14,7 @@ namespace Italbytz.Adapters.Algorithms.Util.Datastructure
         {
             X = x;
             Y = y;
-        }
+        } 
     }
 }
 

@@ -21,5 +21,5 @@ namespace Italbytz.Adapters.Algorithms.Search.Informed
             _evalFn = evalFn;
 
         public Func<INode<TState, TAction>, double>? HeuristicFn { get; set; }
-    }
+    } 
 }
