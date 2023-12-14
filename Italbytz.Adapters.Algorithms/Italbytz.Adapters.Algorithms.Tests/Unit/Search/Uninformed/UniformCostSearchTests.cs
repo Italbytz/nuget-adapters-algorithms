@@ -10,14 +10,18 @@ using Italbytz.Adapters.Algorithms.Tests.Environment.Map;
 using Italbytz.Ports.Algorithms.AI.Agent;
 using Italbytz.Ports.Algorithms.AI.Search;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace Italbytz.Adapters.Algorithms.Tests.Unit.Search.Uninformed;
 
 public class UniformCostSearchTests
 {
+    private static ILoggerFactory _loggerFactory = NullLoggerFactory.Instance;
+
     [SetUp]
     public void Setup()
     {
+        _loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
     }
 
     [Test]
@@ -63,7 +67,7 @@ public class UniformCostSearchTests
             MapFunctions.GetResult, MapFunctions.TestGoal,
             MapFunctions.CreateDistanceStepCostFunction(romaniaMap));
         var agent = new SearchAgent<IPercept, string, MoveToAction>(problem,
-            search, LoggerFactory.Create(builder => builder.AddConsole()));
+            search, _loggerFactory);
         var actions = agent.Actions;
         return string.Join(", ", actions);
     }

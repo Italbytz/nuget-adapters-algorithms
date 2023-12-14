@@ -5,8 +5,10 @@
 using System;
 using System.Collections.Generic;
 using Italbytz.Adapters.Algorithms.Search.Framework;
+using Italbytz.Adapters.Algorithms.Util;
 using Italbytz.Ports.Algorithms.AI.Problem;
 using Italbytz.Ports.Algorithms.AI.Search;
+using Microsoft.Extensions.Logging;
 
 namespace Italbytz.Adapters.Algorithms.Search.Local
 {
@@ -61,7 +63,7 @@ namespace Italbytz.Adapters.Algorithms.Search.Local
                 }
 
                 current = neighbor;
-                Console.WriteLine(current.State);
+                this.Log(LogLevel.Information, current.State.ToString());
             }
 
             _lastState = current.State;
