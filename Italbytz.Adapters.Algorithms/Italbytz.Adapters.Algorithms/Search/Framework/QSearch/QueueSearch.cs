@@ -10,9 +10,9 @@ namespace Italbytz.Adapters.Algorithms.Search.Framework.QSearch
 {
     public abstract class QueueSearch<TState, TAction>
     {
-        private const string MetricNodesExpanded = "nodesExpanded";
-        private const string MetricQueueSize = "queueSize";
-        private const string MetricMaxQueueSize = "maxQueueSize";
+        public const string MetricNodesExpanded = "nodesExpanded";
+        public const string MetricQueueSize = "queueSize";
+        public const string MetricMaxQueueSize = "maxQueueSize";
         public const string MetricPathCost = "pathCost";
 
         protected QueueSearch(NodeFactory<TState, TAction> nodeFactory)

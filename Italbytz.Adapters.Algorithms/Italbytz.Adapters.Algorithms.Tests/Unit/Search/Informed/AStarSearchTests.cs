@@ -42,6 +42,9 @@ public class AStarSearchTests
             Assert.That(
                 search.Metrics.Get(QueueSearch<string, MoveToAction>
                     .MetricPathCost), Is.EqualTo("278"));
+            Assert.That(
+                search.Metrics.Get(QueueSearch<string, MoveToAction>
+                    .MetricNodesExpanded), Is.EqualTo("4"));
         });
     }
 
@@ -63,6 +66,9 @@ public class AStarSearchTests
             Assert.That(
                 search.Metrics.Get(QueueSearch<string, MoveToAction>
                     .MetricPathCost), Is.EqualTo("418"));
+            Assert.That(
+                search.Metrics.Get(QueueSearch<string, MoveToAction>
+                    .MetricNodesExpanded), Is.EqualTo("5"));
         });
     }
 
