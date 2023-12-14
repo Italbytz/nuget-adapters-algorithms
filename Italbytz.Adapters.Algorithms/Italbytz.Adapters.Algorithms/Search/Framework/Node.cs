@@ -35,7 +35,11 @@ namespace Italbytz.Adapters.Algorithms.Search.Framework
 
         public bool IsRootNode() => Parent == null;
 
-        public override string ToString() =>
-            $"[parent={Parent}, action={Action}, state={State}, pathCost={PathCost}]";
+        public override string ToString()
+        {
+            var parent = Parent != null ? $"{Parent.State}" : "";
+            return
+                $"[parent={parent}, action={Action}, state={State}, pathCost={PathCost}]";
+        }
     }
 }

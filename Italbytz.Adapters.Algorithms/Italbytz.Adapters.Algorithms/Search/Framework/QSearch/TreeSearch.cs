@@ -3,8 +3,10 @@
 // Copyright (c) 2015 aima-java contributors
 
 using System.Collections.Generic;
+using Italbytz.Adapters.Algorithms.Util;
 using Italbytz.Ports.Algorithms.AI.Problem;
 using Italbytz.Ports.Algorithms.AI.Search;
+using Microsoft.Extensions.Logging;
 
 namespace Italbytz.Adapters.Algorithms.Search.Framework.QSearch
 {
@@ -79,6 +81,7 @@ namespace Italbytz.Adapters.Algorithms.Search.Framework.QSearch
             PriorityQueue<INode<TState, TAction>, double> frontier,
             INode<TState, TAction> node)
         {
+            this.Log(LogLevel.Information, "Add to frontier: " + node);
             frontier.Enqueue(node, node.PathCost);
             UpdateMetrics(frontier.Count);
         }

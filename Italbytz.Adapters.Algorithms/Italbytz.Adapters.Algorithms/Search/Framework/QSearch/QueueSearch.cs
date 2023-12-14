@@ -2,7 +2,6 @@
 // MIT License
 // Copyright (c) 2015 aima-java contributors
 
-using System;
 using System.Collections.Generic;
 using Italbytz.Ports.Algorithms.AI.Problem;
 using Italbytz.Ports.Algorithms.AI.Search;
@@ -21,7 +20,6 @@ namespace Italbytz.Adapters.Algorithms.Search.Framework.QSearch
             NodeFactory = nodeFactory;
             NodeFactory.AddNodeListener(_ =>
                 Metrics.IncrementInt(MetricNodesExpanded));
-            NodeFactory.AddNodeListener(Console.WriteLine);
         }
 
         public NodeFactory<TState, TAction> NodeFactory { get; }

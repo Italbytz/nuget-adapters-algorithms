@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using Italbytz.Adapters.Algorithms.Agent;
 using Italbytz.Ports.Algorithms.AI.Problem;
 using Italbytz.Ports.Algorithms.AI.Search;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace Italbytz.Adapters.Algorithms.Search.Agent
 {
@@ -15,7 +17,14 @@ namespace Italbytz.Adapters.Algorithms.Search.Agent
         private IMetrics _searchMetrics;
 
         public SearchAgent(IProblem<TState, TAction> problem,
-            ISearchForActions<TState, TAction> search)
+            ISearchForActions<TState, TAction> search) : this(problem, search,
+            NullLoggerFactory.Instance)
+        {
+        }
+
+        public SearchAgent(IProblem<TState, TAction> problem,
+            ISearchForActions<TState, TAction> search,
+            ILoggerFactory loggerFactory) : base(loggerFactory)
         {
             var actions = search.FindActions(problem);
             Actions = new List<TAction>();

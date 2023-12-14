@@ -2,13 +2,19 @@
 // MIT License
 // Copyright (c) 2015 aima-java contributors
 
+using Italbytz.Adapters.Algorithms.Util;
 using Italbytz.Ports.Algorithms.AI.Agent;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace Italbytz.Adapters.Algorithms.Agent
 {
     public class SimpleAgent<TPercept, TAction> : IAgent<TPercept, TAction>
     {
-        protected SimpleAgent()
+        protected SimpleAgent(ILoggerFactory loggerFactory) =>
+            LoggingExtensions.InitLoggers(loggerFactory);
+
+        protected SimpleAgent() : this(NullLoggerFactory.Instance)
         {
         }
 

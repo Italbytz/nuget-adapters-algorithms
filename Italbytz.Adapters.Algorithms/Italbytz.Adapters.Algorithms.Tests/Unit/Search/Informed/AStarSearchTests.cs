@@ -8,6 +8,7 @@ using Italbytz.Adapters.Algorithms.Search.Framework.QSearch;
 using Italbytz.Adapters.Algorithms.Search.Informed;
 using Italbytz.Adapters.Algorithms.Tests.Environment.Map;
 using Italbytz.Ports.Algorithms.AI.Agent;
+using Italbytz.Ports.Algorithms.AI.Search;
 
 namespace Italbytz.Adapters.Algorithms.Tests.Unit.Search.Informed;
 
@@ -19,27 +20,58 @@ public class AStarSearchTests
     }
 
     [Test]
-    public void TestSimplifiedRoadMapOfRomania()
+    public void TestSimplifiedRoadMapOfRomaniaFromSibiu()
     {
         var romaniaMap = new SimplifiedRoadMapOfPartOfRomania();
-        var problem = new GeneralProblem<string, MoveToAction>(
-            SimplifiedRoadMapOfPartOfRomania.SIBIU,
-            MapFunctions.CreateActionsFunction(romaniaMap),
-            MapFunctions.GetResult, MapFunctions.TestGoal,
-            MapFunctions.CreateDistanceStepCostFunction(romaniaMap));
         var search = new AStarSearch<string, MoveToAction>(
             new GraphSearch<string, MoveToAction>(),
             MapFunctions.CreateSLDHeuristicFunction(
                 SimplifiedRoadMapOfPartOfRomania.BUCHAREST, romaniaMap));
+        var actions = TestSimplifiedRoadMapOfRomania(search, romaniaMap,
+            SimplifiedRoadMapOfPartOfRomania.SIBIU);
+        Assert.Multiple(() =>
+        {
+            Assert.That(actions,
+                Is.EqualTo(
+                    "MoveToAction[name=moveTo, location=RimnicuVilcea], MoveToAction[name=moveTo, location=Pitesti], MoveToAction[name=moveTo, location=Bucharest]"));
+            Assert.That(
+                search.Metrics.Get(QueueSearch<string, MoveToAction>
+                    .MetricPathCost), Is.EqualTo("278"));
+        });
+    }
+
+    [Test]
+    public void TestSimplifiedRoadMapOfRomaniaFromArad()
+    {
+        var romaniaMap = new SimplifiedRoadMapOfPartOfRomania();
+        var search = new AStarSearch<string, MoveToAction>(
+            new GraphSearch<string, MoveToAction>(),
+            MapFunctions.CreateSLDHeuristicFunction(
+                SimplifiedRoadMapOfPartOfRomania.BUCHAREST, romaniaMap));
+        var actions = TestSimplifiedRoadMapOfRomania(search, romaniaMap,
+            SimplifiedRoadMapOfPartOfRomania.ARAD);
+        Assert.Multiple(() =>
+        {
+            Assert.That(actions,
+                Is.EqualTo(
+                    "MoveToAction[name=moveTo, location=Sibiu], MoveToAction[name=moveTo, location=RimnicuVilcea], MoveToAction[name=moveTo, location=Pitesti], MoveToAction[name=moveTo, location=Bucharest]"));
+            Assert.That(
+                search.Metrics.Get(QueueSearch<string, MoveToAction>
+                    .MetricPathCost), Is.EqualTo("418"));
+        });
+    }
+
+    private static string TestSimplifiedRoadMapOfRomania(
+        ISearchForActions<string, MoveToAction> search, IMap romaniaMap,
+        string initialState)
+    {
+        var problem = new GeneralProblem<string, MoveToAction>(initialState,
+            MapFunctions.CreateActionsFunction(romaniaMap),
+            MapFunctions.GetResult, MapFunctions.TestGoal,
+            MapFunctions.CreateDistanceStepCostFunction(romaniaMap));
         var agent =
             new SearchAgent<IPercept, string, MoveToAction>(problem, search);
         var actions = agent.Actions;
-        var actionsString = string.Join(", ", actions);
-        Assert.That(actionsString,
-            Is.EqualTo(
-                "MoveToAction[name=moveTo, location=RimnicuVilcea], MoveToAction[name=moveTo, location=Pitesti], MoveToAction[name=moveTo, location=Bucharest]"));
-        Assert.That(
-            search.Metrics.Get(QueueSearch<string, MoveToAction>
-                .MetricPathCost), Is.EqualTo("278")); 
+        return string.Join(", ", actions);
     }
 }
