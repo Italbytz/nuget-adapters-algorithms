@@ -13,13 +13,12 @@ namespace Italbytz.Adapters.Algorithms.Search.Informed
     public class BestFirstSearch<TState, TAction> :
         QueueBasedSearch<TState, TAction>, IInformed<TState, TAction>
     {
-        private Func<INode<TState, TAction>, double> _evalFn;
-
         protected BestFirstSearch(QueueSearch<TState, TAction> impl,
             Func<INode<TState, TAction>, double> evalFn) : base(impl,
-            QueueFactory.CreatePriorityQueue<INode<TState, TAction>>()) =>
-            _evalFn = evalFn;
+            QueueFactory.CreatePriorityQueue(evalFn))
+        {
+        }
 
         public Func<INode<TState, TAction>, double>? HeuristicFn { get; set; }
-    } 
+    }
 }

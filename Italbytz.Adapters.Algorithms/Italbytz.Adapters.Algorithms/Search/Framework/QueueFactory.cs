@@ -2,14 +2,17 @@
 // MIT License
 // Copyright (c) 2015 aima-java contributors
 
-using System.Collections.Generic;
+using System;
+using Italbytz.Adapters.Algorithms.Util.Datastructure;
+using Italbytz.Ports.Algorithms.AI.Search;
 
 namespace Italbytz.Adapters.Algorithms.Search.Framework
 {
     public static class QueueFactory
     {
-        public static PriorityQueue<TElement, double>
-            CreatePriorityQueue<TElement>() =>
-            new(11);
+        public static NodePriorityQueue<TState, TAction>
+            CreatePriorityQueue<TState, TAction>(
+                Func<INode<TState, TAction>, double> priorityFn) =>
+            new(priorityFn, 11);
     }
 }

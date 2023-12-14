@@ -3,6 +3,7 @@
 // Copyright (c) 2015 aima-java contributors
 
 using System.Collections.Generic;
+using Italbytz.Adapters.Algorithms.Util.Datastructure;
 using Italbytz.Ports.Algorithms.AI.Problem;
 using Italbytz.Ports.Algorithms.AI.Search;
 
@@ -23,14 +24,14 @@ namespace Italbytz.Adapters.Algorithms.Search.Framework.QSearch
 
         public override INode<TState, TAction>? FindNode(
             IProblem<TState, TAction> problem,
-            PriorityQueue<INode<TState, TAction>, double> frontier)
+            NodePriorityQueue<TState, TAction> frontier)
         {
             _explored.Clear();
             return base.FindNode(problem, frontier);
         }
 
         protected override void AddToFrontier(
-            PriorityQueue<INode<TState, TAction>, double> frontier,
+            NodePriorityQueue<TState, TAction> frontier,
             INode<TState, TAction> node)
         {
             if (_explored.Contains(node.State)) return;
@@ -38,7 +39,7 @@ namespace Italbytz.Adapters.Algorithms.Search.Framework.QSearch
         }
 
         protected override INode<TState, TAction> RemoveFromFrontier(
-            PriorityQueue<INode<TState, TAction>, double> frontier)
+            NodePriorityQueue<TState, TAction> frontier)
         {
             var result = frontier.Dequeue();
             _explored.Add(result.State);
@@ -47,7 +48,7 @@ namespace Italbytz.Adapters.Algorithms.Search.Framework.QSearch
         }
 
         protected override bool IsFrontierEmpty(
-            PriorityQueue<INode<TState, TAction>, double> frontier)
+            NodePriorityQueue<TState, TAction> frontier)
         {
             CleanUpFrontier(frontier);
             UpdateMetrics(frontier.Count);
@@ -60,7 +61,7 @@ namespace Italbytz.Adapters.Algorithms.Search.Framework.QSearch
         /// </summary>
         /// <param name="frontier"></param>
         private void CleanUpFrontier(
-            PriorityQueue<INode<TState, TAction>, double> frontier)
+            NodePriorityQueue<TState, TAction> frontier)
         {
             while (frontier.Count > 0 &&
                    _explored.Contains(frontier.Peek().State))

@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using Italbytz.Adapters.Algorithms.Search.Framework.QSearch;
+using Italbytz.Adapters.Algorithms.Util.Datastructure;
 using Italbytz.Ports.Algorithms.AI.Problem;
 using Italbytz.Ports.Algorithms.AI.Search;
 
@@ -13,13 +14,12 @@ namespace Italbytz.Adapters.Algorithms.Search.Framework
     public abstract class QueueBasedSearch<TState, TAction> :
         ISearchForActions<TState, TAction>, ISearchForStates<TState, TAction>
     {
-        private readonly PriorityQueue<INode<TState, TAction>, double>
-            _frontier;
+        private readonly NodePriorityQueue<TState, TAction> _frontier;
 
         private readonly QueueSearch<TState, TAction> Impl;
 
         protected QueueBasedSearch(QueueSearch<TState, TAction> impl,
-            PriorityQueue<INode<TState, TAction>, double> queue)
+            NodePriorityQueue<TState, TAction> queue)
         {
             Impl = impl;
             _frontier = queue;

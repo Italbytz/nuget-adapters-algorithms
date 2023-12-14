@@ -31,7 +31,6 @@
         <Folder Include="Agent\"/>
         <Folder Include="Search\Agent\"/>
         <Folder Include="Search\Framework\Problem\"/>
-        <Folder Include="Util\Datastructure\"/>
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="Italbytz.Ports.Algorithms" Version="0.2.0"/>

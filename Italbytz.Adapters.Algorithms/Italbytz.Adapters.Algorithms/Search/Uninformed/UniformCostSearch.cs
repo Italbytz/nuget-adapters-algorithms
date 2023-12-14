@@ -2,10 +2,7 @@
 // MIT License
 // Copyright (c) 2015 aima-java contributors
 
-using System.Collections.Generic;
 using Italbytz.Adapters.Algorithms.Search.Framework;
-using Italbytz.Ports.Algorithms.AI.Problem;
-using Italbytz.Ports.Algorithms.AI.Search;
 using Italbytz.Adapters.Algorithms.Search.Framework.QSearch;
 
 namespace Italbytz.Adapters.Algorithms.Search.Uninformed
@@ -13,12 +10,14 @@ namespace Italbytz.Adapters.Algorithms.Search.Uninformed
     public class
         UniformCostSearch<TState, TAction> : QueueBasedSearch<TState, TAction>
     {
-        public UniformCostSearch() : this(new GraphSearch<TState, TAction>()) {
+        public UniformCostSearch() : this(new GraphSearch<TState, TAction>())
+        {
         }
 
-        private UniformCostSearch(QueueSearch<TState, TAction> impl) : base(impl,
-            QueueFactory
-                .CreatePriorityQueue<INode<TState, TAction>>())  
+        private UniformCostSearch(QueueSearch<TState, TAction> impl) : base(
+            impl,
+            QueueFactory.CreatePriorityQueue<TState, TAction>(node =>
+                node.PathCost))
 
         {
         }

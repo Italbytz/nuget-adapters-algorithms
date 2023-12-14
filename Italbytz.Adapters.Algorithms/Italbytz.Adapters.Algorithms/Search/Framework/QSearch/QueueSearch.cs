@@ -2,7 +2,7 @@
 // MIT License
 // Copyright (c) 2015 aima-java contributors
 
-using System.Collections.Generic;
+using Italbytz.Adapters.Algorithms.Util.Datastructure;
 using Italbytz.Ports.Algorithms.AI.Problem;
 using Italbytz.Ports.Algorithms.AI.Search;
 
@@ -28,7 +28,7 @@ namespace Italbytz.Adapters.Algorithms.Search.Framework.QSearch
 
         public abstract INode<TState, TAction>? FindNode(
             IProblem<TState, TAction> problem,
-            PriorityQueue<INode<TState, TAction>, double> frontier);
+            NodePriorityQueue<TState, TAction> frontier);
 
         protected void ClearMetrics()
         {

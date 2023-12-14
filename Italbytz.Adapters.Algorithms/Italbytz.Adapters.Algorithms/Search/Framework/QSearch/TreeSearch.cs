@@ -2,8 +2,8 @@
 // MIT License
 // Copyright (c) 2015 aima-java contributors
 
-using System.Collections.Generic;
 using Italbytz.Adapters.Algorithms.Util;
+using Italbytz.Adapters.Algorithms.Util.Datastructure;
 using Italbytz.Ports.Algorithms.AI.Problem;
 using Italbytz.Ports.Algorithms.AI.Search;
 using Microsoft.Extensions.Logging;
@@ -39,7 +39,7 @@ namespace Italbytz.Adapters.Algorithms.Search.Framework.QSearch
         /// </returns>
         public override INode<TState, TAction>? FindNode(
             IProblem<TState, TAction> problem,
-            PriorityQueue<INode<TState, TAction>, double> frontier)
+            NodePriorityQueue<TState, TAction> frontier)
         {
             ClearMetrics();
             var root = NodeFactory.CreateNode(problem.InitialState);
@@ -64,7 +64,7 @@ namespace Italbytz.Adapters.Algorithms.Search.Framework.QSearch
         }
 
         protected virtual bool IsFrontierEmpty(
-            PriorityQueue<INode<TState, TAction>, double> frontier) =>
+            NodePriorityQueue<TState, TAction> frontier) =>
             frontier.Count == 0;
 
         private bool IsGoal(INode<TState, TAction> node,
@@ -76,7 +76,7 @@ namespace Italbytz.Adapters.Algorithms.Search.Framework.QSearch
         }
 
         protected virtual INode<TState, TAction> RemoveFromFrontier(
-            PriorityQueue<INode<TState, TAction>, double> frontier)
+            NodePriorityQueue<TState, TAction> frontier)
         {
             var result = frontier.Dequeue();
             UpdateMetrics(frontier.Count);
@@ -84,10 +84,10 @@ namespace Italbytz.Adapters.Algorithms.Search.Framework.QSearch
         }
 
         protected virtual void AddToFrontier(
-            PriorityQueue<INode<TState, TAction>, double> frontier,
+            NodePriorityQueue<TState, TAction> frontier,
             INode<TState, TAction> node)
         {
-            frontier.Enqueue(node, node.PathCost);
+            frontier.Enqueue(node);
             UpdateMetrics(frontier.Count);
         }
     }
