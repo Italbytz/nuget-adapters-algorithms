@@ -45,9 +45,11 @@ namespace Italbytz.Adapters.Algorithms.Search.Framework.QSearch
             var root = NodeFactory.CreateNode(problem.InitialState);
             AddToFrontier(frontier, root);
             if (EarlyGoalTest && IsGoal(root, problem)) return root;
-            while (frontier.Count > 0)
+            while (!IsFrontierEmpty(frontier))
             {
                 var node = RemoveFromFrontier(frontier);
+                this.Log(LogLevel.Information,
+                    "Testing " + node.State + " with cost " + node.PathCost);
                 if (IsGoal(node, problem)) return node;
                 var successors = NodeFactory.GetSuccessors(node, problem);
                 foreach (var successor in successors)
@@ -61,6 +63,10 @@ namespace Italbytz.Adapters.Algorithms.Search.Framework.QSearch
             return null;
         }
 
+        protected virtual bool IsFrontierEmpty(
+            PriorityQueue<INode<TState, TAction>, double> frontier) =>
+            frontier.Count == 0;
+
         private bool IsGoal(INode<TState, TAction> node,
             IProblem<TState, TAction> problem)
         {
@@ -69,7 +75,7 @@ namespace Italbytz.Adapters.Algorithms.Search.Framework.QSearch
             return true;
         }
 
-        private INode<TState, TAction> RemoveFromFrontier(
+        protected virtual INode<TState, TAction> RemoveFromFrontier(
             PriorityQueue<INode<TState, TAction>, double> frontier)
         {
             var result = frontier.Dequeue();
@@ -77,11 +83,10 @@ namespace Italbytz.Adapters.Algorithms.Search.Framework.QSearch
             return result;
         }
 
-        private void AddToFrontier(
+        protected virtual void AddToFrontier(
             PriorityQueue<INode<TState, TAction>, double> frontier,
             INode<TState, TAction> node)
         {
-            this.Log(LogLevel.Information, "Add to frontier: " + node);
             frontier.Enqueue(node, node.PathCost);
             UpdateMetrics(frontier.Count);
         }

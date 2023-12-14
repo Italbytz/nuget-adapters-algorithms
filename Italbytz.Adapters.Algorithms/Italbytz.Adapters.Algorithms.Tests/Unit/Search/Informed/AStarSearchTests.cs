@@ -9,6 +9,7 @@ using Italbytz.Adapters.Algorithms.Search.Informed;
 using Italbytz.Adapters.Algorithms.Tests.Environment.Map;
 using Italbytz.Ports.Algorithms.AI.Agent;
 using Italbytz.Ports.Algorithms.AI.Search;
+using Microsoft.Extensions.Logging;
 
 namespace Italbytz.Adapters.Algorithms.Tests.Unit.Search.Informed;
 
@@ -69,8 +70,8 @@ public class AStarSearchTests
             MapFunctions.CreateActionsFunction(romaniaMap),
             MapFunctions.GetResult, MapFunctions.TestGoal,
             MapFunctions.CreateDistanceStepCostFunction(romaniaMap));
-        var agent =
-            new SearchAgent<IPercept, string, MoveToAction>(problem, search);
+        var agent = new SearchAgent<IPercept, string, MoveToAction>(problem,
+            search, LoggerFactory.Create(builder => builder.AddConsole()));
         var actions = agent.Actions;
         return string.Join(", ", actions);
     }
