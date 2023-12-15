@@ -24,7 +24,7 @@ namespace Italbytz.Adapters.Algorithms.Search.Framework.QSearch
 
         public NodeFactory<TState, TAction> NodeFactory { get; }
         protected bool EarlyGoalTest { get; } = false;
-        public Metrics Metrics { get; } = new();
+        public IMetrics Metrics { get; } = new Metrics();
 
         public abstract INode<TState, TAction>? FindNode(
             IProblem<TState, TAction> problem,

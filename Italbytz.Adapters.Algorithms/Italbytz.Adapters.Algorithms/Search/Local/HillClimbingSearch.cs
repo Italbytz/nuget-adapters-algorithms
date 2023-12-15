@@ -15,6 +15,8 @@ namespace Italbytz.Adapters.Algorithms.Search.Local
     public class HillClimbingSearch<TState, TAction> :
         ISearchForActions<TState, TAction>, ISearchForStates<TState, TAction>
     {
+        public const string MetricNodesExpanded = "nodesExpanded";
+        public const string MetricNodeValue = "nodeValue";
         private readonly Func<INode<TState, TAction>, double> _evalFn;
         private readonly INodeFactory<TState, TAction> _nodeFactory;
         private TState? _lastState;
@@ -43,18 +45,16 @@ namespace Italbytz.Adapters.Algorithms.Search.Local
         public TState? FindState(IProblem<TState, TAction> problem) =>
             throw new NotImplementedException();
 
-        public INode<TState, TAction>? FindNode(IProblem<TState, TAction> p)
+        private INode<TState, TAction>? FindNode(IProblem<TState, TAction> p)
         {
-            //ClearMetrics();
+            ClearMetrics();
             var current = _nodeFactory.CreateNode(p.InitialState);
-            INode<TState, TAction> neighbor;
-            //while (!Tasks.currIsCancelled())
-            //{
-            //    metrics.set(METRIC_NODE_VALUE, getValue(current));
             while (true)
             {
-                var children = _nodeFactory.GetSuccessors(current, p);
-                neighbor = GetHighestValuedNodeFrom(children);
+                Metrics.Set(MetricNodeValue, (int)_evalFn(current));
+                var neighbor =
+                    GetHighestValuedNodeFrom(
+                        _nodeFactory.GetSuccessors(current, p));
 
                 if (neighbor == null || _evalFn(neighbor) <= _evalFn(current))
                 {
@@ -68,6 +68,12 @@ namespace Italbytz.Adapters.Algorithms.Search.Local
 
             _lastState = current.State;
             return null;
+        }
+
+        private void ClearMetrics()
+        {
+            Metrics.Set(MetricNodesExpanded, 0);
+            Metrics.Set(MetricNodeValue, 0);
         }
 
         private INode<TState, TAction> GetHighestValuedNodeFrom(

@@ -20,11 +20,17 @@ public class NQueensHillClimbingTests
     }
 
     [Test]
-    public void TestNQueens()
+    public void TestNQueensBoard1()
     {
         var board = new NQueensBoard(8);
         for (var i = 0; i < board.Size; i++)
             board.AddQueenAt(new XYLocation(i, 0));
+        var env = TestNQueens(board);
+        Assert.That(env.Board.GetNumberOfAttackingPairs(), Is.EqualTo(28));
+    }
+
+    private NQueensEnvironment TestNQueens(NQueensBoard board)
+    {
         var problem = new GeneralProblem<NQueensBoard, QueenAction>(board,
             NQueensFunctions.GetCSFActions, NQueensFunctions.GetResult,
             NQueensFunctions.TestGoal);
@@ -34,6 +40,6 @@ public class NQueensHillClimbingTests
             problem, search, _loggerFactory);
         var env = new NQueensEnvironment(board) { Agent = agent };
         while (!agent.Done) env.Step();
-        Assert.That(env.Board.GetNumberOfAttackingPairs(), Is.EqualTo(28));
+        return env;
     }
 }
