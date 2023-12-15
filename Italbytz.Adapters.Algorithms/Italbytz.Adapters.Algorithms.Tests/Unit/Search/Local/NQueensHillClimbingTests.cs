@@ -25,11 +25,57 @@ public class NQueensHillClimbingTests
         var board = new NQueensBoard(8);
         for (var i = 0; i < board.Size; i++)
             board.AddQueenAt(new XYLocation(i, 0));
-        var env = TestNQueens(board);
-        Assert.That(env.Board.GetNumberOfAttackingPairs(), Is.EqualTo(28));
+        var agent = TestNQueens(board);
+        // No optimal solution
+        Assert.Multiple(() =>
+        {
+            Assert.That(agent.Actions, Is.Empty);
+            Assert.That(agent.Done);
+        });
     }
 
-    private NQueensEnvironment TestNQueens(NQueensBoard board)
+    [Test]
+    public void TestNQueensBoard2()
+    {
+        var board = new NQueensBoard(8);
+        board.AddQueenAt(new XYLocation(0, 4));
+        board.AddQueenAt(new XYLocation(1, 5));
+        board.AddQueenAt(new XYLocation(2, 6));
+        board.AddQueenAt(new XYLocation(3, 3));
+        board.AddQueenAt(new XYLocation(4, 4));
+        board.AddQueenAt(new XYLocation(5, 5));
+        board.AddQueenAt(new XYLocation(6, 6));
+        board.AddQueenAt(new XYLocation(7, 5));
+        var agent = TestNQueens(board);
+        // No optimal solution
+        Assert.Multiple(() =>
+        {
+            Assert.That(agent.Actions, Is.Empty);
+            Assert.That(agent.Done);
+        });
+    }
+
+    [Test]
+    public void TestNQueensBoard3()
+    {
+        var board = new NQueensBoard(8);
+        board.AddQueenAt(new XYLocation(0, 5));
+        board.AddQueenAt(new XYLocation(1, 7));
+        board.AddQueenAt(new XYLocation(2, 0));
+        board.AddQueenAt(new XYLocation(3, 1));
+        board.AddQueenAt(new XYLocation(4, 1));
+        board.AddQueenAt(new XYLocation(5, 7));
+        board.AddQueenAt(new XYLocation(6, 7));
+        board.AddQueenAt(new XYLocation(7, 2));
+        var agent = TestNQueens(board);
+        var env = new NQueensEnvironment(board) { Agent = agent };
+        while (!agent.Done) env.Step();
+        // Optimal solution
+        Assert.That(env.Board.GetNumberOfAttackingPairs(), Is.EqualTo(0));
+    }
+
+    private SearchAgent<IPercept, NQueensBoard, QueenAction> TestNQueens(
+        NQueensBoard board)
     {
         var problem = new GeneralProblem<NQueensBoard, QueenAction>(board,
             NQueensFunctions.GetCSFActions, NQueensFunctions.GetResult,
@@ -38,8 +84,6 @@ public class NQueensHillClimbingTests
             -NQueensFunctions.GetNumberOfAttackingPairs(node));
         var agent = new SearchAgent<IPercept, NQueensBoard, QueenAction>(
             problem, search, _loggerFactory);
-        var env = new NQueensEnvironment(board) { Agent = agent };
-        while (!agent.Done) env.Step();
-        return env;
+        return agent;
     }
 }

@@ -49,13 +49,14 @@ namespace Italbytz.Adapters.Algorithms.Search.Local
         {
             ClearMetrics();
             var current = _nodeFactory.CreateNode(p.InitialState);
+            this.Log(LogLevel.Information, current.State.ToString());
             while (true)
             {
                 Metrics.Set(MetricNodeValue, (int)_evalFn(current));
                 var neighbor =
                     GetHighestValuedNodeFrom(
                         _nodeFactory.GetSuccessors(current, p));
-
+                this.Log(LogLevel.Information, neighbor.State.ToString());
                 if (neighbor == null || _evalFn(neighbor) <= _evalFn(current))
                 {
                     _lastState = current.State;
@@ -63,7 +64,6 @@ namespace Italbytz.Adapters.Algorithms.Search.Local
                 }
 
                 current = neighbor;
-                this.Log(LogLevel.Information, current.State.ToString());
             }
 
             _lastState = current.State;

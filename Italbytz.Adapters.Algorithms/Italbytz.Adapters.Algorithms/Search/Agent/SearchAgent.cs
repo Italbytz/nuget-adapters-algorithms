@@ -39,6 +39,7 @@ namespace Italbytz.Adapters.Algorithms.Search.Agent
         //private List<TAction>.Enumerator actionEnumerator;
         public bool Done { get; }
 
+        // TODO
         public override TAction? Act(TPercept? percept) => default;
     }
 }
