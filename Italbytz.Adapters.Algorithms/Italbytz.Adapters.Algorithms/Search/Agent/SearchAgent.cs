@@ -14,6 +14,7 @@ namespace Italbytz.Adapters.Algorithms.Search.Agent
     public class
         SearchAgent<TPercept, TState, TAction> : SimpleAgent<TPercept, TAction>
     {
+        private readonly Queue<TAction> actionsQueue = new();
         private IMetrics _searchMetrics;
 
         public SearchAgent(IProblem<TState, TAction> problem,
@@ -29,17 +30,16 @@ namespace Italbytz.Adapters.Algorithms.Search.Agent
             var actions = search.FindActions(problem);
             Actions = new List<TAction>();
             if (actions != null) Actions.AddRange(actions);
-            if (Actions.Count == 0) Done = true;
-            //actionEnumerator = Actions.GetEnumerator();
+            actionsQueue = new Queue<TAction>(Actions);
             _searchMetrics = search.Metrics;
         }
 
         public List<TAction> Actions { get; }
 
         //private List<TAction>.Enumerator actionEnumerator;
-        public bool Done { get; }
+        public bool Done => actionsQueue.Count == 0;
 
-        // TODO
-        public override TAction? Act(TPercept? percept) => default;
+        public override TAction? Act(TPercept? percept) =>
+            actionsQueue.Count > 0 ? actionsQueue.Dequeue() : default;
     }
 }

@@ -48,10 +48,7 @@ public static class NQueensFunctions
         return result;
     }
 
-    internal static bool TestGoal(NQueensBoard state)
-    {
-        Console.WriteLine(state.GetNumberOfAttackingPairs());
-        return state.GetNumberOfQueensOnBoard() == state.Size &&
-               state.GetNumberOfAttackingPairs() == 0;
-    }
+    internal static bool TestGoal(NQueensBoard state) =>
+        state.GetNumberOfQueensOnBoard() == state.Size &&
+        state.GetNumberOfAttackingPairs() == 0;
 }
