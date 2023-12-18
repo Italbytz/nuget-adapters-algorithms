@@ -12,24 +12,37 @@ using Microsoft.Extensions.Logging;
 
 namespace Italbytz.Adapters.Algorithms.Search.Local
 {
-    public class HillClimbingSearch<TState, TAction> :
+    public class SimulatedAnnealingSearch<TState, TAction> :
         ISearchForActions<TState, TAction>, ISearchForStates<TState, TAction>
     {
         public const string MetricNodesExpanded = "nodesExpanded";
         public const string MetricNodeValue = "nodeValue";
-        private readonly Func<INode<TState, TAction>, double> _evalFn;
+        public const string MetricTemperature = "temp";
+
+        private readonly Func<INode<TState, TAction>, double> _energyFn;
         private readonly INodeFactory<TState, TAction> _nodeFactory;
+        private readonly Scheduler _scheduler;
         private TState? _lastState;
 
-        public HillClimbingSearch(Func<INode<TState, TAction>, double> evalFn) :
-            this(evalFn, new NodeFactory<TState, TAction>())
+        public SimulatedAnnealingSearch(
+            Func<INode<TState, TAction>, double> energyFn) : this(energyFn,
+            new Scheduler())
         {
         }
 
-        public HillClimbingSearch(Func<INode<TState, TAction>, double> evalFn,
+        public SimulatedAnnealingSearch(
+            Func<INode<TState, TAction>, double> energyFn,
+            Scheduler scheduler) : this(energyFn, scheduler,
+            new NodeFactory<TState, TAction>())
+        {
+        }
+
+        public SimulatedAnnealingSearch(
+            Func<INode<TState, TAction>, double> energyFn, Scheduler scheduler,
             INodeFactory<TState, TAction> nodeFactory)
         {
-            _evalFn = evalFn;
+            _energyFn = energyFn;
+            _scheduler = scheduler;
             _nodeFactory = nodeFactory;
             nodeFactory.AddNodeListener(node =>
                 Metrics.IncrementInt(MetricNodesExpanded));
@@ -52,20 +65,25 @@ namespace Italbytz.Adapters.Algorithms.Search.Local
             ClearMetrics();
             var current = _nodeFactory.CreateNode(p.InitialState);
             this.Log(LogLevel.Information, current.State.ToString());
+            var timeStep = 0;
+            var random = new Random();
             while (true)
             {
-                Metrics.Set(MetricNodeValue, _evalFn(current));
-                var neighbor =
-                    GetHighestValuedNodeFrom(
-                        _nodeFactory.GetSuccessors(current, p));
-                this.Log(LogLevel.Information, neighbor.State.ToString());
-                if (neighbor == null || _evalFn(neighbor) <= _evalFn(current))
-                {
-                    _lastState = current.State;
+                var temperature = _scheduler.GetTemp(timeStep++);
+                _lastState = current.State;
+                if (temperature == 0.0)
                     return p.TestSolution(current) ? current : null;
+                Metrics.Set(MetricTemperature, temperature);
+                Metrics.Set(MetricNodeValue, _energyFn(current));
+                var children = _nodeFactory.GetSuccessors(current, p);
+                if (children.Count > 0)
+                {
+                    var next = Util.Util.SelectRandomlyFromList(children);
+                    this.Log(LogLevel.Information, next.State.ToString());
+                    var deltaE = _energyFn(next) - _energyFn(current);
+                    if (deltaE < 0.0 || random.NextDouble() <=
+                        Math.Exp(-deltaE / temperature)) current = next;
                 }
-
-                current = neighbor;
             }
 
             _lastState = current.State;
@@ -76,6 +94,7 @@ namespace Italbytz.Adapters.Algorithms.Search.Local
         {
             Metrics.Set(MetricNodesExpanded, 0);
             Metrics.Set(MetricNodeValue, 0);
+            Metrics.Set(MetricTemperature, 0);
         }
 
         private INode<TState, TAction> GetHighestValuedNodeFrom(
@@ -85,7 +104,7 @@ namespace Italbytz.Adapters.Algorithms.Search.Local
             INode<TState, TAction>? nodeWithHighestValue = null;
             foreach (var child in children)
             {
-                var value = _evalFn(child);
+                var value = _energyFn(child);
                 if (value > highestValue)
                 {
                     highestValue = value;

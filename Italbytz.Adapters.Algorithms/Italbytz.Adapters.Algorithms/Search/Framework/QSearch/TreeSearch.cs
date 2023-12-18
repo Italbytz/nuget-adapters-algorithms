@@ -71,7 +71,7 @@ namespace Italbytz.Adapters.Algorithms.Search.Framework.QSearch
             IProblem<TState, TAction> problem)
         {
             if (!problem.TestSolution(node)) return false;
-            Metrics.Set(MetricPathCost, (int)node.PathCost);
+            Metrics.Set(MetricPathCost, node.PathCost);
             return true;
         }
 

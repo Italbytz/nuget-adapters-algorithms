@@ -3,6 +3,7 @@
 // Copyright (c) 2015 aima-java contributors
 
 using System.Collections.Generic;
+using System.Globalization;
 using Italbytz.Ports.Algorithms.AI.Search;
 
 namespace Italbytz.Adapters.Algorithms.Search.Framework
@@ -18,6 +19,7 @@ namespace Italbytz.Adapters.Algorithms.Search.Framework
             _dict[name] = i.ToString();
         }
 
+
         public void IncrementInt(string name)
         {
             Set(name, GetInt(name) + 1);
@@ -27,6 +29,28 @@ namespace Italbytz.Adapters.Algorithms.Search.Framework
         {
             var value = _dict[name];
             return int.Parse(value);
+        }
+
+        public void Set(string name, double d)
+        {
+            _dict[name] = d.ToString(CultureInfo.InvariantCulture);
+        }
+
+        public void Set(string name, long l)
+        {
+            _dict[name] = l.ToString();
+        }
+
+        public double GetDouble(string name)
+        {
+            var value = _dict[name];
+            return double.Parse(value);
+        }
+
+        public long GetLong(string name)
+        {
+            var value = _dict[name];
+            return long.Parse(value);
         }
     }
 }

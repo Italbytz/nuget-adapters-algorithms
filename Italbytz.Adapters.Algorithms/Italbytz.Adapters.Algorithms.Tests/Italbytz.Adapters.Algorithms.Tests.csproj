@@ -10,7 +10,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Italbytz.Ports.Algorithms" Version="0.2.0"/>
+        <PackageReference Include="Italbytz.Ports.Algorithms" Version="0.2.2"/>
         <PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.0"/>
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.5.0"/>
         <PackageReference Include="NUnit" Version="3.13.3"/>

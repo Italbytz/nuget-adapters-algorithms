@@ -27,13 +27,12 @@
         <None Remove="Util\Datastructure\"/>
     </ItemGroup>
     <ItemGroup>
-        <Folder Include="Search\Local\"/>
         <Folder Include="Agent\"/>
         <Folder Include="Search\Agent\"/>
         <Folder Include="Search\Framework\Problem\"/>
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="Italbytz.Ports.Algorithms" Version="0.2.0"/>
+        <PackageReference Include="Italbytz.Ports.Algorithms" Version="0.2.2"/>
         <PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.0"/>
         <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="8.0.0"/>
     </ItemGroup>
