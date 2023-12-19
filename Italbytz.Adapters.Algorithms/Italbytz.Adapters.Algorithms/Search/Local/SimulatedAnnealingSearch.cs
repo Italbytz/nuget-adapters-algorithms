@@ -84,6 +84,10 @@ namespace Italbytz.Adapters.Algorithms.Search.Local
                     if (deltaE < 0.0 || random.NextDouble() <=
                         Math.Exp(-deltaE / temperature)) current = next;
                 }
+                else
+                {
+                    return null;
+                }
             }
 
             _lastState = current.State;
