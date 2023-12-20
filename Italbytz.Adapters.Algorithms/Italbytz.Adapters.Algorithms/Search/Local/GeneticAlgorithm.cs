@@ -54,13 +54,13 @@ namespace Italbytz.Adapters.Algorithms.Search.Local
                 Metrics.GetInt(MetricIterations) >= maxIterations;
         }
 
-        public IIndividual<TAlphabet> Execute(
+        private IIndividual<TAlphabet> Execute(
             IEnumerable<IIndividual<TAlphabet>> initPopulation,
             Func<IIndividual<TAlphabet>, double> fitnessFn,
             Func<IIndividual<TAlphabet>, bool> goalTest,
             long maxTimeMilliseconds)
         {
-            Individual<TAlphabet>? bestIndividual = null;
+            IIndividual<TAlphabet>? bestIndividual = null;
             var population = new List<IIndividual<TAlphabet>>(initPopulation);
             ValidatePopulation(population);
             UpdateMetrics(population, 0, 0L);
@@ -68,10 +68,27 @@ namespace Italbytz.Adapters.Algorithms.Search.Local
             var itCount = 0;
             do
             {
+                //Console.Write(string.Join(", ",population.Select(fitnessFn).Select(o => o.ToString())));
                 population = NextGeneration(population, fitnessFn);
+                bestIndividual = RetrieveBestIndividual(population, fitnessFn);
+                var elapsedTime =
+                    DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond -
+                    startTime;
+                UpdateMetrics(population, ++itCount, elapsedTime);
+                if (maxTimeMilliseconds > 0L &&
+                    elapsedTime > maxTimeMilliseconds) break;
             } while (!goalTest(bestIndividual));
 
+            NotifyProgressTrackers(itCount, population);
             return bestIndividual;
+        }
+
+        private IIndividual<TAlphabet> RetrieveBestIndividual(
+            List<IIndividual<TAlphabet>> population,
+            Func<IIndividual<TAlphabet>, double> fitnessFn)
+        {
+            var max = population.Max(fitnessFn);
+            return population.First(individual => fitnessFn(individual) == max);
         }
 
         private List<IIndividual<TAlphabet>> NextGeneration(
@@ -80,7 +97,7 @@ namespace Italbytz.Adapters.Algorithms.Search.Local
         {
             var newPopulation =
                 new List<IIndividual<TAlphabet>>(population.Count());
-            for (var i = 0; i < population.Count; i++)
+            foreach (var individual in population)
             {
                 var x = RandomSelection(population, fitnessFn);
                 var y = RandomSelection(population, fitnessFn);
@@ -118,7 +135,7 @@ namespace Italbytz.Adapters.Algorithms.Search.Local
             var childRepresentation = new List<TAlphabet>();
             childRepresentation.AddRange(x.Representation.GetRange(0, c));
             childRepresentation.AddRange(
-                y.Representation.GetRange(c, IndividualLength));
+                y.Representation.GetRange(c, IndividualLength - c));
             return new Individual<TAlphabet>(childRepresentation);
         }
 

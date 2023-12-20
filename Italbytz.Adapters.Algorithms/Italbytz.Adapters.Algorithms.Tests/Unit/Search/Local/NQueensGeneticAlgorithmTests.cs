@@ -32,59 +32,20 @@ public class NQueensGeneticAlgorithmTests
             7
         };
         var algo = new GeneticAlgorithm<int>(8, alphabet, 0.3);
-        var initPopulation = new List<Individual<int>>
+        var initPopulation = new List<IIndividual<int>>();
+        var random = new Random();
+        for (var i = 0; i < 100; i++)
         {
-            new(new List<int>
-            {
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0
-            }),
-            new(new List<int>
-            {
-                5,
-                7,
-                0,
-                1,
-                1,
-                7,
-                7,
-                2
-            }),
-            new(new List<int>
-            {
-                4,
-                5,
-                6,
-                3,
-                4,
-                5,
-                6,
-                5
-            }),
-            new(new List<int>
-            {
-                3,
-                7,
-                0,
-                4,
-                6,
-                1,
-                5,
-                2
-            })
-        };
+            var randomRepresentation = new List<int>(8);
+            for (var j = 0; j < 8; j++)
+                randomRepresentation.Add(random.Next(8));
+            initPopulation.Add(new Individual<int>(randomRepresentation));
+        }
 
-        var result = algo.Execute(initPopulation, FitnessFn, 10000);
+        var result = algo.Execute(initPopulation, FitnessFn, 100);
         var finalFitness = FitnessFn(result);
 
-        Assert.That(finalFitness, Is.GreaterThan(0.5));
-        //Assert.That(finalFitness, Is.EqualTo(1.0));
+        Assert.That(finalFitness, Is.EqualTo(1.0));
         return;
 
         double FitnessFn(IIndividual<int> individual)
