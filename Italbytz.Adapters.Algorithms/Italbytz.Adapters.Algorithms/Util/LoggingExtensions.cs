@@ -7,6 +7,7 @@ namespace Italbytz.Adapters.Algorithms.Util
 {
     public static class LoggingExtensions
     {
+        private static ILogger _geneticAlgorithmLogger = NullLogger.Instance;
         private static ILogger _queueSearchLogger = NullLogger.Instance;
         private static ILogger _hillClimbingSearchLogger = NullLogger.Instance;
 
@@ -20,6 +21,8 @@ namespace Italbytz.Adapters.Algorithms.Util
                 loggerFactory.CreateLogger("HillClimbingSearch");
             _simulatedAnnealingSearchLogger =
                 loggerFactory.CreateLogger("SimulatedAnnealingSearch");
+            _geneticAlgorithmLogger =
+                loggerFactory.CreateLogger("GeneticAlgorithm");
         }
 
         public static void Log<TState, TAction>(
@@ -41,6 +44,13 @@ namespace Italbytz.Adapters.Algorithms.Util
             LogLevel logLevel, string message)
         {
             _simulatedAnnealingSearchLogger.Log(logLevel, message);
+        }
+
+        public static void Log<TAlphabet>(
+            this GeneticAlgorithm<TAlphabet> search, LogLevel logLevel,
+            string message)
+        {
+            _geneticAlgorithmLogger.Log(logLevel, message);
         }
     }
 }
