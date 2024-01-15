@@ -1,3 +1,4 @@
+using Italbytz.Adapters.Algorithms.Search.Continuous;
 using Italbytz.Adapters.Algorithms.Search.Framework.QSearch;
 using Italbytz.Adapters.Algorithms.Search.Local;
 using Microsoft.Extensions.Logging;
@@ -10,6 +11,7 @@ namespace Italbytz.Adapters.Algorithms.Util
         private static ILogger _geneticAlgorithmLogger = NullLogger.Instance;
         private static ILogger _queueSearchLogger = NullLogger.Instance;
         private static ILogger _hillClimbingSearchLogger = NullLogger.Instance;
+        private static ILogger _lpLogger = NullLogger.Instance;
 
         private static ILogger _simulatedAnnealingSearchLogger =
             NullLogger.Instance;
@@ -23,6 +25,7 @@ namespace Italbytz.Adapters.Algorithms.Util
                 loggerFactory.CreateLogger("SimulatedAnnealingSearch");
             _geneticAlgorithmLogger =
                 loggerFactory.CreateLogger("GeneticAlgorithm");
+            _lpLogger = loggerFactory.CreateLogger("LP");
         }
 
         public static void Log<TState, TAction>(
@@ -30,6 +33,12 @@ namespace Italbytz.Adapters.Algorithms.Util
             string message)
         {
             _queueSearchLogger.Log(logLevel, message);
+        }
+
+        public static void Log(this LpSolver lp, LogLevel logLevel,
+            string message)
+        {
+            _lpLogger.Log(logLevel, message);
         }
 
         public static void Log<TState, TAction>(
