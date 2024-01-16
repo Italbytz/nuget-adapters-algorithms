@@ -35,7 +35,7 @@ namespace Italbytz.Adapters.Algorithms.Util
             _queueSearchLogger.Log(logLevel, message);
         }
 
-        public static void Log(this LpSolver lp, LogLevel logLevel,
+        public static void Log(this LPSolver lp, LogLevel logLevel,
             string message)
         {
             _lpLogger.Log(logLevel, message);
