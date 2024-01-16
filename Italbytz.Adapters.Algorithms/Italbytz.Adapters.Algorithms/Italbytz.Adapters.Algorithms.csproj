@@ -9,12 +9,7 @@
         <PackOnBuild>true</PackOnBuild>
         <PackageLicenseUrl>https://github.com/Italbytz/nuget-adapters-algorithms/blob/main/LICENSE</PackageLicenseUrl>
         <TargetFramework>net6.0</TargetFramework>
-    </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-        <LangVersion>9.0</LangVersion>
-    </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-        <LangVersion>9.0</LangVersion>
+        <LangVersion>11</LangVersion>
     </PropertyGroup>
     <ItemGroup>
         <None Remove="Search\"/>
