@@ -13,6 +13,11 @@ namespace Italbytz.Adapters.Algorithms.Search.Continuous
         public LPSolver(ILoggerFactory loggerFactory) =>
             LoggingExtensions.InitLoggers(loggerFactory);
 
+        public LPSolver()
+        {
+            LpSolve.Init();
+        }
+
         public ILPSolution Solve(string model, LPFileFormat format)
         {
             var lpTempFile = Path.GetTempFileName();
