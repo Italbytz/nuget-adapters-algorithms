@@ -1,6 +1,7 @@
 using System;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using Italbytz.Adapters.Algorithms.Util;
 using Italbytz.Ports.Algorithms.AI.Search.Continuous;
 using LpSolveDotNet;
@@ -24,6 +25,44 @@ public class LPSolver : ILPSolver
         outputFile.Close();
 
         var lp = LpSolve.read_LP(lpTempFile, 0, null);
+        lp.print_lp();
+        return RunLP(lp);
+    }
+
+    public ILPSolution Solve(ILPModel model)
+    {
+        var variables = model.ObjectiveFunction.Length;
+        using var lp = LpSolve.make_lp(0, variables);
+        if (model.Maximization) lp.set_maxim();
+        lp.set_obj_fn(new[] { 0.0 }.Concat(model.ObjectiveFunction).ToArray());
+        for (var i = 0; i < variables; i++)
+        {
+            lp.set_bounds(i + 1, model.Bounds[i].Item1, model.Bounds[i].Item2);
+            lp.set_int(i + 1, model.IntegerVariables[i]);
+        }
+
+        foreach (var constraint in model.Constraints)
+        {
+            var constraintType = constraint.ConstraintType switch
+            {
+                ConstraintType.FR => lpsolve_constr_types.FR,
+                ConstraintType.LE => lpsolve_constr_types.LE,
+                ConstraintType.GE => lpsolve_constr_types.GE,
+                ConstraintType.EQ => lpsolve_constr_types.EQ,
+                ConstraintType.OF => lpsolve_constr_types.OF,
+                _ => throw new ArgumentOutOfRangeException()
+            };
+            lp.add_constraint(
+                new[] { 0.0 }.Concat(constraint.Coefficients).ToArray(),
+                constraintType, constraint.RHS);
+        }
+
+        lp.print_lp();
+        return RunLP(lp);
+    }
+
+    private ILPSolution RunLP(LpSolve lp)
+    {
         lp.put_logfunc(Logfunc, IntPtr.Zero);
         var statuscode = lp.solve();
 
@@ -55,6 +94,7 @@ public class LPSolver : ILPSolver
             for (var i = 0; i < lines.Length - 3; i++)
             {
                 var replacement = lines[i + 2].Replace("x" + i, "");
+                replacement = replacement.Replace("C" + (i + 1), "");
                 solution[i] = double.Parse(replacement,
                     CultureInfo.CreateSpecificCulture("en-US"));
             }
@@ -62,9 +102,6 @@ public class LPSolver : ILPSolver
 
         return new LPSolution { Objective = objective, Solution = solution };
     }
-
-    public ILPSolution Solve(ILPModel model) =>
-        throw new NotImplementedException();
 
     private void Logfunc(IntPtr lp, IntPtr userhandle, string buf)
     {
