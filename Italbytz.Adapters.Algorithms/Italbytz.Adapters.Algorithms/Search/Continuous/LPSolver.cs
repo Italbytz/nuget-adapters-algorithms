@@ -24,7 +24,21 @@ public class LPSolver : ILPSolver
         outputFile.Write(model);
         outputFile.Close();
 
-        var lp = LpSolve.read_LP(lpTempFile, 0, null);
+        LpSolve lp;
+        switch (format)
+        {
+            case LPFileFormat.lp_solve:
+                lp = LpSolve.read_LP(lpTempFile, 0, null);
+                break;
+            case LPFileFormat.MPS:
+                lp = LpSolve.read_MPS(lpTempFile, 0,
+                    lpsolve_mps_options.MPS_FIXED);
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(format), format,
+                    null);
+        }
+
         lp.print_lp();
         return RunLP(lp);
     }

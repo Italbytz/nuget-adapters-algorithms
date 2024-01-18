@@ -77,6 +77,33 @@ public class LpSolveTests
     }
 
     [Test]
+    public void TestSimpleLPWithIntegerSolutionMPSFixed()
+    {
+        const string lp = """
+                          NAME
+                          ROWS
+                           N  R0
+                           L  R1
+                           L  R2
+                          COLUMNS
+                              C1        R0        -6.000000000   R1        1.0000000000
+                              C1        R2        3.0000000000
+                              C2        R0        -5.000000000   R1        1.0000000000
+                              C2        R2        2.0000000000
+                          RHS
+                              RHS       R1        5.0000000000   R2        12.000000000
+                          ENDATA
+                          """;
+        var solution = _lpsolve!.Solve(lp, LPFileFormat.MPS);
+        Assert.Multiple(() =>
+        {
+            Assert.That(solution.Objective, Is.EqualTo(-27.0));
+            Assert.That(solution.Solution[0], Is.EqualTo(2.0));
+            Assert.That(solution.Solution[1], Is.EqualTo(3.0));
+        });
+    }
+
+    [Test]
     public void TestSimpleLPWithNoIntegerSolution()
     {
         var model = new LPModel
@@ -130,6 +157,33 @@ public class LpSolveTests
         Assert.Multiple(() =>
         {
             Assert.That(solution.Objective, Is.EqualTo(27.66).Within(0.01));
+            Assert.That(solution.Solution[0], Is.EqualTo(2.33).Within(0.01));
+            Assert.That(solution.Solution[1], Is.EqualTo(2.66).Within(0.01));
+        });
+    }
+
+    [Test]
+    public void TestSimpleLPWithNoIntegerSolutionMPSFixed()
+    {
+        const string lp = """
+                          NAME
+                          ROWS
+                           N  R0
+                           L  R1
+                           L  R2
+                          COLUMNS
+                              C1        R0        -5.000000000   R1        1.0000000000
+                              C1        R2        4.0000000000
+                              C2        R0        -6.000000000   R1        1.0000000000
+                              C2        R2        7.0000000000
+                          RHS
+                              RHS       R1        5.0000000000   R2        28.000000000
+                          ENDATA
+                          """;
+        var solution = _lpsolve!.Solve(lp, LPFileFormat.MPS);
+        Assert.Multiple(() =>
+        {
+            Assert.That(solution.Objective, Is.EqualTo(-27.66).Within(0.01));
             Assert.That(solution.Solution[0], Is.EqualTo(2.33).Within(0.01));
             Assert.That(solution.Solution[1], Is.EqualTo(2.66).Within(0.01));
         });
@@ -190,6 +244,38 @@ public class LpSolveTests
         Assert.Multiple(() =>
         {
             Assert.That(solution.Objective, Is.EqualTo(27.0));
+            Assert.That(solution.Solution[0], Is.EqualTo(3.0));
+            Assert.That(solution.Solution[1], Is.EqualTo(2.0));
+        });
+    }
+
+    [Test]
+    public void TestSimpleILPMPSFixed()
+    {
+        const string lp = """
+                          NAME
+                          ROWS
+                           N  R0
+                           L  R1
+                           L  R2
+                          COLUMNS
+                              MARK0000  'MARKER'                 'INTORG'
+                              C1        R0        -5.000000000   R1        1.0000000000
+                              C1        R2        4.0000000000
+                              C2        R0        -6.000000000   R1        1.0000000000
+                              C2        R2        7.0000000000
+                              MARK0001  'MARKER'                 'INTEND'
+                          RHS
+                              RHS       R1        5.0000000000   R2        28.000000000
+                          BOUNDS
+                           LO BND       C1        0.0000000000
+                           LO BND       C2        0.0000000000
+                          ENDATA
+                          """;
+        var solution = _lpsolve!.Solve(lp, LPFileFormat.MPS);
+        Assert.Multiple(() =>
+        {
+            Assert.That(solution.Objective, Is.EqualTo(-27.0));
             Assert.That(solution.Solution[0], Is.EqualTo(3.0));
             Assert.That(solution.Solution[1], Is.EqualTo(2.0));
         });
