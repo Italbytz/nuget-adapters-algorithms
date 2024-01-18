@@ -94,7 +94,7 @@ public class LpSolveTests
                               RHS       R1        5.0000000000   R2        12.000000000
                           ENDATA
                           """;
-        var solution = _lpsolve!.Solve(lp, LPFileFormat.MPS);
+        var solution = _lpsolve!.Solve(lp, LPFileFormat.MPS_FIXED);
         Assert.Multiple(() =>
         {
             Assert.That(solution.Objective, Is.EqualTo(-27.0));
@@ -180,7 +180,7 @@ public class LpSolveTests
                               RHS       R1        5.0000000000   R2        28.000000000
                           ENDATA
                           """;
-        var solution = _lpsolve!.Solve(lp, LPFileFormat.MPS);
+        var solution = _lpsolve!.Solve(lp, LPFileFormat.MPS_FIXED);
         Assert.Multiple(() =>
         {
             Assert.That(solution.Objective, Is.EqualTo(-27.66).Within(0.01));
@@ -272,7 +272,7 @@ public class LpSolveTests
                            LO BND       C2        0.0000000000
                           ENDATA
                           """;
-        var solution = _lpsolve!.Solve(lp, LPFileFormat.MPS);
+        var solution = _lpsolve!.Solve(lp, LPFileFormat.MPS_FIXED);
         Assert.Multiple(() =>
         {
             Assert.That(solution.Objective, Is.EqualTo(-27.0));

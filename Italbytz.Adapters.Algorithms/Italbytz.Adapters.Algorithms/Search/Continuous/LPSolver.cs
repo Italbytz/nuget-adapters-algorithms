@@ -24,23 +24,7 @@ public class LPSolver : ILPSolver
         outputFile.Write(model);
         outputFile.Close();
 
-        LpSolve lp;
-        switch (format)
-        {
-            case LPFileFormat.lp_solve:
-                lp = LpSolve.read_LP(lpTempFile, 0, null);
-                break;
-            case LPFileFormat.MPS:
-                lp = LpSolve.read_MPS(lpTempFile, 0,
-                    lpsolve_mps_options.MPS_FIXED);
-                break;
-            default:
-                throw new ArgumentOutOfRangeException(nameof(format), format,
-                    null);
-        }
-
-        lp.print_lp();
-        return RunLP(lp);
+        return SolveFile(lpTempFile, format);
     }
 
     public ILPSolution Solve(ILPModel model)
@@ -70,6 +54,27 @@ public class LPSolver : ILPSolver
                 new[] { 0.0 }.Concat(constraint.Coefficients).ToArray(),
                 constraintType, constraint.RHS);
         }
+
+        lp.print_lp();
+        return RunLP(lp);
+    }
+
+    public ILPSolution SolveFile(string filename, LPFileFormat format)
+    {
+        var lp = format switch
+        {
+            LPFileFormat.lp_solve => LpSolve.read_LP(filename, 0, null),
+            LPFileFormat.MPS_FIXED => LpSolve.read_MPS(filename, 0,
+                lpsolve_mps_options.MPS_FIXED),
+            LPFileFormat.MPS_FREE => LpSolve.read_MPS(filename, 0,
+                lpsolve_mps_options.MPS_FREE),
+            LPFileFormat.MPS_IBM => LpSolve.read_MPS(filename, 0,
+                lpsolve_mps_options.MPS_IBM),
+            LPFileFormat.MPS_NEGOBJCONST => LpSolve.read_MPS(filename, 0,
+                lpsolve_mps_options.MPS_NEGOBJCONST),
+            _ => throw new ArgumentOutOfRangeException(nameof(format), format,
+                null)
+        };
 
         lp.print_lp();
         return RunLP(lp);
