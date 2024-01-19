@@ -4,43 +4,32 @@ namespace Italbytz.Adapters.Algorithms.Tests.Environment.TwoPly;
 
 public class TwoPlyGameTree
 {
-    public Func<TwoPlyGameState, List<MoveToAction>> Actions { get; } =
-        state => { return null; };
+    private readonly ExtendableMap aima3eFig5_2;
+
+    public TwoPlyGameTree()
+    {
+        aima3eFig5_2 = new ExtendableMap();
+        aima3eFig5_2.AddUnidirectionalLink("A", "B", 1.0);
+        aima3eFig5_2.AddUnidirectionalLink("A", "C", 1.0);
+        aima3eFig5_2.AddUnidirectionalLink("A", "D", 1.0);
+        aima3eFig5_2.AddUnidirectionalLink("B", "E", 1.0);
+        aima3eFig5_2.AddUnidirectionalLink("B", "F", 1.0);
+        aima3eFig5_2.AddUnidirectionalLink("B", "G", 1.0);
+        aima3eFig5_2.AddUnidirectionalLink("C", "H", 1.0);
+        aima3eFig5_2.AddUnidirectionalLink("C", "I", 1.0);
+        aima3eFig5_2.AddUnidirectionalLink("C", "J", 1.0);
+        aima3eFig5_2.AddUnidirectionalLink("D", "K", 1.0);
+        aima3eFig5_2.AddUnidirectionalLink("D", "L", 1.0);
+        aima3eFig5_2.AddUnidirectionalLink("D", "M", 1.0);
+
+        Actions = GetActions;
+    }
+
+    private List<MoveToAction> GetActions(TwoPlyGameState state)
+    {
+        var nextPossibleLocations = aima3eFig5_2.GetPossibleNextLocations(state.Location);
+        return nextPossibleLocations.Select(nextLocation => new MoveToAction(nextLocation)).ToList();
+    }
+
+    public Func<TwoPlyGameState, List<MoveToAction>> Actions { get; }
 }
-
-/*
-public class TwoPlyGameTree {
-   Map aima3eFig5_2;
-
-   public TwoPlyGameTree() {
-   aima3eFig5_2 = new ExtendableMap() {
-   {
-   addUnidirectionalLink("A", "B", 1.0);
-   addUnidirectionalLink("A", "C", 1.0);
-   addUnidirectionalLink("A", "D", 1.0);
-   addUnidirectionalLink("B", "E", 1.0);
-   addUnidirectionalLink("B", "F", 1.0);
-   addUnidirectionalLink("B", "G", 1.0);
-   addUnidirectionalLink("C", "H", 1.0);
-   addUnidirectionalLink("C", "I", 1.0);
-   addUnidirectionalLink("C", "J", 1.0);
-   addUnidirectionalLink("D", "K", 1.0);
-   addUnidirectionalLink("D", "L", 1.0);
-   addUnidirectionalLink("D", "M", 1.0);
-   }
-   };
-   }
-
-   public List<MoveToAction> getActions(TwoPlyGameState state) {
-   List<MoveToAction> possibleActions = new ArrayList<>();
-   List<String> nextPossibleLocations = aima3eFig5_2.getPossibleNextLocations(state.getLocation());
-   for (String nextLocation : nextPossibleLocations) {
-   MoveToAction action = new MoveToAction(nextLocation);
-   possibleActions.add(action);
-   }
-   return possibleActions;
-   }
-
-   }
-
-*/

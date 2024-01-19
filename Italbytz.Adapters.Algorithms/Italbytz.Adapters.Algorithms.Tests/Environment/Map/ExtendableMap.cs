@@ -32,7 +32,7 @@ public class ExtendableMap : IMap
     /**
      * Creates an empty map.
      */
-    protected ExtendableMap()
+    public ExtendableMap()
     {
         _links = new LabeledGraph<string, double>();
         _locationPositions = new Dictionary<string, Point2D>();
