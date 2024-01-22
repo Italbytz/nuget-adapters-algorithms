@@ -1,3 +1,7 @@
+// The original version of this file is part of <see href="https://github.com/aimacode/aima-java"/> which is released under
+// MIT License
+// Copyright (c) 2015 aima-java contributors
+
 using Italbytz.Adapters.Algorithms.Tests.Environment.Map;
 
 namespace Italbytz.Adapters.Algorithms.Tests.Environment.TwoPly;
@@ -25,11 +29,13 @@ public class TwoPlyGameTree
         Actions = GetActions;
     }
 
+    public Func<TwoPlyGameState, List<MoveToAction>> Actions { get; }
+
     private List<MoveToAction> GetActions(TwoPlyGameState state)
     {
-        var nextPossibleLocations = aima3eFig5_2.GetPossibleNextLocations(state.Location);
-        return nextPossibleLocations.Select(nextLocation => new MoveToAction(nextLocation)).ToList();
+        var nextPossibleLocations =
+            aima3eFig5_2.GetPossibleNextLocations(state.Location);
+        return nextPossibleLocations
+            .Select(nextLocation => new MoveToAction(nextLocation)).ToList();
     }
-
-    public Func<TwoPlyGameState, List<MoveToAction>> Actions { get; }
 }
