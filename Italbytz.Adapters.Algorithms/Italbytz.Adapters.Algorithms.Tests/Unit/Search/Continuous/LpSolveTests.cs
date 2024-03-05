@@ -7,13 +7,15 @@ namespace Italbytz.Adapters.Algorithms.Tests.Unit.Search.Continuous;
 
 public class LpSolveTests
 {
-    private static ILoggerFactory _loggerFactory = NullLoggerFactory.Instance;
+    private static readonly ILoggerFactory _loggerFactory =
+        NullLoggerFactory.Instance;
+
     private LPSolver? _lpsolve;
 
     [SetUp]
     public void Setup()
     {
-        _loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+        //_loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
         _lpsolve = new LPSolver(_loggerFactory);
     }
 

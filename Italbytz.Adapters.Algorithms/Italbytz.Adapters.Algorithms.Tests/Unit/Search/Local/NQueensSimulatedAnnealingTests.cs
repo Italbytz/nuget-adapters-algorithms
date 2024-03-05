@@ -11,12 +11,12 @@ namespace Italbytz.Adapters.Algorithms.Tests.Unit.Search.Local;
 
 public class NQueensSimulatedAnnealingTests
 {
-    private ILoggerFactory _loggerFactory = NullLoggerFactory.Instance;
+    private readonly ILoggerFactory _loggerFactory = NullLoggerFactory.Instance;
 
     [SetUp]
     public void Setup()
     {
-        _loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+        //_loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
     }
 
     [Test]

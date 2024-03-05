@@ -14,7 +14,7 @@ public class NQueensGeneticAlgorithmTests
     [SetUp]
     public void Setup()
     {
-        _loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+        //_loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
     }
 
     [Test]

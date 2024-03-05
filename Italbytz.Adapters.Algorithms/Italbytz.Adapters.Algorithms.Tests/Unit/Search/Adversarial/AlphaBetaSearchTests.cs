@@ -11,19 +11,22 @@ using Microsoft.Extensions.Logging.Abstractions;
 
 namespace Italbytz.Adapters.Algorithms.Tests.Unit.Search.Adversarial;
 
-public class MinimaxSearchTests
+public class AlphaBetaSearchTests
 {
     private static ILoggerFactory _loggerFactory = NullLoggerFactory.Instance;
+
+    private AlphaBetaSearch<TwoPlyGameState, MoveToAction, string>
+        _alphaBetaSearch;
+
     private IGame<TwoPlyGameState, MoveToAction, string> _game;
-    private MinimaxSearch<TwoPlyGameState, MoveToAction, string> _minimaxSearch;
 
     [SetUp]
     public void Setup()
     {
         //_loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
         _game = new TwoPlyGame();
-        _minimaxSearch =
-            new MinimaxSearch<TwoPlyGameState, MoveToAction, string>(_game);
+        _alphaBetaSearch =
+            new AlphaBetaSearch<TwoPlyGameState, MoveToAction, string>(_game);
     }
 
     [Test]
@@ -45,7 +48,7 @@ public class MinimaxSearchTests
             Assert.That(_game.InitialState.ToString(), Is.EqualTo("A"));
             Assert.That(_game.Player(_game.InitialState), Is.EqualTo("MAX"));
             Assert.That(
-                _minimaxSearch.MakeDecision(_game.InitialState).ToString(),
+                _alphaBetaSearch.MakeDecision(_game.InitialState).ToString(),
                 Is.EqualTo("MoveToAction[name=moveTo, location=B]"));
         });
     }
