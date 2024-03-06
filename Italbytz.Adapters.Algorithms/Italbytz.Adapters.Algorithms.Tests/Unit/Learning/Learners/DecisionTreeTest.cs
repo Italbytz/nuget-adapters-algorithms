@@ -4,6 +4,7 @@
 
 using Italbytz.Adapters.Algorithms.Learning.Inductive;
 using Italbytz.Adapters.Algorithms.Learning.Learners;
+using Italbytz.Adapters.Algorithms.Tests.Unit.Learning.Framework;
 
 namespace Italbytz.Adapters.Algorithms.Tests.Unit.Learning.Learners;
 
@@ -19,10 +20,64 @@ public class DecisionTreeTest
     {
         var learner = new DecisionTreeLearner(
             CreateActualRestaurantDecisionTree(), "Unable to clasify");
+        var results = learner.Test(TestDataSetFactory.GetRestaurantDataSet());
+        Assert.Multiple(() =>
+        {
+            Assert.That(results[0], Is.EqualTo(12));
+            Assert.That(results[1], Is.EqualTo(0));
+        });
     }
 
     private static DecisionTree CreateActualRestaurantDecisionTree()
     {
-        throw new NotImplementedException();
+        // raining node
+        var raining = new DecisionTree("raining");
+        raining.AddLeaf(Util.Util.Yes, Util.Util.Yes);
+        raining.AddLeaf(Util.Util.No, Util.Util.No);
+
+        // bar node
+        var bar = new DecisionTree("bar");
+        bar.AddLeaf(Util.Util.Yes, Util.Util.Yes);
+        bar.AddLeaf(Util.Util.No, Util.Util.No);
+
+        // friday saturday node
+        var frisat = new DecisionTree("fri/sat");
+        frisat.AddLeaf(Util.Util.Yes, Util.Util.Yes);
+        frisat.AddLeaf(Util.Util.No, Util.Util.No);
+
+        // second alternate node to the right of the diagram below hungry
+        var alternate2 = new DecisionTree("alternate");
+        alternate2.AddNode(Util.Util.Yes, raining);
+        alternate2.AddLeaf(Util.Util.No, Util.Util.Yes);
+
+        // reservation node
+        var reservation = new DecisionTree("reservation");
+        frisat.AddNode(Util.Util.No, bar);
+        frisat.AddLeaf(Util.Util.Yes, Util.Util.Yes);
+
+        // first alternate node to the left of the diagram below waitestimate
+        var alternate1 = new DecisionTree("alternate");
+        alternate1.AddNode(Util.Util.No, reservation);
+        alternate1.AddNode(Util.Util.Yes, frisat);
+
+        // hungry node
+        var hungry = new DecisionTree("hungry");
+        hungry.AddLeaf(Util.Util.No, Util.Util.Yes);
+        hungry.AddNode(Util.Util.Yes, alternate2);
+
+        // wait estimate node
+        var waitEstimate = new DecisionTree("wait_estimate");
+        waitEstimate.AddLeaf(">60", Util.Util.No);
+        waitEstimate.AddNode("30-60", alternate1);
+        waitEstimate.AddNode("10-30", hungry);
+        waitEstimate.AddLeaf("0-10", Util.Util.Yes);
+
+        // patrons node
+        var patrons = new DecisionTree("patrons");
+        patrons.AddLeaf("None", Util.Util.No);
+        patrons.AddLeaf("Some", Util.Util.Yes);
+        patrons.AddNode("Full", waitEstimate);
+
+        return patrons;
     }
 }
