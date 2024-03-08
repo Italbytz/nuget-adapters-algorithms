@@ -62,6 +62,23 @@ public class DecisionTreeTest
         Assert.That(dt.Count, Is.EqualTo(26));
     }
 
+    [Test]
+    public void TestStumpPredictionForDataSet()
+    {
+        var ds = TestDataSetFactory.GetRestaurantDataSet();
+        var unmatchedValues = new List<string> { Util.Util.No };
+        var tree = DecisionTree.GetStumpFor(ds, "hungry", Util.Util.Yes,
+            Util.Util.Yes,
+            unmatchedValues, "Unable to Classify");
+        var learner = new DecisionTreeLearner(tree, "Unable to Classify");
+        var result = learner.Test(ds);
+        Assert.Multiple(() =>
+        {
+            Assert.That(result[0], Is.EqualTo(5));
+            Assert.That(result[1], Is.EqualTo(7));
+        });
+    }
+
     private static DecisionTree CreateInducedRestaurantDecisionTree()
     {
         var frisat = new DecisionTree("fri/sat");

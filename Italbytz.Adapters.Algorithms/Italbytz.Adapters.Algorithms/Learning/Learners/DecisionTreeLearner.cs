@@ -1,4 +1,5 @@
-using System;
+using System.Collections.Generic;
+using System.Linq;
 using Italbytz.Adapters.Algorithms.Learning.Inductive;
 using Italbytz.Ports.Algorithms.AI.Learning;
 
@@ -6,6 +7,11 @@ namespace Italbytz.Adapters.Algorithms.Learning.Learners;
 
 public class DecisionTreeLearner : ILearner
 {
+    public DecisionTreeLearner()
+    {
+        DefaultValue = "Unable To Classify";
+    }
+
     public DecisionTreeLearner(DecisionTree decisionTree, string defaultValue)
     {
         Tree = decisionTree;
@@ -17,12 +23,14 @@ public class DecisionTreeLearner : ILearner
 
     public void Train(IDataSet ds)
     {
-        throw new NotImplementedException();
+        var attributes = ds.GetNonTargetAttributes();
+        Tree = DecisionTreeLearning(ds, attributes,
+            new ConstantDecisionTree(DefaultValue));
     }
 
     public string Predict(IExample e)
     {
-        throw new NotImplementedException();
+        return (string)Tree.Predict(e);
     }
 
     public int[] Test(IDataSet ds)
@@ -36,5 +44,60 @@ public class DecisionTreeLearner : ILearner
                 results[1] = results[1] + 1;
 
         return results;
+    }
+
+    private DecisionTree DecisionTreeLearning(IDataSet ds,
+        IEnumerable<string> attributeNames, ConstantDecisionTree defaultTree)
+    {
+        if (ds.Examples.Count == 0)
+            return defaultTree;
+        if (AllExamplesHaveSameClassification(ds))
+            return new ConstantDecisionTree(ds.Examples[0].TargetValue());
+        if (!attributeNames.Any())
+            return MajorityValue(ds);
+        var chosenAttribute = ChooseAttribute(ds, attributeNames);
+        var tree = new DecisionTree(chosenAttribute);
+        var m = MajorityValue(ds);
+        var values = ds.GetPossibleAttributeValues(chosenAttribute);
+        foreach (var v in values)
+        {
+            var filtered = ds.MatchingDataSet(chosenAttribute, v);
+
+            var newAttribs =
+                Util.Util.RemoveFrom(attributeNames, chosenAttribute);
+            var subTree = DecisionTreeLearning(filtered, newAttribs, m);
+            tree.AddNode(v, subTree);
+        }
+
+        return tree;
+    }
+
+    private static string ChooseAttribute(IDataSet ds,
+        IEnumerable<string> attributeNames)
+    {
+        var greatestGain = 0.0;
+        var attributeWithGreatestGain = attributeNames.First();
+        foreach (var attr in attributeNames)
+        {
+            var gain = ds.CalculateGainFor(attr);
+            if (!(gain > greatestGain)) continue;
+            greatestGain = gain;
+            attributeWithGreatestGain = attr;
+        }
+
+        return attributeWithGreatestGain;
+    }
+
+    private static ConstantDecisionTree MajorityValue(IDataSet ds)
+    {
+        var learner = new MajorityLearner();
+        learner.Train(ds);
+        return new ConstantDecisionTree(learner.Predict(ds.Examples[0]));
+    }
+
+    private static bool AllExamplesHaveSameClassification(IDataSet ds)
+    {
+        var classification = ds.Examples[0].TargetValue();
+        return ds.Examples.All(ex => ex.TargetValue().Equals(classification));
     }
 }

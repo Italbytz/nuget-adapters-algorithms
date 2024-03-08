@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Italbytz.Ports.Algorithms.AI.Learning;
 
 namespace Italbytz.Adapters.Algorithms.Learning.Framework;
@@ -35,5 +36,82 @@ public class DataSet : IDataSet
     public IEnumerable<string> GetPossibleAttributeValues(string attributeName)
     {
         return Specification.GetPossibleAttributeValues(attributeName);
+    }
+
+    public IDataSet EmptyDataSet()
+    {
+        return new DataSet(Specification);
+    }
+
+    public double CalculateGainFor(string parameterName)
+    {
+        var dict = SplitByAttribute(parameterName);
+        var totalSize = Examples.Count;
+        var remainder = 0.0;
+        foreach (var parameterValue in dict.Keys)
+        {
+            var reducedDataSetSize = dict[parameterValue].Examples.Count;
+            remainder += reducedDataSetSize / totalSize *
+                         dict[parameterValue].GetInformationFor();
+        }
+
+        return GetInformationFor() - remainder;
+    }
+
+    public double GetInformationFor()
+    {
+        var attributeName = Specification.TargetAttribute;
+        var counts = new Dictionary<string, int>();
+        foreach (var e in Examples)
+        {
+            var val = e.GetAttributeValueAsString(attributeName);
+            if (counts.ContainsKey(val))
+                counts[val] = counts[val] + 1;
+            else
+                counts.Add(val, 1);
+        }
+
+        var data = new List<double>(counts.Keys.Count);
+        using var iter = counts.Values.GetEnumerator();
+        for (var i = 0; i < counts.Keys.Count; i++)
+        {
+            data[i] = iter.Current;
+            iter.MoveNext();
+        }
+
+        data = Util.Util.Normalize(data);
+
+        return Util.Util.Information(data);
+    }
+
+    public IDataSet MatchingDataSet(string attributeName, string attributeValue)
+    {
+        var ds = new DataSet(Specification);
+        foreach (var e in Examples.Where(e => e
+                     .GetAttributeValueAsString(attributeName).Equals(
+                         attributeValue)))
+            ds.Examples.Add(e);
+        return ds;
+    }
+
+    private Dictionary<string, IDataSet> SplitByAttribute(string parameterName)
+    {
+        var dict = new Dictionary<string, IDataSet>();
+        foreach (var e in Examples)
+        {
+            var val = e.GetAttributeValueAsString(parameterName);
+            if (dict.ContainsKey(val))
+            {
+                dict[val].Examples.Add(e);
+            }
+            else
+            {
+                var ds = new DataSet(Specification);
+                ds.Examples.Add(e);
+                dict.Add(val, ds);
+            }
+        }
+
+        return dict;
     }
 }

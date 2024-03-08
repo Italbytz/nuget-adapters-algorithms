@@ -8,4 +8,9 @@ public interface IDataSet : IEnumerable<IExample>
     public IDataSetSpecification Specification { get; }
     IEnumerable<string> GetNonTargetAttributes();
     IEnumerable<string> GetPossibleAttributeValues(string attributeName);
+    IDataSet EmptyDataSet();
+    double CalculateGainFor(string parameterName);
+    IDataSet MatchingDataSet(string attributeName, string attributeValue);
+
+    public double GetInformationFor();
 }

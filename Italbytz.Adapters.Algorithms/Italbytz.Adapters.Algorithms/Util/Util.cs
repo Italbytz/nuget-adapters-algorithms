@@ -153,11 +153,9 @@ public static class Util
         return Math.Log(d) / Math.Log(2);
     }
 
-    public static double Information(double[] probabilities)
+    public static double Information(IEnumerable<double> probabilities)
     {
-        var total = 0.0;
-        foreach (var d in probabilities) total += -1.0 * Log2(d) * d;
-        return total;
+        return probabilities.Sum(d => -1.0 * Log2(d) * d);
     }
 
     public static List<T> RemoveFrom<T>(IEnumerable<T> list, T member)
