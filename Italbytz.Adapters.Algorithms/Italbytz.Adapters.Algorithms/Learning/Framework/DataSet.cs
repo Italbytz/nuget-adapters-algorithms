@@ -25,7 +25,7 @@ public class DataSet : IDataSet
     }
 
     public List<IExample> Examples { get; }
-    public IDataSetSpecification Specification { get; }
+    public IDataSetSpecification Specification { get; set; }
 
     public IEnumerable<string> GetNonTargetAttributes()
     {
