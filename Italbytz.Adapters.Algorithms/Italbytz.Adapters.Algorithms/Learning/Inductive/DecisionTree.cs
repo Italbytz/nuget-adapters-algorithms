@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Italbytz.Ports.Algorithms.AI.Learning;
 
 namespace Italbytz.Adapters.Algorithms.Learning.Inductive;
@@ -49,5 +50,20 @@ public class DecisionTree
         foreach (var unmatchedValue in unmatchedValues)
             dt.AddLeaf(unmatchedValue, returnValueIfUnmatched);
         return dt;
+    }
+
+    public static IEnumerable<DecisionTree> GetStumpsFor(IDataSet ds,
+        string returnValueIfMatched, string returnValueIfUnmatched)
+    {
+        var attributes = ds.GetNonTargetAttributes();
+
+        return (from attribute in attributes
+            let values = ds.GetPossibleAttributeValues(attribute)
+            from value in values
+            let unmatchedValues =
+                Util.Util.RemoveFrom(ds.GetPossibleAttributeValues(attribute),
+                    value)
+            select GetStumpFor(ds, attribute, value, returnValueIfMatched,
+                unmatchedValues, returnValueIfUnmatched)).ToList();
     }
 }

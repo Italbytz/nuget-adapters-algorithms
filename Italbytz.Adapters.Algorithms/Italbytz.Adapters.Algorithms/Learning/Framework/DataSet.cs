@@ -25,4 +25,15 @@ public class DataSet : IDataSet
 
     public List<IExample> Examples { get; }
     public IDataSetSpecification Specification { get; }
+
+    public IEnumerable<string> GetNonTargetAttributes()
+    {
+        return Util.Util.RemoveFrom(Specification.GetAttributeNames(),
+            Specification.TargetAttribute);
+    }
+
+    public IEnumerable<string> GetPossibleAttributeValues(string attributeName)
+    {
+        return Specification.GetPossibleAttributeValues(attributeName);
+    }
 }

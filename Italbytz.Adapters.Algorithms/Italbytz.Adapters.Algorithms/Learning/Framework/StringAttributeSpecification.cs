@@ -13,8 +13,9 @@ public class StringAttributeSpecification : IAttributeSpecification
         AttributePossibleValues = attributePossibleValues;
     }
 
+    public IEnumerable<string> AttributePossibleValues { get; }
+
     public string AttributeName { get; }
-    private IEnumerable<string> AttributePossibleValues { get; }
 
     /*public StringAttributeSpecification(string attributeName, IEnumerable<string> attributePossibleValues) : this(attributeName, new List<string>(attributePossibleValues))
     {

@@ -41,6 +41,16 @@ public class DataSetSpecification : IDataSetSpecification
         throw new SystemException($"no attribute spec for {name}");
     }
 
+    public IEnumerable<string> GetPossibleAttributeValues(string attributeName)
+    {
+        foreach (var ats in _attributeSpecifications)
+            if (ats.AttributeName.Equals(attributeName))
+                return ((StringAttributeSpecification)ats)
+                    .AttributePossibleValues;
+
+        throw new SystemException($"No such attribute {attributeName}");
+    }
+
     public void DefineStringAttribute(string name, string[] attributeValues)
     {
         _attributeSpecifications.Add(new StringAttributeSpecification(name,

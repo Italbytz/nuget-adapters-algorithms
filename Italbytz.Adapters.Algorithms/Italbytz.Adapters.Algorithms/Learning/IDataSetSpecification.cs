@@ -10,4 +10,5 @@ public interface IDataSetSpecification
     public IEnumerable<string> GetAttributeNames();
 
     public IAttributeSpecification GetAttributeSpecFor(string name);
+    IEnumerable<string> GetPossibleAttributeValues(string attributeName);
 }

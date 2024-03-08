@@ -160,7 +160,7 @@ public static class Util
         return total;
     }
 
-    public static List<T> RemoveFrom<T>(List<T> list, T member)
+    public static List<T> RemoveFrom<T>(IEnumerable<T> list, T member)
     {
         var newList = new List<T>(list);
         newList.Remove(member);

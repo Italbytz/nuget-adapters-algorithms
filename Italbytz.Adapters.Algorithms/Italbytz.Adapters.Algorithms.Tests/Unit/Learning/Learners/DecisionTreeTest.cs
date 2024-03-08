@@ -53,6 +53,15 @@ public class DecisionTreeTest
         Assert.That(dt, Is.Not.Null);
     }
 
+    [Test]
+    public void TestStumpCreationForDataSet()
+    {
+        var ds = TestDataSetFactory.GetRestaurantDataSet();
+        var dt = DecisionTree.GetStumpsFor(ds, Util.Util.Yes,
+            "Unable to classify");
+        Assert.That(dt.Count, Is.EqualTo(26));
+    }
+
     private static DecisionTree CreateInducedRestaurantDecisionTree()
     {
         var frisat = new DecisionTree("fri/sat");

@@ -6,4 +6,6 @@ public interface IDataSet : IEnumerable<IExample>
 {
     public List<IExample> Examples { get; }
     public IDataSetSpecification Specification { get; }
+    IEnumerable<string> GetNonTargetAttributes();
+    IEnumerable<string> GetPossibleAttributeValues(string attributeName);
 }
