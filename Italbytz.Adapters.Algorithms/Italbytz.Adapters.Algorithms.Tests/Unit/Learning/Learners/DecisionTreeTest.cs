@@ -28,6 +28,46 @@ public class DecisionTreeTest
         });
     }
 
+    [Test]
+    public void TestInducedDecisionTreeClassifiesRestaurantDataSetCorrectly()
+    {
+        var learner = new DecisionTreeLearner(
+            CreateInducedRestaurantDecisionTree(), "Unable to clasify");
+        var results = learner.Test(TestDataSetFactory.GetRestaurantDataSet());
+        Assert.Multiple(() =>
+        {
+            Assert.That(results[0], Is.EqualTo(12));
+            Assert.That(results[1], Is.EqualTo(0));
+        });
+    }
+
+    private static DecisionTree CreateInducedRestaurantDecisionTree()
+    {
+        var frisat = new DecisionTree("fri/sat");
+        frisat.AddLeaf(Util.Util.Yes, Util.Util.Yes);
+        frisat.AddLeaf(Util.Util.No, Util.Util.No);
+
+        // type node
+        var type = new DecisionTree("type");
+        type.AddLeaf("French", Util.Util.Yes);
+        type.AddLeaf("Italian", Util.Util.No);
+        type.AddNode("Thai", frisat);
+        type.AddLeaf("Burger", Util.Util.Yes);
+
+        // hungry node
+        var hungry = new DecisionTree("hungry");
+        hungry.AddLeaf(Util.Util.No, Util.Util.No);
+        hungry.AddNode(Util.Util.Yes, type);
+
+        // patrons node
+        var patrons = new DecisionTree("patrons");
+        patrons.AddLeaf("None", Util.Util.No);
+        patrons.AddLeaf("Some", Util.Util.Yes);
+        patrons.AddNode("Full", hungry);
+
+        return patrons;
+    }
+
     private static DecisionTree CreateActualRestaurantDecisionTree()
     {
         // raining node
