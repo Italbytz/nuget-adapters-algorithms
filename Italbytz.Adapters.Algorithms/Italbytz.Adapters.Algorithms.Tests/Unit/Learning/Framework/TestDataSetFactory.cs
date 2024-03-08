@@ -27,7 +27,7 @@ public class TestDataSetFactory
     public static IDataSet GetRestaurantDataSet()
     {
         var spec = CreateRestaurantDataSetSpec();
-        return new DataSetFactory().FromString(restaurant, spec, "\\s+");
+        return DataSetFactory.FromString(restaurant, spec, " ");
     }
 
     private static DataSetSpecification CreateRestaurantDataSetSpec()

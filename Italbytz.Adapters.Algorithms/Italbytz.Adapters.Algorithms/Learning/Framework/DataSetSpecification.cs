@@ -22,7 +22,23 @@ public class DataSetSpecification : IDataSetSpecification
         if (_attributeSpecifications.Count != attributes.Count)
             throw new SystemException(
                 $"size mismatch specsize = {_attributeSpecifications.Count} attributes size = {attributes.Count}");
-        throw new NotImplementedException();
+        return _attributeSpecifications.Zip(attributes, Tuple.Create)
+            .All(au => au.Item1.IsValid(au.Item2));
+    }
+
+    public IEnumerable<string> GetAttributeNames()
+    {
+        return _attributeSpecifications.Select(ats => ats.AttributeName)
+            .ToList();
+    }
+
+    public IAttributeSpecification GetAttributeSpecFor(string name)
+    {
+        var spec =
+            _attributeSpecifications.FirstOrDefault(spec =>
+                spec.AttributeName.Equals(name));
+        if (spec != null) return spec;
+        throw new SystemException($"no attribute spec for {name}");
     }
 
     public void DefineStringAttribute(string name, string[] attributeValues)

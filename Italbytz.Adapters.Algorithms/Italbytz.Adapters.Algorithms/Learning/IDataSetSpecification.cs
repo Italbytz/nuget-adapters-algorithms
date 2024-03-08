@@ -4,5 +4,10 @@ namespace Italbytz.Ports.Algorithms.AI.Learning;
 
 public interface IDataSetSpecification
 {
-    bool IsValid(IEnumerable<string> uncheckedAttributes);
+    public string TargetAttribute { get; }
+    public bool IsValid(IEnumerable<string> uncheckedAttributes);
+
+    public IEnumerable<string> GetAttributeNames();
+
+    public IAttributeSpecification GetAttributeSpecFor(string name);
 }

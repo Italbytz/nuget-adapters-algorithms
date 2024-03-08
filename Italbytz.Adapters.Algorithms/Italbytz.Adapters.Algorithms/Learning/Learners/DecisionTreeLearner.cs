@@ -27,6 +27,14 @@ public class DecisionTreeLearner : ILearner
 
     public int[] Test(IDataSet ds)
     {
-        throw new NotImplementedException();
+        var results = new[] { 0, 0 };
+
+        foreach (var e in ds.Examples)
+            if (e.TargetValue().Equals(Tree.Predict(e)))
+                results[0] = results[0] + 1;
+            else
+                results[1] = results[1] + 1;
+
+        return results;
     }
 }

@@ -1,3 +1,5 @@
+using Italbytz.Ports.Algorithms.AI.Learning;
+
 namespace Italbytz.Adapters.Algorithms.Learning.Inductive;
 
 public class ConstantDecisionTree : DecisionTree
@@ -8,4 +10,9 @@ public class ConstantDecisionTree : DecisionTree
     }
 
     public string Value { get; set; }
+
+    public override object Predict(IExample e)
+    {
+        return Value;
+    }
 }

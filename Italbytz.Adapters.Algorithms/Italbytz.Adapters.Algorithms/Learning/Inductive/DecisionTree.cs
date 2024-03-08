@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using Italbytz.Ports.Algorithms.AI.Learning;
 
 namespace Italbytz.Adapters.Algorithms.Learning.Inductive;
 
@@ -13,10 +15,12 @@ public class DecisionTree
     public DecisionTree(string attributeName)
     {
         AttributeName = attributeName;
+        if (attributeName == null)
+            throw new ArgumentNullException(nameof(attributeName));
         _nodes = new Dictionary<string, DecisionTree>();
     }
 
-    public string AttributeName { get; set; }
+    private string? AttributeName { get; }
 
     public void AddLeaf(string attributeValue, string decision)
     {
@@ -26,5 +30,13 @@ public class DecisionTree
     public void AddNode(string attributeValue, DecisionTree tree)
     {
         _nodes[attributeValue] = tree;
+    }
+
+    public virtual object Predict(IExample e)
+    {
+        var attrValue = e.GetAttributeValueAsString(AttributeName);
+        if (_nodes.ContainsKey(attrValue))
+            return _nodes[attrValue].Predict(e);
+        throw new Exception($"no node exists for attribute value {attrValue}");
     }
 }

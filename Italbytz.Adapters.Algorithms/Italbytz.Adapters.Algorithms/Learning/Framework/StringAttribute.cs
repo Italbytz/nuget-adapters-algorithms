@@ -4,12 +4,23 @@ namespace Italbytz.Adapters.Algorithms.Learning.Framework;
 
 public class StringAttribute : IAttribute
 {
-    private IAttributeSpecification _spec;
-    private string _value;
+    private readonly IAttributeSpecification _spec;
+    private readonly string _value;
 
     public StringAttribute(string value, StringAttributeSpecification spec)
     {
         _value = value;
         _spec = spec;
+    }
+
+
+    public string Name()
+    {
+        return _spec.AttributeName.Trim();
+    }
+
+    public string ValueAsString()
+    {
+        return _value.Trim();
     }
 }
