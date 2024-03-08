@@ -41,6 +41,18 @@ public class DecisionTreeTest
         });
     }
 
+    [Test]
+    public void TestStumpCreationForSpecifiedAttributeValuePair()
+    {
+        var ds = TestDataSetFactory.GetRestaurantDataSet();
+        var unmatchedValues = new List<string>();
+        unmatchedValues.Add(Util.Util.No);
+        var dt = DecisionTree.GetStumpFor(ds, "alternate", Util.Util.Yes,
+            Util.Util.Yes,
+            unmatchedValues, Util.Util.No);
+        Assert.That(dt, Is.Not.Null);
+    }
+
     private static DecisionTree CreateInducedRestaurantDecisionTree()
     {
         var frisat = new DecisionTree("fri/sat");

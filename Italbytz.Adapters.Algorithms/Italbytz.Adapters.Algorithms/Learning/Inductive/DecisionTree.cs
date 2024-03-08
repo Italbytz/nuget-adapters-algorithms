@@ -39,4 +39,15 @@ public class DecisionTree
             return _nodes[attrValue].Predict(e);
         throw new Exception($"no node exists for attribute value {attrValue}");
     }
+
+    public static DecisionTree GetStumpFor(IDataSet ds, string attributeName,
+        string attributeValue, string returnValueIfMatched,
+        List<string> unmatchedValues, string returnValueIfUnmatched)
+    {
+        var dt = new DecisionTree(attributeName);
+        dt.AddLeaf(attributeValue, returnValueIfMatched);
+        foreach (var unmatchedValue in unmatchedValues)
+            dt.AddLeaf(unmatchedValue, returnValueIfUnmatched);
+        return dt;
+    }
 }
