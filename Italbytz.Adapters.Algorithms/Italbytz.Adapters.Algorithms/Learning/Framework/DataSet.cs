@@ -62,20 +62,16 @@ public class DataSet : IDataSet
     {
         var attributeName = Specification.TargetAttribute;
         var counts = new Dictionary<string, int>();
-        foreach (var e in Examples)
-        {
-            var val = e.GetAttributeValueAsString(attributeName);
-            if (counts.ContainsKey(val))
+        foreach (var val in Examples.Select(e =>
+                     e.GetAttributeValueAsString(attributeName)))
+            if (!counts.TryAdd(val, 1))
                 counts[val] = counts[val] + 1;
-            else
-                counts.Add(val, 1);
-        }
 
         var data = new List<double>(counts.Keys.Count);
         using var iter = counts.Values.GetEnumerator();
         for (var i = 0; i < counts.Keys.Count; i++)
         {
-            data[i] = iter.Current;
+            data.Add(iter.Current);
             iter.MoveNext();
         }
 
