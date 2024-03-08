@@ -67,13 +67,7 @@ public class DataSet : IDataSet
             if (!counts.TryAdd(val, 1))
                 counts[val] = counts[val] + 1;
 
-        var data = new List<double>(counts.Keys.Count);
-        using var iter = counts.Values.GetEnumerator();
-        for (var i = 0; i < counts.Keys.Count; i++)
-        {
-            data.Add(iter.Current);
-            iter.MoveNext();
-        }
+        var data = counts.Values.ToList().ConvertAll(Convert.ToDouble);
 
         data = Util.Util.Normalize(data);
 
