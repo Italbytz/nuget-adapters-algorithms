@@ -7,7 +7,9 @@ namespace Italbytz.Adapters.Algorithms.Tests.Unit.Search.Continuous;
 
 public class LpSolveTests
 {
-    private static readonly ILoggerFactory _loggerFactory =
+    private const bool ConsoleLogging = false;
+
+    private ILoggerFactory _loggerFactory =
         NullLoggerFactory.Instance;
 
     private LPSolver? _lpsolve;
@@ -15,7 +17,9 @@ public class LpSolveTests
     [SetUp]
     public void Setup()
     {
-        //_loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+        if (ConsoleLogging)
+            _loggerFactory =
+                LoggerFactory.Create(builder => builder.AddConsole());
         _lpsolve = new LPSolver(_loggerFactory);
     }
 

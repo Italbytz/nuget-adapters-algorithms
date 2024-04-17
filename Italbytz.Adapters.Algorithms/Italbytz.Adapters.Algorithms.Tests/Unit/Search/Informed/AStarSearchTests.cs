@@ -16,13 +16,17 @@ namespace Italbytz.Adapters.Algorithms.Tests.Unit.Search.Informed;
 
 public class AStarSearchTests
 {
-    private static readonly ILoggerFactory _loggerFactory =
+    private const bool ConsoleLogging = false;
+
+    private static ILoggerFactory _loggerFactory =
         NullLoggerFactory.Instance;
 
     [SetUp]
     public void Setup()
     {
-        //_loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+        if (ConsoleLogging)
+            _loggerFactory =
+                LoggerFactory.Create(builder => builder.AddConsole());
     }
 
     [Test]

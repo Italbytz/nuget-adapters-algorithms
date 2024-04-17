@@ -9,12 +9,15 @@ namespace Italbytz.Adapters.Algorithms.Tests.Unit.Search.Local;
 
 public class NQueensGeneticAlgorithmTests
 {
+    private const bool ConsoleLogging = false;
     private ILoggerFactory _loggerFactory = NullLoggerFactory.Instance;
 
     [SetUp]
     public void Setup()
     {
-        //_loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+        if (ConsoleLogging)
+            _loggerFactory =
+                LoggerFactory.Create(builder => builder.AddConsole());
     }
 
     [Test]

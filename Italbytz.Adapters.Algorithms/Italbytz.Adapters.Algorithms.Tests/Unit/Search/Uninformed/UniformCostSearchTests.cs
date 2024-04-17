@@ -16,13 +16,17 @@ namespace Italbytz.Adapters.Algorithms.Tests.Unit.Search.Uninformed;
 
 public class UniformCostSearchTests
 {
-    private static readonly ILoggerFactory LoggerFactory =
+    private const bool ConsoleLogging = false;
+
+    private static ILoggerFactory _loggerFactory =
         NullLoggerFactory.Instance;
 
     [SetUp]
     public void Setup()
     {
-        //_loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+        if (ConsoleLogging)
+            _loggerFactory =
+                LoggerFactory.Create(builder => builder.AddConsole());
     }
 
     [Test]
@@ -74,7 +78,7 @@ public class UniformCostSearchTests
             MapFunctions.GetResult, MapFunctions.TestGoal,
             MapFunctions.CreateDistanceStepCostFunction(romaniaMap));
         var agent = new SearchAgent<IPercept, string, MoveToAction>(problem,
-            search, LoggerFactory);
+            search, _loggerFactory);
         var actions = agent.Actions;
         return string.Join(", ", actions);
     }

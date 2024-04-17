@@ -13,17 +13,20 @@ namespace Italbytz.Adapters.Algorithms.Tests.Unit.Search.Adversarial;
 
 public class AlphaBetaSearchTests
 {
-    private static ILoggerFactory _loggerFactory = NullLoggerFactory.Instance;
+    private const bool ConsoleLogging = false;
 
     private AlphaBetaSearch<TwoPlyGameState, MoveToAction, string>
         _alphaBetaSearch;
 
     private IGame<TwoPlyGameState, MoveToAction, string> _game;
+    private ILoggerFactory _loggerFactory = NullLoggerFactory.Instance;
 
     [SetUp]
     public void Setup()
     {
-        //_loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+        if (ConsoleLogging)
+            _loggerFactory =
+                LoggerFactory.Create(builder => builder.AddConsole());
         _game = new TwoPlyGame();
         _alphaBetaSearch =
             new AlphaBetaSearch<TwoPlyGameState, MoveToAction, string>(_game);

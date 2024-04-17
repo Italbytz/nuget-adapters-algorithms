@@ -13,14 +13,17 @@ namespace Italbytz.Adapters.Algorithms.Tests.Unit.Search.Adversarial;
 
 public class MinimaxSearchTests
 {
-    private static ILoggerFactory _loggerFactory = NullLoggerFactory.Instance;
+    private const bool ConsoleLogging = false;
     private IGame<TwoPlyGameState, MoveToAction, string> _game;
+    private ILoggerFactory _loggerFactory = NullLoggerFactory.Instance;
     private MinimaxSearch<TwoPlyGameState, MoveToAction, string> _minimaxSearch;
 
     [SetUp]
     public void Setup()
     {
-        //_loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+        if (ConsoleLogging)
+            _loggerFactory =
+                LoggerFactory.Create(builder => builder.AddConsole());
         _game = new TwoPlyGame();
         _minimaxSearch =
             new MinimaxSearch<TwoPlyGameState, MoveToAction, string>(_game);

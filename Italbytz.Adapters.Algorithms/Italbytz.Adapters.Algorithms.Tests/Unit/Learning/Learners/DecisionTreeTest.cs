@@ -19,7 +19,7 @@ public class DecisionTreeTest
     public void TestActualDecisionTreeClassifiesRestaurantDataSetCorrectly()
     {
         var learner = new DecisionTreeLearner(
-            CreateActualRestaurantDecisionTree(), "Unable to clasify");
+            CreateActualRestaurantDecisionTree(), "Unable to classify");
         var results = learner.Test(TestDataSetFactory.GetRestaurantDataSet());
         Assert.Multiple(() =>
         {
@@ -32,7 +32,7 @@ public class DecisionTreeTest
     public void TestInducedDecisionTreeClassifiesRestaurantDataSetCorrectly()
     {
         var learner = new DecisionTreeLearner(
-            CreateInducedRestaurantDecisionTree(), "Unable to clasify");
+            CreateInducedRestaurantDecisionTree(), "Unable to classify");
         var results = learner.Test(TestDataSetFactory.GetRestaurantDataSet());
         Assert.Multiple(() =>
         {
