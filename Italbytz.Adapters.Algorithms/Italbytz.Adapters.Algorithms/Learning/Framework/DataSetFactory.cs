@@ -19,7 +19,10 @@ public class DataSetFactory
         var dataSet = new DataSet(spec);
         var lines = data.Split('\n');
         foreach (var line in lines)
+        {
+            if (line.Length == 0) continue;
             dataSet.Examples.Add(ExampleFromString(line, spec, separator));
+        }
 
         return dataSet;
     }
@@ -31,6 +34,7 @@ public class DataSetFactory
         var attributeValues = data.Split(separator,
             StringSplitOptions.TrimEntries |
             StringSplitOptions.RemoveEmptyEntries);
+        if (attributeValues.Length < 11) Console.Write("WTF");
         if (dataSetSpec.IsValid(attributeValues))
         {
             var nw = dataSetSpec.GetAttributeNames()

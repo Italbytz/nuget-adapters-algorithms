@@ -28,6 +28,14 @@ public class DecisionTreeLearner : ILearner
             new ConstantDecisionTree(DefaultValue));
     }
 
+    /*public string[] Predict(IDataSet ds)
+    {
+        var results = new string[ds.Examples.Count];
+        for (var i = 0; i < ds.Examples.Count; i++)
+            results[i] = Predict(ds.Examples[i]);
+        return results;
+    }*/
+
     public string Predict(IExample e)
     {
         return (string)Tree.Predict(e);
@@ -44,6 +52,11 @@ public class DecisionTreeLearner : ILearner
                 results[1] = results[1] + 1;
 
         return results;
+    }
+
+    public string[] Predict(IDataSet ds)
+    {
+        return ds.Examples.Select(Predict).ToArray();
     }
 
     private DecisionTree DecisionTreeLearning(IDataSet ds,

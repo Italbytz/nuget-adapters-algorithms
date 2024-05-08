@@ -29,6 +29,27 @@ public class DecisionTreeTest
     }
 
     [Test]
+    public void TestMisclassificationOfInducedDecisionTree()
+    {
+        var completeRestaurantDataSet =
+            TestDataSetFactory.GetCompleteRestaurantDataSet();
+        var actualLearner = new DecisionTreeLearner(
+            CreateActualRestaurantDecisionTree(), "Unable to classify");
+        var inducedLearner = new DecisionTreeLearner(
+            CreateInducedRestaurantDecisionTree(), "Unable to classify");
+        var actualPredictions =
+            actualLearner.Predict(completeRestaurantDataSet);
+        var inducedPredictions =
+            inducedLearner.Predict(completeRestaurantDataSet);
+        var mcr = 0F;
+        for (var i = 0; i < actualPredictions.Length; i++)
+            if (!actualPredictions[i].Equals(inducedPredictions[i]))
+                mcr++;
+        mcr /= actualPredictions.Length;
+        Assert.That(mcr, Is.InRange(0.18, 0.19));
+    }
+
+    [Test]
     public void TestInducedDecisionTreeClassifiesRestaurantDataSetCorrectly()
     {
         var learner = new DecisionTreeLearner(
@@ -130,8 +151,8 @@ public class DecisionTreeTest
 
         // reservation node
         var reservation = new DecisionTree("reservation");
-        frisat.AddNode(Util.Util.No, bar);
-        frisat.AddLeaf(Util.Util.Yes, Util.Util.Yes);
+        reservation.AddNode(Util.Util.No, bar);
+        reservation.AddLeaf(Util.Util.Yes, Util.Util.Yes);
 
         // first alternate node to the left of the diagram below waitestimate
         var alternate1 = new DecisionTree("alternate");

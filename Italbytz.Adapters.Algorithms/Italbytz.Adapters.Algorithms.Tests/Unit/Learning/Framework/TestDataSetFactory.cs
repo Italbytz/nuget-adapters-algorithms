@@ -2,6 +2,7 @@
 // MIT License
 // Copyright (c) 2015 aima-java contributors
 
+using System.Text;
 using Italbytz.Adapters.Algorithms.Learning.Framework;
 using Italbytz.Ports.Algorithms.AI.Learning;
 
@@ -23,6 +24,34 @@ public class TestDataSetFactory
                                       No  No  No  No  None $   No   No  Thai    0-10   No
                                       Yes Yes Yes Yes Full $   No   No  Burger  30-60  Yes
                                       """;
+
+    public static IDataSet GetCompleteRestaurantDataSet()
+    {
+        var spec = CreateRestaurantDataSetSpec();
+        var dataString = new StringBuilder();
+        IteratePossibleValues(spec, spec.GetAttributeNames().ToArray(), 0, "",
+            dataString
+        );
+        return DataSetFactory.FromString(dataString.ToString(), spec, " ");
+    }
+
+    private static void IteratePossibleValues(IDataSetSpecification spec,
+        IReadOnlyList<string> attributes, int current, string line,
+        StringBuilder dataString)
+    {
+        if (current == attributes.Count - 1)
+        {
+            line += spec.GetPossibleAttributeValues(
+                attributes[current]).First();
+            dataString.AppendLine(line);
+            return;
+        }
+
+        foreach (var value in spec.GetPossibleAttributeValues(
+                     attributes[current]))
+            IteratePossibleValues(spec, attributes, current + 1,
+                line + $"{value} ", dataString);
+    }
 
     public static IDataSet GetRestaurantDataSet()
     {
