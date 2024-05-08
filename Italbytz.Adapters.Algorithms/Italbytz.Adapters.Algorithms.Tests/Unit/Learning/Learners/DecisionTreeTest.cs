@@ -2,6 +2,7 @@
 // MIT License
 // Copyright (c) 2015 aima-java contributors
 
+using System.Text;
 using Italbytz.Adapters.Algorithms.Learning.Inductive;
 using Italbytz.Adapters.Algorithms.Learning.Learners;
 using Italbytz.Adapters.Algorithms.Tests.Unit.Learning.Framework;
@@ -26,6 +27,44 @@ public class DecisionTreeTest
             Assert.That(results[0], Is.EqualTo(12));
             Assert.That(results[1], Is.EqualTo(0));
         });
+    }
+
+    [Test]
+    public void SavePredictionsInFile()
+    {
+        var completeRestaurantDataSet =
+            TestDataSetFactory.GetCompleteRestaurantDataSet();
+        var actualLearner = new DecisionTreeLearner(
+            CreateActualRestaurantDecisionTree(), "Unable to classify");
+        var actualPredictions =
+            actualLearner.Predict(completeRestaurantDataSet);
+
+        var sb = new StringBuilder();
+        var attributeNames =
+            completeRestaurantDataSet.Specification.GetAttributeNames()
+                .ToArray();
+        sb.Append(string.Join(", ", attributeNames));
+        sb.Append("\n");
+        var exampleNo = 0;
+        foreach (var example in completeRestaurantDataSet.Examples)
+        {
+            foreach (var attribute in attributeNames)
+                if (attribute.Equals("will_wait"))
+                {
+                    sb.Append(actualPredictions[exampleNo]);
+                }
+                else
+                {
+                    sb.Append(example.GetAttributeValueAsString(attribute));
+                    sb.Append(", ");
+                }
+
+            sb.Append("\n");
+            exampleNo++;
+        }
+
+        using var file = new StreamWriter(@"restaurantcomplete.csv");
+        file.WriteLine(sb.ToString());
     }
 
     [Test]
