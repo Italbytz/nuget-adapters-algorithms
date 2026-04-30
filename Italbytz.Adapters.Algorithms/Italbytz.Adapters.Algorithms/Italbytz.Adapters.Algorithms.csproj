@@ -24,11 +24,6 @@
         <None Remove="Util\Datastructure\"/>
     </ItemGroup>
     <ItemGroup>
-        <Folder Include="Agent\"/>
-        <Folder Include="Search\Agent\"/>
-        <Folder Include="Search\Framework\Problem\"/>
-    </ItemGroup>
-    <ItemGroup>
         <PackageReference Include="Italbytz.Ports.Algorithms" Version="0.4.2"/>
         <PackageReference Include="LpSolveDotNet.Native.linux-x64" Version="4.0.0"/>
         <PackageReference Include="LpSolveDotNet.Native.linux-x86" Version="4.0.0"/>
